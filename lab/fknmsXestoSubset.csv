@@ -1,0 +1,233 @@
+"","region","location","site","date","sampleID","tubeID","species","latDD","longDD","depthFt","depthM","depthZone","collection","rackID","n"
+"1","Upper Keys","Carysfort","FK-01","8/13/19","13-VIII-19-1-012","X001","Xestospongia muta",25.2157,-80.1924,168,51.2,"Mesophotic","ROV",1,30
+"2","Upper Keys","The Elbow","FK-02","8/14/19","14-VIII-19-1-009","X002","Xestospongia muta",25.15874833,-80.21938833,157,47.9,"Mesophotic","ROV",1,30
+"3","Upper Keys","The Elbow","FK-02","8/14/19","14-VIII-19-1-014","X003","Xestospongia muta",25.15874833,-80.21938833,142,43.3,"Mesophotic","ROV",1,30
+"4","Upper Keys","The Elbow","FK-03","8/14/19","14-VIII-19-2-002","X004","Xestospongia muta",25.15517,-80.23328667,111,33.8,"Mesophotic","ROV",1,30
+"5","Upper Keys","The Elbow","FK-03","8/14/19","14-VIII-19-2-004","X005","Xestospongia muta",25.15517,-80.23328667,111,33.8,"Mesophotic","ROV",1,30
+"6","Upper Keys","Grecian Rocks","FK-04","8/15/19","15-VIII-19-1-004","X006","Xestospongia muta",25.10855167,-80.261585,165,50.3,"Mesophotic","ROV",1,30
+"7","Upper Keys","French Reef","FK-06","8/15/19","15-VIII-19-2-001","X007","Xestospongia muta",25.03631167,-80.31959,160,48.8,"Mesophotic","ROV",1,30
+"8","Upper Keys","French Reef","FK-06","8/15/19","15-VIII-19-2-007","X008","Xestospongia muta",25.03631167,-80.31959,42,12.8,"Shallow","ROV",1,30
+"9","Upper Keys","French Reef","FK-06","8/15/19","15-VIII-19-2-009","X009","Xestospongia muta",25.03631167,-80.31959,141,43,"Mesophotic","ROV",1,30
+"10","Lower Keys","Big Coppitt","FK-08","8/16/19","16-VIII-19-2-007","X010","Xestospongia muta",24.49172,-81.59309833,81,24.7,"Shallow","ROV",1,30
+"11","TER-North","Sherwood Forrest","Site 17","8/22/19","22-VIII-19-1-003","X011","Xestospongia muta",24.65211,-83.103095,114,34.7,"Mesophotic","Tech Dive",1,22
+"12","TER-North","Sherwood Forrest","Site 17","8/22/19","22-VIII-19-1-023","X012","Xestospongia muta",24.65211,-83.103095,112,34.1,"Mesophotic","Tech Dive",1,22
+"13","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-1-010","X013","Xestospongia muta",24.64042,-83.10294333,101,30.8,"Mesophotic","Tech Dive",1,22
+"14","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-1-011","X014","Xestospongia muta",24.64042,-83.10294333,100,30.5,"Mesophotic","Tech Dive",1,22
+"15","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-1-012","X015","Xestospongia muta",24.64042,-83.10294333,101,30.8,"Mesophotic","Tech Dive",1,22
+"16","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-1-013","X016","Xestospongia muta",24.64042,-83.10294333,101,30.8,"Mesophotic","Tech Dive",1,22
+"17","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-1-016","X017","Xestospongia muta",24.64042,-83.10294333,98,29.9,"Shallow","Tech Dive",1,30
+"18","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-1-032","X018","Xestospongia muta",24.64042,-83.10294333,99,30.2,"Mesophotic","Tech Dive",1,22
+"19","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-001","X019","Xestospongia muta",24.67518667,-83.068585,67,20.4,"Shallow","Scuba",1,30
+"20","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-003","X020","Xestospongia muta",24.67518667,-83.068585,68,20.7,"Shallow","Scuba",2,30
+"21","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-004","X021","Xestospongia muta",24.67518667,-83.068585,67,20.4,"Shallow","Scuba",2,30
+"22","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-005","X022","Xestospongia muta",24.67518667,-83.068585,66,20.1,"Shallow","Scuba",2,30
+"23","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-006","X023","Xestospongia muta",24.67518667,-83.068585,65,19.8,"Shallow","Scuba",2,30
+"24","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-007","X024","Xestospongia muta",24.67518667,-83.068585,64,19.5,"Shallow","Scuba",2,30
+"25","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-009","X025","Xestospongia muta",24.67518667,-83.068585,68,20.7,"Shallow","Scuba",2,30
+"26","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-010","X026","Xestospongia muta",24.67518667,-83.068585,69,21,"Shallow","Scuba",2,30
+"27","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-013","X027","Xestospongia muta",24.67518667,-83.068585,66,20.1,"Shallow","Scuba",2,30
+"28","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-018","X028","Xestospongia muta",24.67518667,-83.068585,69,21,"Shallow","Scuba",2,30
+"29","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-019","X029","Xestospongia muta",24.67518667,-83.068585,68,20.7,"Shallow","Scuba",2,30
+"30","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-020","X030","Xestospongia muta",24.67518667,-83.068585,67,20.4,"Shallow","Scuba",2,30
+"31","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-021","X031","Xestospongia muta",24.67518667,-83.068585,69,21,"Shallow","Scuba",2,30
+"32","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-023","X032","Xestospongia muta",24.67518667,-83.068585,64,19.5,"Shallow","Scuba",2,30
+"33","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-024","X033","Xestospongia muta",24.67518667,-83.068585,66,20.1,"Shallow","Scuba",2,30
+"34","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-032","X034","Xestospongia muta",24.67518667,-83.068585,65,19.8,"Shallow","Scuba",2,30
+"35","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-037","X035","Xestospongia muta",24.67518667,-83.068585,66,20.1,"Shallow","Scuba",2,30
+"36","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-038","X036","Xestospongia muta",24.67518667,-83.068585,66,20.1,"Shallow","Scuba",2,30
+"37","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-039","X037","Xestospongia muta",24.67518667,-83.068585,67,20.4,"Shallow","Scuba",2,30
+"38","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-042","X038","Xestospongia muta",24.67518667,-83.068585,64,19.5,"Shallow","Scuba",3,30
+"39","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-043","X039","Xestospongia muta",24.67518667,-83.068585,66,20.1,"Shallow","Scuba",3,30
+"40","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-044","X040","Xestospongia muta",24.67518667,-83.068585,65,19.8,"Shallow","Scuba",3,30
+"41","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-045","X041","Xestospongia muta",24.67518667,-83.068585,65,19.8,"Shallow","Scuba",3,30
+"42","TER-North","Sherwood Forrest","Site 37","8/23/19","23-VIII-19-2-046","X042","Xestospongia muta",24.67518667,-83.068585,66,20.1,"Shallow","Scuba",3,30
+"43","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-002","X043","Xestospongia muta",24.640415,-83.10294667,97,29.6,"Shallow","Scuba",3,30
+"44","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-003","X044","Xestospongia muta",24.640415,-83.10294667,97,29.6,"Shallow","Scuba",3,30
+"45","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-004","X045","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",3,22
+"46","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-005","X046","Xestospongia muta",24.640415,-83.10294667,101,30.8,"Mesophotic","Scuba",3,22
+"47","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-006","X047","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",3,22
+"48","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-007","X048","Xestospongia muta",24.640415,-83.10294667,101,30.8,"Mesophotic","Scuba",3,22
+"49","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-008","X049","Xestospongia muta",24.640415,-83.10294667,96,29.3,"Shallow","Scuba",3,30
+"50","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-009","X050","Xestospongia muta",24.640415,-83.10294667,99,30.2,"Mesophotic","Scuba",3,22
+"51","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-010","X051","Xestospongia muta",24.640415,-83.10294667,101,30.8,"Mesophotic","Scuba",3,22
+"52","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-011","X052","Xestospongia muta",24.640415,-83.10294667,101,30.8,"Mesophotic","Scuba",3,22
+"53","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-012","X053","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",3,22
+"54","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-013","X054","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",3,22
+"55","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-014","X055","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",3,22
+"56","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-015","X056","Xestospongia muta",24.640415,-83.10294667,101,30.8,"Mesophotic","Scuba",3,22
+"57","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-016","X057","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",3,22
+"58","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-018","X058","Xestospongia muta",24.640415,-83.10294667,98,29.9,"Shallow","Scuba",3,30
+"59","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-019","X059","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",4,22
+"60","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-020","X060","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",4,22
+"61","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-021","X061","Xestospongia muta",24.640415,-83.10294667,100,30.5,"Mesophotic","Scuba",4,22
+"62","TER-North","Sherwood Forrest","Site 35/36","8/23/19","23-VIII-19-4-022","X062","Xestospongia muta",24.640415,-83.10294667,98,29.9,"Shallow","Scuba",4,30
+"63","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-023","X063","Xestospongia muta",24.49396,-83.09607833,108,32.9,"Mesophotic","Tech Dive",4,30
+"64","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-024","X064","Xestospongia muta",24.49396,-83.09607833,109,33.2,"Mesophotic","Tech Dive",4,30
+"65","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-025","X065","Xestospongia muta",24.49396,-83.09607833,108,32.9,"Mesophotic","Tech Dive",4,30
+"66","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-026","X066","Xestospongia muta",24.49396,-83.09607833,107,32.6,"Mesophotic","Tech Dive",4,30
+"67","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-027","X067","Xestospongia muta",24.49396,-83.09607833,108,32.9,"Mesophotic","Tech Dive",4,30
+"68","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-030","X068","Xestospongia muta",24.49396,-83.09607833,105,32,"Mesophotic","Tech Dive",4,30
+"69","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-033","X069","Xestospongia muta",24.49396,-83.09607833,109,33.2,"Mesophotic","Tech Dive",4,30
+"70","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-035","X070","Xestospongia muta",24.49396,-83.09607833,104,31.7,"Mesophotic","Tech Dive",4,30
+"71","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-036","X071","Xestospongia muta",24.49396,-83.09607833,106,32.3,"Mesophotic","Tech Dive",4,30
+"72","TER-South","Riley's Hump","Site 18","8/24/19","24-VIII-19-1-037","X072","Xestospongia muta",24.49396,-83.09607833,107,32.6,"Mesophotic","Tech Dive",4,30
+"73","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-001","X073","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",4,30
+"74","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-003","X074","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",4,30
+"75","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-005","X075","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",4,30
+"76","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-006","X076","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",4,30
+"77","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-007","X077","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",4,30
+"78","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-009","X078","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",4,30
+"79","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-010","X079","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"80","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-012","X080","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"81","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-013","X081","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"82","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-014","X082","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"83","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-016","X083","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",5,30
+"84","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-017","X084","Xestospongia muta",24.51780833,-83.09790167,82,25,"Shallow","Scuba",5,30
+"85","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-019","X085","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"86","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-020","X086","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"87","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-022","X087","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"88","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-029","X088","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",5,30
+"89","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-031","X089","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"90","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-033","X090","Xestospongia muta",24.51780833,-83.09790167,82,25,"Shallow","Scuba",5,30
+"91","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-036","X091","Xestospongia muta",24.51780833,-83.09790167,85,25.9,"Shallow","Scuba",5,30
+"92","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-038","X092","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",5,30
+"93","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-040","X093","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",5,30
+"94","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-042","X094","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"95","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-044","X095","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",5,30
+"96","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-046","X096","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",5,30
+"97","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-048","X097","Xestospongia muta",24.51780833,-83.09790167,84,25.6,"Shallow","Scuba",5,30
+"98","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-050","X098","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"99","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-052","X099","Xestospongia muta",24.51780833,-83.09790167,93,28.3,"Shallow","Scuba",5,30
+"100","TER-South","Riley's Hump","Site 38","8/24/19","24-VIII-19-2-054","X100","Xestospongia muta",24.51780833,-83.09790167,83,25.3,"Shallow","Scuba",5,30
+"101","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-001","X101","Xestospongia muta",24.48925667,-83.122695,123,37.5,"Mesophotic","Tech Dive",5,30
+"102","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-002","X102","Xestospongia muta",24.48925667,-83.122695,119,36.3,"Mesophotic","Tech Dive",5,30
+"103","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-003","X103","Xestospongia muta",24.48925667,-83.122695,118,36,"Mesophotic","Tech Dive",5,30
+"104","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-005","X104","Xestospongia muta",24.48925667,-83.122695,120,36.6,"Mesophotic","Tech Dive",6,30
+"105","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-008","X105","Xestospongia muta",24.48925667,-83.122695,119,36.3,"Mesophotic","Tech Dive",6,30
+"106","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-009","X106","Xestospongia muta",24.48925667,-83.122695,121,36.9,"Mesophotic","Tech Dive",6,30
+"107","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-010","X107","Xestospongia muta",24.48925667,-83.122695,122,37.2,"Mesophotic","Tech Dive",6,30
+"108","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-012","X108","Xestospongia muta",24.48925667,-83.122695,119,36.3,"Mesophotic","Tech Dive",6,30
+"109","TER-South","Riley's Hump","Site 19","8/24/19","24-VIII-19-3-013","X109","Xestospongia muta",24.48925667,-83.122695,124,37.8,"Mesophotic","Tech Dive",6,30
+"110","TER-South","Riley's Hump","Site 39","8/24/19","24-VIII-19-4-011","X110","Xestospongia muta",24.51135833,-83.09516,90,27.4,"Shallow","Scuba",6,30
+"111","TER-South","Riley's Hump","Site 39","8/24/19","24-VIII-19-4-012","X111","Xestospongia muta",24.51135833,-83.09516,90,27.4,"Shallow","Scuba",6,30
+"112","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-003","X112","Xestospongia muta",24.48466,-83.110725,152,46.3,"Mesophotic","Tech Dive",6,30
+"113","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-004","X113","Xestospongia muta",24.48466,-83.110725,147,44.8,"Mesophotic","Tech Dive",6,30
+"114","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-010","X114","Xestospongia muta",24.48466,-83.110725,145,44.2,"Mesophotic","Tech Dive",6,30
+"115","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-014","X115","Xestospongia muta",24.48466,-83.110725,154,46.9,"Mesophotic","Tech Dive",6,30
+"116","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-015","X116","Xestospongia muta",24.48466,-83.110725,154,46.9,"Mesophotic","Tech Dive",6,30
+"117","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-016","X117","Xestospongia muta",24.48466,-83.110725,153,46.6,"Mesophotic","Tech Dive",6,30
+"118","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-018","X118","Xestospongia muta",24.48466,-83.110725,151,46,"Mesophotic","Tech Dive",7,30
+"119","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-019","X119","Xestospongia muta",24.48466,-83.110725,148,45.1,"Mesophotic","Tech Dive",7,30
+"120","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-021","X120","Xestospongia muta",24.48466,-83.110725,145,44.2,"Mesophotic","Tech Dive",7,30
+"121","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-025","X121","Xestospongia muta",24.48466,-83.110725,143,43.6,"Mesophotic","Tech Dive",7,30
+"122","TER-South","Riley's Hump","Site 44","8/25/19","25-VIII-19-1-027","X122","Xestospongia muta",24.48466,-83.110725,142,43.3,"Mesophotic","Tech Dive",7,30
+"123","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-001","X123","Xestospongia muta",24.49395667,-81.58831167,116,35.4,"Mesophotic","Tech Dive",7,30
+"124","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-002","X124","Xestospongia muta",24.49395667,-81.58831167,114,34.7,"Mesophotic","Tech Dive",7,30
+"125","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-005","X125","Xestospongia muta",24.49395667,-81.58831167,113,34.4,"Mesophotic","Tech Dive",7,30
+"126","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-008","X126","Xestospongia muta",24.49395667,-81.58831167,109,33.2,"Mesophotic","Tech Dive",7,30
+"127","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-009","X127","Xestospongia muta",24.49395667,-81.58831167,109,33.2,"Mesophotic","Tech Dive",7,30
+"128","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-010","X128","Xestospongia muta",24.49395667,-81.58831167,107,32.6,"Mesophotic","Tech Dive",7,30
+"129","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-012","X129","Xestospongia muta",24.49395667,-81.58831167,107,32.6,"Mesophotic","Tech Dive",7,30
+"130","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-014","X130","Xestospongia muta",24.49395667,-81.58831167,106,32.3,"Mesophotic","Tech Dive",7,30
+"131","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-015","X131","Xestospongia muta",24.49395667,-81.58831167,107,32.6,"Mesophotic","Tech Dive",7,30
+"132","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-018","X132","Xestospongia muta",24.49395667,-81.58831167,108,32.9,"Mesophotic","Tech Dive",7,30
+"133","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-021","X133","Xestospongia muta",24.49395667,-81.58831167,107,32.6,"Mesophotic","Tech Dive",7,30
+"134","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-026","X134","Xestospongia muta",24.49395667,-81.58831167,113,34.4,"Mesophotic","Tech Dive",7,30
+"135","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-027","X135","Xestospongia muta",24.49395667,-81.58831167,113,34.4,"Mesophotic","Tech Dive",7,30
+"136","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-028","X136","Xestospongia muta",24.49395667,-81.58831167,111,33.8,"Mesophotic","Tech Dive",7,30
+"137","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-030","X137","Xestospongia muta",24.49395667,-81.58831167,110,33.5,"Mesophotic","Tech Dive",8,30
+"138","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-032","X138","Xestospongia muta",24.49395667,-81.58831167,106,32.3,"Mesophotic","Tech Dive",8,30
+"139","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-037","X139","Xestospongia muta",24.49395667,-81.58831167,103,31.4,"Mesophotic","Tech Dive",8,30
+"140","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-039","X140","Xestospongia muta",24.49395667,-81.58831167,105,32,"Mesophotic","Tech Dive",8,30
+"141","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-042","X141","Xestospongia muta",24.49395667,-81.58831167,106,32.3,"Mesophotic","Tech Dive",8,30
+"142","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-043","X142","Xestospongia muta",24.49395667,-81.58831167,108,32.9,"Mesophotic","Tech Dive",8,30
+"143","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-045","X143","Xestospongia muta",24.49395667,-81.58831167,108,32.9,"Mesophotic","Tech Dive",8,30
+"144","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-047","X144","Xestospongia muta",24.49395667,-81.58831167,107,32.6,"Mesophotic","Tech Dive",8,30
+"145","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-1-050","X145","Xestospongia muta",24.49395667,-81.58831167,106,32.3,"Mesophotic","Tech Dive",8,30
+"146","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-059","X146","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",8,30
+"147","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-060","X147","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",8,30
+"148","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-061","X148","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",8,30
+"149","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-062","X149","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",8,30
+"150","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-063","X150","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",8,30
+"151","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-064","X151","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",8,30
+"152","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-065","X152","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",8,30
+"153","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-066","X153","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",8,30
+"154","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-067","X154","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",8,30
+"155","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-068","X155","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",8,30
+"156","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-069","X156","Xestospongia muta",24.49297,-81.59892667,58,17.7,"Shallow","Scuba",8,30
+"157","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-070","X157","Xestospongia muta",24.49297,-81.59892667,56,17.1,"Shallow","Scuba",8,30
+"158","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-071","X158","Xestospongia muta",24.49297,-81.59892667,56,17.1,"Shallow","Scuba",8,30
+"159","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-072","X159","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",8,30
+"160","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-073","X160","Xestospongia muta",24.49297,-81.59892667,56,17.1,"Shallow","Scuba",8,30
+"161","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-074","X161","Xestospongia muta",24.49297,-81.59892667,55,16.8,"Shallow","Scuba",8,30
+"162","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-075","X162","Xestospongia muta",24.49297,-81.59892667,56,17.1,"Shallow","Scuba",9,30
+"163","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-076","X163","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",9,30
+"164","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-077","X164","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",9,30
+"165","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-078","X165","Xestospongia muta",24.49297,-81.59892667,58,17.7,"Shallow","Scuba",9,30
+"166","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-079","X166","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",9,30
+"167","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-080","X167","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",9,30
+"168","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-081","X168","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",9,30
+"169","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-082","X169","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",9,30
+"170","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-083","X170","Xestospongia muta",24.49297,-81.59892667,59,18,"Shallow","Scuba",9,30
+"171","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-084","X171","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",9,30
+"172","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-085","X172","Xestospongia muta",24.49297,-81.59892667,58,17.7,"Shallow","Scuba",9,30
+"173","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-098","X173","Xestospongia muta",24.49297,-81.59892667,57,17.4,"Shallow","Scuba",9,30
+"174","Lower Keys","Big Coppitt","Site 46","8/26/19","26-VIII-19-2-099","X174","Xestospongia muta",24.49297,-81.59892667,56,17.1,"Shallow","Scuba",9,30
+"175","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-3-010","X175","Xestospongia muta",24.494035,-81.58790833,110,33.5,"Mesophotic","Tech Dive",9,30
+"176","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-3-011","X176","Xestospongia muta",24.494035,-81.58790833,108,32.9,"Mesophotic","Tech Dive",9,30
+"177","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-3-012","X177","Xestospongia muta",24.494035,-81.58790833,108,32.9,"Mesophotic","Tech Dive",9,30
+"178","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-3-013","X178","Xestospongia muta",24.494035,-81.58790833,106,32.3,"Mesophotic","Tech Dive",9,30
+"179","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-3-017","X179","Xestospongia muta",24.494035,-81.58790833,106,32.3,"Mesophotic","Tech Dive",9,30
+"180","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-3-019","X180","Xestospongia muta",24.494035,-81.58790833,106,32.3,"Mesophotic","Tech Dive",9,30
+"181","Lower Keys","Big Coppitt","Site 45","8/26/19","26-VIII-19-3-020","X181","Xestospongia muta",24.494035,-81.58790833,106,32.3,"Mesophotic","Tech Dive",9,30
+"182","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-1-001","X182","Xestospongia muta",25.152185,-80.23162,117,35.7,"Mesophotic","Tech Dive",9,30
+"183","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-1-002","X183","Xestospongia muta",25.152185,-80.23162,117,35.7,"Mesophotic","Tech Dive",9,30
+"184","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-1-003","X184","Xestospongia muta",25.152185,-80.23162,118,36,"Mesophotic","Tech Dive",9,30
+"185","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-1-004","X185","Xestospongia muta",25.152185,-80.23162,116,35.4,"Mesophotic","Tech Dive",10,30
+"186","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-1-005","X186","Xestospongia muta",25.152185,-80.23162,116,35.4,"Mesophotic","Tech Dive",10,30
+"187","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-1-007","X187","Xestospongia muta",25.152185,-80.23162,116,35.4,"Mesophotic","Tech Dive",10,30
+"188","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-1-008","X188","Xestospongia muta",25.152185,-80.23162,117,35.7,"Mesophotic","Tech Dive",10,30
+"189","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-1-009","X189","Xestospongia muta",25.152185,-80.23162,117,35.7,"Mesophotic","Tech Dive",10,30
+"190","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-2-001","X190","Xestospongia muta",25.14415667,-80.252055,78,23.8,"Shallow","Scuba",10,30
+"191","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-2-002","X191","Xestospongia muta",25.14415667,-80.252055,72,21.9,"Shallow","Scuba",10,30
+"192","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-2-003","X192","Xestospongia muta",25.14415667,-80.252055,75,22.9,"Shallow","Scuba",10,30
+"193","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-2-004","X193","Xestospongia muta",25.14415667,-80.252055,73,22.3,"Shallow","Scuba",10,30
+"194","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-2-005","X194","Xestospongia muta",25.14415667,-80.252055,73,22.3,"Shallow","Scuba",10,30
+"195","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-2-006","X195","Xestospongia muta",25.14415667,-80.252055,70,21.3,"Shallow","Scuba",10,30
+"196","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-2-007","X196","Xestospongia muta",25.14415667,-80.252055,70,21.3,"Shallow","Scuba",10,30
+"197","Upper Keys","The Elbow","Site 51","8/27/19","27-VIII-19-2-008","X197","Xestospongia muta",25.14415667,-80.252055,69,21,"Shallow","Scuba",10,30
+"198","Upper Keys","The Elbow","Ian's Lumps Site 52","8/27/19","27-VIII-19-4-001","X198","Xestospongia muta",25.15823333,-80.22064,143,43.6,"Mesophotic","Tech Dive",10,30
+"199","Upper Keys","The Elbow","Ian's Lumps Site 52","8/27/19","27-VIII-19-4-005","X199","Xestospongia muta",25.15823333,-80.22064,142,43.3,"Mesophotic","Tech Dive",10,30
+"200","Upper Keys","The Elbow","Ian's Lumps Site 52","8/27/19","27-VIII-19-4-008","X200","Xestospongia muta",25.15823333,-80.22064,141,43,"Mesophotic","Tech Dive",10,30
+"201","Upper Keys","The Elbow","Ian's Lumps Site 52","8/27/19","27-VIII-19-4-009","X201","Xestospongia muta",25.15823333,-80.22064,141,43,"Mesophotic","Tech Dive",10,30
+"202","Upper Keys","The Elbow","Ian's Lumps Site 52","8/27/19","27-VIII-19-4-011","X202","Xestospongia muta",25.15823333,-80.22064,141,43,"Mesophotic","Tech Dive",10,30
+"203","Upper Keys","The Elbow","Ian's Lumps Site 52","8/27/19","27-VIII-19-4-013","X203","Xestospongia muta",25.15823333,-80.22064,141,43,"Mesophotic","Tech Dive",10,30
+"204","Upper Keys","The Elbow","Site 49","8/27/19","27-VIII-19-5-015","X204","Xestospongia muta",25.14404833,-80.25258833,67,20.4,"Shallow","Scuba",10,30
+"205","Upper Keys","The Elbow","Site 49","8/27/19","27-VIII-19-5-016","X205","Xestospongia muta",25.14404833,-80.25258833,67,20.4,"Shallow","Scuba",10,30
+"206","Upper Keys","The Elbow","Site 49","8/27/19","27-VIII-19-5-017","X206","Xestospongia muta",25.14404833,-80.25258833,67,20.4,"Shallow","Scuba",10,30
+"207","Upper Keys","The Elbow","Site 49","8/27/19","27-VIII-19-5-018","X207","Xestospongia muta",25.14404833,-80.25258833,64,19.5,"Shallow","Scuba",10,30
+"208","Upper Keys","The Elbow","Site 49","8/27/19","27-VIII-19-5-019","X208","Xestospongia muta",25.14404833,-80.25258833,64,19.5,"Shallow","Scuba",10,30
+"209","Upper Keys","The Elbow","Site 49","8/27/19","27-VIII-19-5-020","X209","Xestospongia muta",25.14404833,-80.25258833,60,18.3,"Shallow","Scuba",11,30
+"210","Upper Keys","The Elbow","Site 49","8/27/19","27-VIII-19-5-021","X210","Xestospongia muta",25.14404833,-80.25258833,63,19.2,"Shallow","Scuba",11,30
+"211","Upper Keys","Carysfort","Site 1","8/28/19","28-VIII-19-1-001","X211","Xestospongia muta",25.217545,-80.19341333,141,43,"Mesophotic","Tech Dive",11,30
+"212","Upper Keys","Carysfort","Site 1","8/28/19","28-VIII-19-1-002","X212","Xestospongia muta",25.217545,-80.19341333,142,43.3,"Mesophotic","Tech Dive",11,30
+"213","Upper Keys","Carysfort","Site 1","8/28/19","28-VIII-19-1-003","X213","Xestospongia muta",25.217545,-80.19341333,142,43.3,"Mesophotic","Tech Dive",11,30
+"214","Upper Keys","Carysfort","Site 1","8/28/19","28-VIII-19-3-024","X214","Xestospongia muta",25.21752,-80.19336833,149,45.4,"Mesophotic","Tech Dive",11,30
+"215","Upper Keys","Carysfort","Site 1","8/28/19","28-VIII-19-3-025","X215","Xestospongia muta",25.21752,-80.19336833,149,45.4,"Mesophotic","Tech Dive",11,30
+"216","Upper Keys","Carysfort","Site 1","8/28/19","28-VIII-19-3-026","X216","Xestospongia muta",25.21752,-80.19336833,148,45.1,"Mesophotic","Tech Dive",11,30
+"217","Upper Keys","Carysfort","Site 1","8/28/19","28-VIII-19-3-027","X217","Xestospongia muta",25.21752,-80.19336833,149,45.4,"Mesophotic","Tech Dive",11,30
+"218","Upper Keys","Carysfort","Site 1","8/28/19","28-VIII-19-3-028","X218","Xestospongia muta",25.21752,-80.19336833,148,45.1,"Mesophotic","Tech Dive",11,30
+"219","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-001","X219","Xestospongia muta",25.22036,-80.20094333,88,26.8,"Shallow","Scuba",11,30
+"220","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-002","X220","Xestospongia muta",25.22036,-80.20094333,88,26.8,"Shallow","Scuba",11,30
+"221","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-003","X221","Xestospongia muta",25.22036,-80.20094333,82,25,"Shallow","Scuba",11,30
+"222","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-005","X222","Xestospongia muta",25.22036,-80.20094333,82,25,"Shallow","Scuba",11,30
+"223","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-006","X223","Xestospongia muta",25.22036,-80.20094333,85,25.9,"Shallow","Scuba",11,30
+"224","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-007","X224","Xestospongia muta",25.22036,-80.20094333,84,25.6,"Shallow","Scuba",11,30
+"225","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-008","X225","Xestospongia muta",25.22036,-80.20094333,86,26.2,"Shallow","Scuba",11,30
+"226","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-009","X226","Xestospongia muta",25.22036,-80.20094333,84,25.6,"Shallow","Scuba",11,30
+"227","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-010","X227","Xestospongia muta",25.22036,-80.20094333,83,25.3,"Shallow","Scuba",11,30
+"228","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-012","X228","Xestospongia muta",25.22036,-80.20094333,81,24.7,"Shallow","Scuba",11,30
+"229","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-013","X229","Xestospongia muta",25.22036,-80.20094333,81,24.7,"Shallow","Scuba",11,30
+"230","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-014","X230","Xestospongia muta",25.22036,-80.20094333,83,25.3,"Shallow","Scuba",11,30
+"231","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-015","X231","Xestospongia muta",25.22036,-80.20094333,82,25,"Shallow","Scuba",11,30
+"232","Upper Keys","Carysfort","Site 48","8/28/19","28-VIII-19-4-016","X232","Xestospongia muta",25.22036,-80.20094333,85,25.9,"Shallow","Scuba",12,30
