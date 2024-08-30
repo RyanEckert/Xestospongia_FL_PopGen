@@ -1,0 +1,1164 @@
+---
+title: "Untitled"
+author: "Ryan Eckert"
+date: "2023-10-11"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## T R I M M I N G &nbsp; & &nbsp; F I L T E R I N G
+***
+
+### Trim and demultiplex reads
+```{bash, trim}
+cd ../concatReads
+
+2bRAD_trim_launch_dedup.pl fastq > trims.sh
+launcher_creator.py -j trims.sh -n trims -q shortq7 -t 06:00:00 -e reckert2017@fau.edu
+sbatch --mem=200GB trims.slurm
+
+```
+
+Check that we have the correct number of trim files (226 in this case)
+```{bash, check count}
+ls -l *.tr0 | wc -l
+
+mkdir ../trimmedReads
+srun mv *.tr0 ../trimmedReads &
+
+zipper.py -f fastq -a -9 --launcher -e reckert2017@fau.edu
+sbatch --mem=200GB zip.slurm
+
+cd ../trimmedReads
+```
+
+Rename sequence files using sampleRename.py
+This script needs a .csv with XXX
+Make sure you use the reverse complement of your inline BCs!
+```{bash, remame py}
+srun sampleRename.py -i sampleList -f tr0
+
+```
+
+### Quality filtering using cutadapt
+I can't get KoKo's module for cutadapt to work, so we'll do it in miniconda.
+Run below if you don't have a conda env. set up, otherwise you can skip to the next chunk
+```{bash, conda}
+module load miniconda3-4.6.14-gcc-8.3.0-eenl5dj
+conda config --add channels defaults
+conda config --add channels bioconda
+conda create -n 2bRAD cutadapt
+
+```
+
+Removing reads with qualities at ends less than Q15 for de novo analysis
+```{bash, low q reads}
+source activate 2bRAD
+
+echo '#!/bin/bash' > trimse.sh
+echo 'module load miniconda3-4.6.14-gcc-8.3.0-eenl5dj' >> trimse.sh
+echo 'source activate 2bRAD' >> trimse.sh
+for file in *.tr0; do
+echo "cutadapt -q 15,15 -m 36 -o ${file/.tr0/}.trim $file > ${file/.tr0/}.trimlog.txt" >> trimse.sh;
+done
+
+```
+
+I can't get it to run through launcher so just run it serially, it takes a while to run, so consider breaking up in several jobs.
+```{bash launch trims}
+sbatch -o trimse.o%j -e trimse.e%j --mem=200GB trimse.sh
+
+```
+
+Do we have expected number of *.trim files created?
+```{bash, trim files}
+conda deactivate
+ls -l *.trim | wc -l
+
+```
+
+How many reads in each sample?
+```{bash, readcounts}
+echo '#!/bin/bash' >xestoReads
+echo readCounts.sh -e trim -o xestoFilt >>xestoReads
+sbatch --mem=200GB xestoReads
+
+#Once it's finished:
+cat xestoFiltReadCounts
+
+```
+
+Move filtered reads and clean up directory
+```{bash, cleanup}
+mkdir ../filteredReads
+mv *.trim ../filteredReads
+
+zipper.py -f tr0 -a -9 --launcher -e reckert2017@fau.edu
+sbatch zip.slurm
+
+```
+<br>
+
+
+## M A P P I N G &nbsp; R E A D S &nbsp; T O &nbsp; R E F E R E N C E
+***
+Build genome for ```Bowtie```
+```{bash, format genome}
+cd ~/bin/xestoGenome
+
+GENOME_FASTA=XesMuta1.1.fna
+
+echo '#!/bin/bash' >genomeBuild.sh
+echo bowtie2-build $GENOME_FASTA $GENOME_FASTA >>genomeBuild.sh
+echo samtools faidx $GENOME_FASTA >>genomeBuild.sh
+
+sbatch -o genomeBuild.o%j -e genomeBuild.e%j --mem=200GB genomeBuild.sh
+
+```
+
+Mapping reads to reference and formatting bam files
+
+Map reads to genome:
+```{bash, map reads}
+mkdir ~/2bRAD/flXesto/
+cd ~/2bRAD/flXesto/
+
+mkdir mappedReads
+cd mappedReads
+
+mv ../../filteredReads/*.trim .
+
+GENOME_FASTA=~/bin/xestoGenome/odXesMuta1.1_alternate_haplotype.fna
+
+# mapping with --local option, enables clipping of mismatching ends (guards against deletions near ends of RAD tags)
+2bRAD_bowtie2_launcher.py -f trim -g $GENOME_FASTA --launcher -N 6 -e reckert2017@fau.edu
+sbatch maps.slurm
+
+```
+
+Do we have the right number of SAM files?
+```{bash, sam counts}
+ls *.sam | wc -l 
+
+```
+
+Checking alignment rates
+```{bash, align rates}
+>alignmentRates
+for F in `ls *trim`; do
+M=`grep -E '^[ATGCN]+$' $F | wc -l | grep -f - maps.e* -A 4 | tail -1 | perl -pe 's/maps\.e\d+-|% overall alignment rate//g'` ;
+echo "$F.sam $M">>alignmentRates;
+done
+
+cat alignmentRates
+
+```
+
+### Convert SAM files to BAM files
+BAM files will be used for genotyping, population structure, etc.
+```{bash, convert sam}
+>s2b
+for file in *.sam; do
+echo "samtools sort -O bam -o ${file/.sam/}.bam $file && samtools index ${file/.sam/}.bam">>s2b;
+done
+
+launcher_creator.py -j s2b -n s2b -q shortq7 -N 2 -t 06:00:00 -e reckert2017@fau.edu
+
+sbatch s2b.slurm
+
+```
+
+Do we have enough BAM files?
+```{bash, bam count}
+ls *bam | wc -l  # should be the same number as number of trim files
+
+```
+
+Clean up directory
+```{bash, clean bams}
+zipper.py -a -9 -f sam --launcher -e reckert2017@fau.edu
+sbatch zip.slurm
+
+zipper.py -a -9 -f trim --launcher -e reckert2017@fau.edu
+sbatch zip.slurm
+
+mv *.trim.gz ../../trimmedReads
+
+```
+
+
+##  G E N O T Y P I N G
+***
+Genotyping with ANGSD - without calling actual genotypes but working with genotype likelihoods at each SNP. Optimal for low-coverage data (<10x).
+```{bash, angsd dir}
+mkdir ../ANGSD
+cd ../ANGSD
+mv ../mappedReads/*.bam* .
+
+ls *bam >bamsClones
+
+```
+
+### Assessing base qualities and coverage depth
+```ANGSD``` settings:
+```-minMapQ 20```: only highly unique mappings (prob of erroneous mapping =< 1%)
+```-baq 1```: realign around indels (not terribly relevant for 2bRAD reads mapped with --local option)
+```-maxDepth```: highest total depth (sum over all samples) to assess; set to 10x number of samples
+```-minInd```: the minimal number of individuals the site must be genotyped in. Reset to 50% of total N at this stage.
+```{bash, ANGSD}
+export FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -maxDepth 3660 -minInd 183"
+export TODO="-doQsDist 1 -doDepth 1 -doCounts 1 -dumpCounts 2"
+
+echo '#!/bin/bash' >xestoDD.sh
+echo angsd -b bamsClones -GL 1 $FILTERS $TODO -P 1 -out dd >>xestoDD.sh
+
+sbatch --mem=200GB -o xestoDD.o%j -e xestoDD.e%j --mail-user=reckert2017@fau.edu --mail-type=ALL xestoDD.sh
+
+```
+
+Summarizing results (using Misha Matz modified script by Matteo Fumagalli)
+```{bash, angsd results}
+echo '#!/bin/bash' >RQC.sh
+echo Rscript ~/bin/plotQC.R prefix=dd >>RQC.sh
+echo gzip -9 dd.counts >>RQC.sh
+sbatch -e RQC.e%j -o RQC.o%j --dependency=afterok:13077250 --mem=200GB RQC.sh
+#--dependency makes it wait for the job id listed to finish first before running (the angsd job above)
+
+```
+
+Proportion of sites covered at >5X:
+```{bash, }
+cat quality.txt
+
+```
+```scp``` dd.pdf to laptop to look at distribution of base quality scores, fraction of sites in each sample passing coverage thresholds and fraction of sites passing genotyping rates cutoffs. Use these to guide choices of ```-minQ```,  ```-minIndDepth``` and ```-minInd``` filters in subsequent ```ANGSD``` runs
+
+![](../data/clones/dd.png)
+
+### Identifying clones and technical replicates
+```{bash, ANGSD clones}
+#FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 30 -dosnpstat 1 -doHWE 1 -hwe_pval 1e-5 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 275 -snp_pval 1e-6 -minMaf 0.05 -setMinDepthInd 3"
+
+FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 30 -dosnpstat 1 -doHWE 1 -hwe_pval 1e-5 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 275 -snp_pval 1e-6 -minMaf 0.05"
+
+TODO="-doMajorMinor 1 -doMaf 1 -doCounts 1 -makeMatrix 1 -doIBS 1 -doCov 1 -doGeno 8 -doBcf 1 -doPost 1 -doGlf 2"
+
+echo '#!/bin/bash' > xestoClones.sh
+echo angsd -b bamsClones -GL 1 $FILTERS $TODO -P 16 -out xestoClones >>xestoClones.sh
+
+sbatch --mem=200GB -o xestoClones.o%j -e xestoClones.e%j -p shortq7 --mail-type=ALL --mail-user=reckert2017@fau.edu xestoClones.sh
+
+```
+
+Use ibs matrix to identify clones with hierachial clustering in ```R```. ```scp``` to local machine and run chunk below in ```R```
+
+```{r, Dendrogram With Clones, fig.dim = c(13, 4.75)}
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load("dendextend", "ggdendro", "tidyverse")
+
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+cloneBams = read.csv("../data/clones/bamsClones", header = FALSE) # list of bam files
+cloneBams$V1 = gsub(pattern = ".trim.bt2.bam", replacement = "", cloneBams$V1)
+
+cloneMa = as.matrix(read.table("../data/clones/xestoClones.ibsMat")) # reads in IBS matrix produced by ANGSD 
+
+dimnames(cloneMa) = list(cloneBams[,1],cloneBams[,1])
+clonesHc = hclust(as.dist(cloneMa),"ave")
+
+# clonePops = cloneBams$region
+# cloneDepth = cloneBams$depthZone
+
+cloneDend = cloneMa %>% as.dist() %>% hclust(.,"ave") %>% as.dendrogram()
+cloneDData = cloneDend %>% dendro_data()
+
+# Making the branches hang shorter so we can easily see clonal groups
+cloneDData$segments$yend2 = cloneDData$segments$yend
+for(i in 1:nrow(cloneDData$segments)) {
+  if (cloneDData$segments$yend2[i] == 0) {
+    cloneDData$segments$yend2[i] = (cloneDData$segments$y[i] - 0.01)}}
+
+cloneDendPoints = cloneDData$labels
+# cloneDendPoints$pop = clonePops[order.dendrogram(cloneDend)]
+# cloneDendPoints$depth=cloneDepth[order.dendrogram(cloneDend)]
+rownames(cloneDendPoints) = cloneDendPoints$label
+
+# Making points at the leaves to place symbols for populations
+point = as.vector(NA)
+for(i in 1:nrow(cloneDData$segments)) {
+  if (cloneDData$segments$yend[i] == 0) {
+    point[i] = cloneDData$segments$y[i] - 0.01
+  } else {
+    point[i] = NA}}
+
+cloneDendPoints$y = point[!is.na(point)]
+
+techReps = c("fk_X014.1", "fk_X014.2", "fk_X014.3", "fk_X029.1", "fk_X029.2", "fk_X121.1", "fk_X121.2", "fk_X121.3", "fk_X159.1", "fk_X159.2", "fk_X190.1", "fk_X190.2", "fk_X190.3", "sf_X012.1","sf_X012.2", "sf_X012.3", "sf_X071.1", "sf_X071.2", "sf_X071.3", "sf_X108.1", "sf_X108.2", "sf_X108.3")
+# cloneDendPoints$depth = factor(cloneDendPoints$depth,levels(cloneDendPoints$depth)[c(2,1)])
+
+# cloneDendPoints$pop = factor(cloneDendPoints$pop,levels(cloneDendPoints$pop)[c(4, 1, 3, 2)])
+
+# flPal = paletteer_d("vapoRwave::jazzCup")[c(2:5)]
+
+cloneDendA = ggplot() +
+  geom_segment(data = segment(cloneDData), aes(x = x, y = y, xend = xend, yend = yend2), size = 0.5) +
+  geom_point(data = cloneDendPoints, aes(x = x, y = y, #fill = pop, shape = depth
+                                         ), size = 4, stroke = 0.25) +
+  #scale_fill_brewer(palette = "Dark2", name = "Population") +
+  # scale_fill_manual(values = flPal, name= "Population")+
+  # scale_shape_manual(values = c(24, 25), name = "Depth Zone")+
+  geom_hline(yintercept = 0.1575, color = "red", lty = 5, size = 0.75) + # creating a dashed line to indicate a clonal distance threshold
+  geom_text(data = subset(cloneDendPoints, subset = label %in% techReps), aes(x = x, y = (y - .015), label = label), angle = 90) + # spacing technical replicates further from leaf
+  geom_text(data = subset(cloneDendPoints, subset = !label %in% techReps), aes(x = x, y = (y - .010), label = label), angle = 90) +
+  labs(y = "Genetic distance (1 - IBS)") +
+  guides(fill = guide_legend(override.aes = list(shape = 22)))+
+  theme_classic()
+
+cloneDend = cloneDendA + theme(
+  axis.title.x = element_blank(),
+  axis.text.x = element_blank(),
+  axis.line.x = element_blank(),
+  axis.ticks.x = element_blank(),
+  axis.title.y = element_text(size = 12, color = "black", angle = 90),
+  axis.text.y = element_text(size = 10, color = "black"),
+  axis.line.y = element_line(),
+  axis.ticks.y = element_line(),
+  panel.grid = element_blank(),
+  panel.border = element_blank(),
+  panel.background = element_blank(),
+  plot.background = element_blank(),
+  legend.key = element_blank(),
+  legend.title = element_text(size = 12),
+  legend.text = element_text(size = 10),
+  legend.position = "bottom")
+
+cloneDend
+
+ggsave("../figures/cloneDend.png", plot = cloneDend, height = 8, width = 35, units = "in", dpi = 300)
+ggsave("../figures/cloneDend.eps", plot = cloneDend, height = 8, width = 35, units = "in", dpi = 300)
+
+```
+![](../figures/rmd/cloneDend.png)
+
+### Removing clones and re-running ANGSD
+```{bash, ANGSD no clones}
+mkdir clones
+mv xestoClones* clones
+
+mv fk_X014.2.trim.bt2.bam fk_X014.trim.bt2.bam
+mv fk_X029.1.trim.bt2.bam fk_X029.trim.bt2.bam
+mv fk_X121.2.trim.bt2.bam fk_X121.trim.bt2.bam
+mv fk_X159.2.trim.bt2.bam fk_X159.trim.bt2.bam
+mv fk_X190.3.trim.bt2.bam fk_X190.trim.bt2.bam
+mv sf_X012.3.trim.bt2.bam sf_X012.trim.bt2.bam
+mv sf_X071.2.trim.bt2.bam sf_X071.trim.bt2.bam
+mv sf_X108.1.trim.bt2.bam sf_X108.trim.bt2.bam
+
+mv fk_X007* *.1.trim* *.2.trim* *.3.trim* clones/ 
+
+ls *.bam > bams
+
+#module unload angsd
+#module load angsd-0.921-gcc-8.3.0-e56qmqg
+
+FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 30 -dosnpstat 1 -doHWE 1 -hwe_pval 1e-5 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 264 -snp_pval 1e-5 -minMaf 0.05"
+TODO="-doMajorMinor 1 -doMaf 1 -doCounts 1 -makeMatrix 1 -doIBS 1 -doCov 1 -doGeno 15 -doBcf 1 -doPost 1 -doGlf 2"
+
+echo '#!/bin/bash' > xestoNoClones.sh
+echo angsd -b bams -GL 1 $FILTERS $TODO -P 1 -out xestoNoClones >> xestoNoClones.sh
+
+sbatch -o xestoNoClones.o%j -e xestoNoClones.e%j -p shortq7 --mail-type=ALL --mem=200GB --mail-user=reckert2017@fau.edu xestoNoClones.sh
+
+```
+
+How many SNPs?
+```{bash, SNPs?}
+grep "filtering:" xestoNoClones.e*
+
+```
+
+8,034 SNPs
+
+
+### Re-running ANGSD only on main cluster
+
+```{bash, ANGSD no clones}
+cat bams | grep -v 'sf_X061.trim.bt2.bam\|sf_X063.trim.bt2.bam\|sf_X068.trim.bt2.bam\|sf_X066.trim.bt2.bam\|sf_X072.trim.bt2.bam\|sf_X079.trim.bt2.bam\|sf_X071.trim.bt2.bam\|sf_X076.trim.bt2.bam\|sf_X075.trim.bt2.bam\|sf_X084.trim.bt2.bam\|sf_X064.trim.bt2.bam\|sf_X065.trim.bt2.bam\|sf_X067.trim.bt2.bam\|fk_X043.trim.bt2.bam\|fk_X206.trim.bt2.bam\|fk_X064.trim.bt2.bam\|fk_X116.trim.bt2.bam\|fk_X003.trim.bt2.bam\|fk_X114.trim.bt2.bam\|sf_X034.trim.bt2.bam\|sf_X036.trim.bt2.bam\|sf_X119.trim.bt2.bam\|sf_X088.trim.bt2.bam\|sf_X083.trim.bt2.bam\|sf_X077.trim.bt2.bam\|sf_X085.trim.bt2.bam\|sf_X086.trim.bt2.bam\|fk_X100.trim.bt2.bam\|sf_X043.trim.bt2.bam\|fk_X060.trim.bt2.bam\|fk_X087.trim.bt2.bam\|sf_X025.trim.bt2.bam\|fk_X063.trim.bt2.bam\|fk_X084.trim.bt2.bam\|fk_X109.trim.bt2.bam\|fk_X122.trim.bt2.bam\|sf_X073.trim.bt2.bam\|fk_X204.trim.bt2.bam\|fk_X051.trim.bt2.bam\|fk_X055.trim.bt2.bam\|fk_X056.trim.bt2.bam\|sf_X080.trim.bt2.bam\|fk_X147.trim.bt2.bam\|fk_X230.trim.bt2.bam\|fk_X059.trim.bt2.bam\|fk_X053.trim.bt2.bam\|fk_X089.trim.bt2.bam\|fk_X160.trim.bt2.bam\|fk_X016.trim.bt2.bam\|sf_X090.trim.bt2.bam\|sf_X114.trim.bt2.bam'>bamsMainCluster
+
+cat bamsMainCluster | wc -l
+
+FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 30 -dosnpstat 1 -doHWE 1 -hwe_pval 1e-5 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 225 -snp_pval 1e-5 -minMaf 0.05"
+
+TODO="-doMajorMinor 1 -doMaf 1 -doCounts 1 -makeMatrix 1 -doIBS 1 -doCov 1 -doGeno 8 -doBcf 1 -doPost 1 -doGlf 2"
+
+echo '#!/bin/bash' > xestoMain.sh
+echo angsd -b bamsMainCluster -GL 1 $FILTERS $TODO -P 1 -out xestoMain >> xestoMain.sh
+
+sbatch -o xestoMain.o%j -e xestoMain.e%j -p shortq7 --mail-type=ALL --mem=200GB --mail-user=reckert2017@fau.edu xestoMain.sh
+
+```
+
+How many SNPs?
+```{bash, SNPs?}
+grep "filtering:" xestoMain.e*
+
+```
+
+9,925 SNPs
+
+
+### Just samples for alternatively fixed SNPs
+
+```{bash, ANGSD no clones}
+FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 30 -dosnpstat 1 -doHWE 1 -hwe_pval 1e-5 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 54 -snp_pval 1e-5 -minMaf 0.05"
+
+TODO="-doMajorMinor 1 -doMaf 1 -doCounts 1 -makeMatrix 1 -doIBS 1 -doCov 1 -doGeno 15 -doBcf 1 -doPost 1 -doGlf 2"
+
+echo '#!/bin/bash' > xestoAFD.sh
+echo angsd -b afd_samples -GL 1 $FILTERS $TODO -P 1 -out xestoAFD >> xestoAFD.sh
+
+sbatch -o xestoAFD.o%j -e xestoAFD.e%j -p shortq7 --mail-type=ALL --mem=200GB --mail-user=reckert2017@fau.edu xestoAFD.sh
+
+```
+
+
+## P O P U L A T I O N &nbsp; S T R U C T U R E
+***
+
+### pcangsd
+Using ```pcangsd``` to discern population structure
+
+```{bash, pcangsd install}
+cd ~/2bRAD/flXesto/
+mkdir pcangsd
+cd pcangsd
+
+cp ../ANGSD/xestoNoClones.beagle.gz .
+cp ../ANGSD/xestoMain.beagle.gz .
+cp ../ANGSD/xestoAFD.beagle.gz .
+
+source activate 2bRAD
+
+echo '#!/bin/bash' > pcangsd
+echo 'pcangsd -b xestoNoClones.beagle.gz -o flXestoPcangsd --admix --inbreedSamples --pcadapt --selection' >> pcangsd
+
+launcher_creator.py -j pcangsd -n pcangsd -q shortq7 -t 06:00:00 -e $EMAIL -w 1 -N 1
+sbatch pcangsd.slurm
+
+
+echo '#!/bin/bash' > pcangsdAFD
+echo 'pcangsd -b xestoAFD.beagle.gz -o flXestoAFDPcangsd --admix --inbreedSamples --pcadapt --selection' >> pcangsdAFD
+
+launcher_creator.py -j pcangsdAFD -n pcangsdAFD -q shortq7 -t 06:00:00 -e $EMAIL -w 1 -N 1
+sbatch pcangsdAFD.slurm
+
+
+echo '#!/bin/bash' > pcangsdMain
+echo 'pcangsd -b xestoMain.beagle.gz -o flXestoMainPcangsd --admix --inbreedSamples --pcadapt --selection' >> pcangsdMain
+
+launcher_creator.py -j pcangsdMain -n pcangsdMain -q shortq7 -t 06:00:00 -e $EMAIL -w 1 -N 1
+sbatch pcangsdMain.slurm
+
+```
+
+
+Calculate population structure from genotype likelihoods using ```NGSadmix``` for K from 2 to 11 : FIRST remove all clones/genotyping replicates! (we did this).
+```{bash, ngsadmix}
+cd ~/2bRAD/flXesto/ANGSD
+
+zipper.py -f bam -a -9 --launcher -e reckert2017@fau.edu
+sbatch zip.slurm
+
+mkdir ../ngsAdmix
+cd ../ngsAdmix
+
+mkdir noClones
+
+cp ../pcangsd/*beagle* .
+
+```
+
+Create a file with 50 replicate simulations for each value of K 1-11 (num pops + 3)
+```{bash, ngsLaunch}
+cd noClones
+mv ../*NoClones* .
+
+ngsAdmixLauncher.py -f xestoNoClones.beagle.gz --maxK 11 -r 20 -n flXestoNoClones --launcher -e reckert2017@fau.edu
+sbatch --mem=200GB flXestoNoClonesNgsAdmix.slurm
+
+
+mkdir ../main
+cd ../main
+mv ../*Main* .
+
+ngsAdmixLauncher.py -f xestoMain.beagle.gz --maxK 11 -r 20 -n flXestoMain --launcher -e reckert2017@fau.edu
+sbatch --mem=200GB flXestoMainNgsAdmix.slurm
+
+
+mkdir ../afd
+cd ../afd
+mv ../*AFD* .
+
+ngsAdmixLauncher.py -f xestoAFD.beagle.gz --maxK 6 -r 20 -n flXestoAFD --launcher -e reckert2017@fau.edu
+sbatch --mem=200GB flXestoAFDNgsAdmix.slurm
+
+```
+
+### Calculating most likely value of K
+Next, take the likelihood value from each run of NGSadmix and put them into a file that can be used with Clumpak to calculate the most likely K using the methods of Evanno et al. (2005).
+```{bash, logfile}
+#Do this for each group ngsAdmix was run on
+cd ~/2bRAD/flXesto/ngsAdmix/noClones
+
+>flXestoNoClonesNgsAdmixLogfile
+for log in flXesto*.log; do
+grep -Po 'like=\K[^ ]+' $log >> flXestoNoClonesNgsAdmixLogfile;
+done
+
+
+cd ~/2bRAD/flXesto/ngsAdmix/main
+
+>flXestoMainNgsAdmixLogfile
+for log in flXesto*.log; do
+grep -Po 'like=\K[^ ]+' $log >> flXestoMainNgsAdmixLogfile;
+done
+
+```
+
+Format for CLUMPAK in R
+```{bash, R}
+R
+
+```
+
+You are now using R in the terminal
+
+```{r, format Clumpak}
+logs <- as.data.frame(read.table("flXestoMainNgsAdmixLogfile"))
+
+#output is organized with 10, 11 preceding 1, 2, 3 etc.
+logs$K <- c(rep("10", 20), rep("11", 20), rep("1", 20), rep("2", 20), rep("3", 20),
+rep("4", 20), rep("5", 20), rep("6", 20),
+    rep("7", 20), rep("8", 20), rep("9", 20))
+write.table(logs[, c(2, 1)], "flXestoMainNgsAdmixLogfile_formatted", row.names = F,
+        col.names = F, quote = F)
+quit()
+# No need to save workspace image [press 'n']
+n
+
+```
+
+Check that your formatted logfile has the appropriate number of entries
+```{bash}
+cat flXestoMainNgsAdmixLogfile_formatted | wc -l
+
+```
+
+make copies of .qopt files to run structure selector on (.Q files)
+```{bash, strselector format}
+for file in flXesto*.qopt; do
+filename=$(basename -- "$file" .qopt);
+cp "$file" "$filename".Q;
+done
+
+mkdir flXestoNoClonesQ
+mv flXesto*Q flXestoNoClonesQ
+
+zip -r flXestoNoClonesQ.zip flXestoNoClonesQ
+
+```
+
+```scp``` .zip and formatted logfile to local machine and upload to ```CLUMPAK``` (http://clumpak.tau.ac.il/bestK.html) and structure selector (https://lmme.ac.cn/StructureSelector/index.html)
+
+```scp``` xestoNoClones* to local machine for further analyses with ```R```
+
+```{bash, admixture}
+ #alternatively, to use real ADMIXTURE on called SNPs (requires plink and ADMIXTURE):
+mkdir ~/2bRAD/flXesto/admixture
+cd ~/2bRAD/flXesto/admixture
+
+cp ../ANGSD/xestoNoClones.bcf .
+srun bcftools convert -O v -o xestoNoClones.vcf xestoNoClones.bcf
+
+grep -o "CAVNZE.[0-9]*\.1" xestoNoClones.vcf | sort --unique >chrNm1
+cat chrNm1 | tr -d '[:alpha:]' | tr -d '[:punct:]' >chrNm2
+
+paste -d ' ' chrNm1 chrNm2 > chrRename
+
+bcftools annotate --rename-chrs chrRename xestoNoClones.vcf -o xestoNoClones_formatted.vcf 
+
+# plink --vcf xestoNoClones.vcf --make-bed --allow-extra-chr --chr-set 30 --out xestoNoClones
+plink --vcf xestoNoClones_formatted.vcf --make-bed --allow-extra-chr --out xestoNoClones
+plink --bfile xestoNoClones --make-grm-bin
+
+>xestoAdmixture
+for K in `seq 1 11`; do
+echo "admixture -B1000 --cv=10 xestoNoClones.bed $K | tee xestoK${K}.out" >>xestoAdmixture; done
+
+module load admixture-linux-1.3.0-gcc-8.3.0-ydoikmo
+
+launcher_creator.py -j xestoAdmixture -n admix -q shortq7 -t 06:00:00 -e reckert2017@fau.edu
+sbatch --mem=200GB admix.slurm
+
+# which K is least CV error?
+grep -h CV xesto*.out
+
+# scp *qopt to local directory to plot ADMIXTURE
+
+```
+
+## A L T E R N A T I V E L Y &nbsp; F I X E D &nbsp; S N P S
+
+
+```{bash, m}
+cd ~/2bRAD/flXesto/
+
+mkdir afd
+cd afd/
+
+cp ../ANGSD/xestoAFD.bcf .
+
+bcftools convert -O v -o xestoAFD.vcf xestoAFD.bcf
+
+#scp or create file of groups
+
+awk '$2 ~ /Xm1/ {print $1}' afd_groups > Xm1.pop
+awk '$2 ~ /Xm2/ {print $1}' afd_groups > Xm2.pop
+awk '$2 ~ /Hyb/ {print $1}' afd_groups > XmHyb.pop
+
+echo '#!/bin/bash' > vcfSplit.sh
+for pop in *.pop; do
+echo "bcftools view -S $pop xestoAFD.vcf > ${pop/.pop/}.vcf">>vcfSplit.sh;
+done
+
+sbatch -e vcfSplit.e%j -o vcfSplit.o%j -p shortq7 --mail-user reckert2017@fau.edu --mail-type=ALL vcfSplit.sh
+
+
+for file in Xm*.vcf; do
+vcftools --vcf $file --freq --out ${file/.vcf/}
+done
+
+for file in *.frq; do
+awk '{s=(NR==1)?"POP":"\t"FILENAME;$0=$0 OFS s}1' $file > $file.1;
+sed 's/.frq*$//g' $file.1 > $file.2;
+sed 's/:/\t/g' $file.2 > $file.3;
+done
+
+rm *.frq *.frq.1 *.frq.2
+for file in *.frq.3; do
+mv $file ${file/.3/}
+done
+
+awk FNR!=1 *.frq > alleleFreq.txt
+
+echo -e "chrom\tpos\tnAlleles\tnChr\tmajAl\tmajFreq\tminAl\tminFreq\tpop" | cat - alleleFreq.txt > flXestoAlleleFreq.txt
+rm alleleFreq.txt
+
+```
+
+
+## M I G R A T I O N &nbsp; M O D E L I N G
+ 
+To use BayesAss3 (Wilson & Ranala, 2003) we first need to convert our ANGSD output into genotype format 
+
+```{bash, migration1}
+cd ~/2bRAD/flXesto/
+mkdir BA3
+
+cd BA3
+
+cp ../ANGSD/xestoMain.bcf .
+
+#need file bspops that lists bams and the sampling site, tab delimited.
+
+bcftools view xestoMain.bcf > xestoMain.vcf
+
+echo "# VCF Parser questions
+PARSER_FORMAT=VCF
+
+# Only output SNPs with a phred-scaled quality of at least:
+VCF_PARSER_QUAL_QUESTION=
+# Select population definition file:
+VCF_PARSER_POP_FILE_QUESTION=./xestoMainPops.txt
+# What is the ploidy of the data?
+VCF_PARSER_PLOIDY_QUESTION=DIPLOID
+# Do you want to include a file with population definitions?
+VCF_PARSER_POP_QUESTION=true
+# Output genotypes as missing if the phred-scale genotype quality is below:
+VCF_PARSER_GTQUAL_QUESTION=
+# Do you want to include non-polymorphic SNPs?
+VCF_PARSER_MONOMORPHIC_QUESTION=false
+# Only output following individuals (ind1, ind2, ind4, ...):
+VCF_PARSER_IND_QUESTION=
+# Only input following regions (refSeqName:start:end, multiple regions: whitespace separated):
+VCF_PARSER_REGION_QUESTION=
+# Output genotypes as missing if the read depth of a position for the sample is below:
+VCF_PARSER_READ_QUESTION=
+# Take most likely genotype if "PL" or "GL" is given in the genotype field?
+VCF_PARSER_PL_QUESTION=true
+# Do you want to exclude loci with only missing data?
+VCF_PARSER_EXC_MISSING_LOCI_QUESTION=true
+
+# Immanc (BayesAss) Writer questions
+WRITER_FORMAT=IMMANC
+
+# Specify the locus/locus combination you want to write to the Immanc (BayesAss) file:
+IMMANC_WRITER_LOCUS_COMBINATION_QUESTION=
+# Specify which data type should be included in the Immanc (BayesAss)) file  (Immanc (BayesAss) can only analyze one data type per file):
+IMMANC_WRITER_DATA_TYPE_QUESTION=SNP" >flXestoMain.spid
+
+
+module load pgdspider-2.1.1.2-gcc-9.2.0-ghxvd4c 
+
+pgdSpider=/opt/ohpc/pub/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/pgdspider-2.1.1.2-ghxvd4c4ieqngkbutakc7x6j4pfkqm5e/bin/PGDSpider2-cli.jar
+
+echo '#!/bin/bash' > pgdSpider.sh
+echo "java -Xmx1024m -Xms512m -jar $pgdSpider -inputformat VCF -outputformat IMMANC vcf -inputfile xestoMain.vcf -outputfile xestoMainBA3.txt -spid flXestoMain.spid" >>pgdSpider.sh
+
+sbatch -e pgdSpider.e%j -o pgdSpider.o%j -p mediumq7 --mail-user reckert2017@fau.edu --mail-type=ALL --mem=200GB pgdSpider.sh
+
+```
+
+
+```{sh, bayesass2}
+## Default params:
+#MCMC reps: 1,000,000
+#burn in: 100,000
+#sampling freq: 100
+#delta migration (1): 0.1
+#delta allele freq (3): 0.1
+#delta inbreeding (4): 0.1
+
+rm xestoMain.vcf
+rm xestoMain.bcf
+
+module load gcc-9.2.0-gcc-8.3.0-ebpgkrt gsl-2.5-gcc-9.2.0-i6lf4jb netlib-lapack-3.9.1-gcc-9.2.0-gcqg2b2 BayesAss/3.0.4.2
+
+# Run a test with verbose [-v] output to see the acceptance rates in the terminal (takes a few minutes to compute)
+# check the output file [less BATest.o*] and kill the job once you get output with acceptance rates [scancel {yourJobID}]
+# After ~5 min you should start seeing output in the BATest.o* file
+
+echo '#!/bin/bash' > BATest
+echo BA3SNP -v -i 20000000 -b 5000000 -n 1000 xestoMainBA3.txt >> BATest
+
+sbatch -e BATest.e%j -o BATest.o%j -p shortq7 --mail-user reckert2017@fau.edu --mail-type=ALL BATest
+
+#logL: -2370649.91 % done: [0.00] % accepted: (0.38, 0.01, 0.88, 0.10, 0.80)
+
+# we are looking for 20—60% acceptance, ideally somewhere nearer 20—30%
+# relationships between mixing parameters and acceptance rates are inverse
+# defaults are 0.1 (all parameters are scale 0—1)
+# increase [-m] increase [-a] and decrease [-f]
+
+echo '#!/bin/bash' > BATest
+echo BA3SNP -v -i 20000000 -b 5000000 -n 1000  -m 0.2 -a 0.6 -f 0.04 xestoMainBA3.txt >> BATest
+
+sbatch -e BATest.e%j -o BATest.o%j -p shortq7 --mail-user reckert2017@fau.edu --mail-type=ALL BATest
+#  -2371745.64 % done: [0.00] % accepted: (0.22, 0.01, 0.30, 0.21, 0.80)
+
+echo '#!/bin/bash' > BATest
+echo BA3SNP -v -i 20000000 -b 5000000 -n 1000  -m 0.15 -a 0.7 -f 0.03 xestoMainBA3.txt >> BATest
+
+sbatch -e BATest.e%j -o BATest.o%j -p shortq7 --mail-user reckert2017@fau.edu --mail-type=ALL BATest
+# -2371545.99 % done: [0.00] % accepted: (0.27, 0.01, 0.26, 0.28, 0.81)
+
+
+```
+
+Make and launch 10 iterations of BayesAss, each in its own run directory so we can keep all trace files (saved as 'BA3trace.txt' and would overwrite if not in separate directories). We are using [-s $RANDOM] to use a random start seed for each independent run
+
+```{sh, bayesass3}
+module load gcc-9.2.0-gcc-8.3.0-ebpgkrt gsl-2.5-gcc-9.2.0-i6lf4jb netlib-lapack-3.9.1-gcc-9.2.0-gcqg2b2 BayesAss/3.0.4.2
+
+for i in {01..10}; do
+echo '#!/bin/bash' > BayesAss$i.sh
+echo BA3SNP -v -u -s $RANDOM -i 20000000 -b 5000000 -n 1000   -m 0.15 -a 0.7 -f 0.03 -t -o flXestoBA${i}Out.txt ../xestoMainBA3.txt >> BayesAss$i.sh;
+mkdir run$i;
+mv BayesAss$i.sh run$i;
+cd run$i;
+sbatch -e BayesAss$i.e%j -o BayesAss$i.o%j -p longq7 --mem=200GB --exclusive --mail-user reckert2017@fau.edu --mail-type=ALL BayesAss$i.sh
+cd ..;
+done
+
+# after all runs complete copy files to main BayesAss directory
+cd ~/2bRAD/flXesto/BA3
+
+#cp run*/*Out.txt .
+
+for i in {01..10}; do 
+cp run$i/BA3trace.txt BA3trace.$i.txt;
+done
+
+scancel 15124929 15124930 15124931 15124932 15124933 15124934 15124935 15124936 15124937
+
+```
+
+
+## S I T E &nbsp; F R E Q U E N C Y &nbsp; S P E C T R A
+Running SFS calculations within lineage to use for Fst and to run ```StairwayPlot```
+
+```{bash, sfs}
+cd ~/2bRAD/fknms/sint/ANGSD3x
+
+## scp bamsClusters text file to directory
+
+awk 'BEGIN { FS=" " } $2 == "Xm1" { print $1 }' k2bams >> k2Xm1Bams
+awk 'BEGIN { FS=" " } $2 == "Xm2" { print $1 }' k2bams >> k2Xm2Bams
+
+awk 'BEGIN { FS=" " } $2 == "Xm1" { print $1 }' k4bams >> k4Xm1Bams
+awk 'BEGIN { FS=" " } $2 == "Xm2" { print $1 }' k4bams >> k4Xm2Bams
+awk 'BEGIN { FS=" " } $2 == "Xm3" { print $1 }' k4bams >> k4Xm3Bams
+awk 'BEGIN { FS=" " } $2 == "Xm4" { print $1 }' k4bams >> k4Xm4Bams
+
+
+## No filters to distort allelic frequencies
+## K2 
+FILTERS="-uniqueOnly 1 -remove_bads 1 -skipTriallelic 1 -minMapQ 30 -minQ 35 -doHWE 1 -sb_pval 1e-5 -hetbias_pval 1e-5 -maxHetFreq 0.5"
+TODO="-doMajorMinor 1 -doMaf 1 -dosnpstat 1 -doPost 2 -doGeno 11 -doGlf 2"
+
+echo "angsd -b k2Xm1Bams -GL 1 -P 1 $FILTERS $TODO -minInd 219 -out k2Xm1SFS
+angsd -b k2Xm2Bams -GL 1 -P 1 $FILTERS $TODO -minInd 15 -out k2Xm2SFS" > sfsClustersK2
+
+launcher_creator.py -j sfsClustersK2 -n sfsClustersK2 -q shortq7 -t 06:00:00 -e $EMAIL -N 1
+sbatch sfsClustersK2.slurm
+
+
+for file in k2*SFS.geno.gz; do
+echo '#!/bin/bash' > ${file%%.*}.sh;
+echo "zcat $file | awk '{print \$1\"\t\"\$2}' > ${file%%.*}sites" >> ${file%%.*}.sh;
+sbatch -e ${file%%.*}.e%j -o ${file%%.*}.o%j -p longq7 --mem=100GB --mail-user reckert2017@fau.edu --mail-type=ALL ${file%%.*}.sh;
+done
+
+
+## K4
+FILTERS="-uniqueOnly 1 -remove_bads 1 -skipTriallelic 1 -minMapQ 30 -minQ 35 -doHWE 1 -sb_pval 1e-5 -hetbias_pval 1e-5 -maxHetFreq 0.5"
+TODO="-doMajorMinor 1 -doMaf 1 -dosnpstat 1 -doPost 2 -doGeno 11 -doGlf 2"
+
+echo "angsd -b k4Xm1Bams -GL 1 -P 1 $FILTERS $TODO -minInd 45 -out k4Xm1SFS
+angsd -b k4Xm2Bams -GL 1 -P 1 $FILTERS $TODO -minInd 15 -out k4Xm2SFS
+angsd -b k4Xm3Bams -GL 1 -P 1 $FILTERS $TODO -minInd 13 -out k4Xm3SFS
+angsd -b k4Xm4Bams -GL 1 -P 1 $FILTERS $TODO -minInd 9 -out k4Xm4SFS" > sfsClustersK4
+
+launcher_creator.py -j sfsClustersK4 -n sfsClustersK4 -q shortq7 -t 06:00:00 -e $EMAIL -N 1
+sbatch sfsClustersK4.slurm
+
+
+for file in k4*SFS.geno.gz; do
+echo '#!/bin/bash' > ${file%%.*}.sh;
+echo "zcat $file | awk '{print \$1\"\t\"\$2}' > ${file%%.*}sites" >> ${file%%.*}.sh;
+sbatch -e ${file%%.*}.e%j -o ${file%%.*}.o%j -p longq7 --mem=100GB --mail-user reckert2017@fau.edu --mail-type=ALL ${file%%.*}.sh;
+done
+
+```
+<br>
+
+Now, compile common sites from all lineages using awk
+
+```{bash, sfs2}
+srun awk '(++c[$0])==(ARGC-1)' k2*SFSsites > sfsK2SitesToDo
+
+cat sfsK2SitesToDo | wc -l
+
+#index sites for ANGSD and re-run ANGSD using ```-sites```
+angsd sites index sfsK2SitesToDo
+
+export GENOME_FASTA=~/bin/xestoGenome/odXesMuta1.1_alternate_haplotype.fna
+
+TODO="-doSaf 1 -ref $GENOME_FASTA -anc $GENOME_FASTA -doMaf 1 -doMajorMinor 4"
+
+echo "angsd -sites sfsK2SitesToDo -b k2Xm1Bams -GL 1 -P 1 $TODO -out xestok2Xm1
+angsd -sites sfsK2SitesToDo -b k2Xm2Bams -GL 1 -P 1 $TODO -out xestok2Xm2" >sfsK2
+
+launcher_creator.py -j sfsK2 -n sfsK2 -q shortq7 -t 06:00:00 -e $EMAIL -N 1
+sbatch sfsK2.slurm
+
+
+srun awk '(++c[$0])==(ARGC-1)' k4*SFSsites > sfsK4SitesToDo
+
+cat sfsK4SitesToDo | wc -l
+
+#index sites for ANGSD and re-run ANGSD using ```-sites```
+angsd sites index sfsK4SitesToDo
+
+export GENOME_FASTA=~/bin/xestoGenome/odXesMuta1.1_alternate_haplotype.fna
+
+TODO="-doSaf 1 -ref $GENOME_FASTA -anc $GENOME_FASTA -doMaf 1 -doMajorMinor 4"
+
+echo "angsd -sites sfsK4SitesToDo -b k4Xm1Bams -GL 1 -P 1 $TODO -out xestok4Xm1
+angsd -sites sfsK4SitesToDo -b k4Xm2Bams -GL 1 -P 1 $TODO -out xestok4Xm2
+angsd -sites sfsK4SitesToDo -b k4Xm3Bams -GL 1 -P 1 $TODO -out xestok4Xm3
+angsd -sites sfsK4SitesToDo -b k4Xm4Bams -GL 1 -P 1 $TODO -out xestok4Xm4" >sfsK4
+
+launcher_creator.py -j sfsK4 -n sfsK4 -q shortq7 -t 06:00:00 -e $EMAIL -N 1
+sbatch sfsK4.slurm
+
+```
+<br>
+
+Once all jobs run:
+```{bash, sfs3}
+cd ~/2bRAD/flXesto/ANGSD
+
+mkdir ../SFS
+mkdir ../SFS/k2
+mkdir ../SFS/k4
+
+mv xestok2* ../SFS/k2
+mv xestok4* ../SFS/k4
+
+cd ~/2bRAD/flXesto/SFS/k2
+
+###-- 1d-SFS K2
+echo "realSFS xestok2Xm1.saf.idx >xestok2Xm1.sfs
+realSFS xestok2Xm2.saf.idx >xestok2Xm2.sfs" >realSFSk2
+
+launcher_creator.py -j realSFSk2 -n realSFSk2 -q shortq7 -t 06:00:00 -e $EMAIL -w 4 -N 1
+sbatch realSFSk2.slurm
+
+
+cd ~/2bRAD/flXesto/SFS/k4
+
+###-- 1d-SFS K4
+echo "realSFS xestok4Xm1.saf.idx >xestok4Xm1.sfs
+realSFS xestok4Xm2.saf.idx >xestok4Xm2.sfs
+realSFS xestok4Xm3.saf.idx >xestok4Xm3.sfs
+realSFS xestok4Xm4.saf.idx >xestok4Xm4.sfs" >realSFSk4
+
+launcher_creator.py -j realSFSk4 -n realSFSk4 -q shortq7 -t 06:00:00 -e $EMAIL -w 4 -N 1
+sbatch realSFSk4.slurm
+
+
+cd ~/2bRAD/flXesto/SFS/k2
+
+###-- 2d-SFS K2
+echo "realSFS xestok2Xm1.saf.idx xestok2Xm2.saf.idx -P 20 > xestoK2Xm1Xm2.sfs ; realSFS fst index xestok2Xm1.saf.idx xestok2Xm2.saf.idx -sfs xestoK2Xm1Xm2.sfs -fstout xestoK2Xm1Xm2" >2dSFS3k2
+
+launcher_creator.py -j 2dSFS3k2 -n 2dSFS3k2 -q shortq7 -t 06:00:00 -e $EMAIL -w 20 -N 1
+sbatch 2dSFS3k2.slurm
+
+
+cd ~/2bRAD/flXesto/SFS/k4
+
+###-- 2d-SFS K4
+echo "realSFS xestok4Xm1.saf.idx xestok4Xm2.saf.idx -P 20 > xestoK4Xm1Xm2.sfs ; realSFS fst index xestok4Xm1.saf.idx xestok4Xm2.saf.idx -sfs xestoK4Xm1Xm2.sfs -fstout xestoK4Xm1Xm2
+realSFS xestok4Xm1.saf.idx xestok4Xm3.saf.idx -P 20 > xestoK4Xm1Xm3.sfs ; realSFS fst index xestok4Xm1.saf.idx xestok4Xm3.saf.idx -sfs xestoK4Xm1Xm3.sfs -fstout xestoK4Xm1Xm3
+realSFS xestok4Xm1.saf.idx xestok4Xm4.saf.idx -P 20 > xestoK4Xm1Xm4.sfs ; realSFS fst index xestok4Xm1.saf.idx xestok4Xm4.saf.idx -sfs xestoK4Xm1Xm4.sfs -fstout xestoK4Xm1Xm4
+realSFS xestok4Xm2.saf.idx xestok4Xm3.saf.idx -P 20 > xestoK4Xm2Xm3.sfs ; realSFS fst index xestok4Xm2.saf.idx xestok4Xm3.saf.idx -sfs xestoK4Xm2Xm3.sfs -fstout xestoK4Xm2Xm3
+realSFS xestok4Xm2.saf.idx xestok4Xm4.saf.idx -P 20 > xestoK4Xm2Xm4.sfs ; realSFS fst index xestok4Xm2.saf.idx xestok4Xm4.saf.idx -sfs xestoK4Xm2Xm4.sfs -fstout xestoK4Xm2Xm4
+realSFS xestok4Xm3.saf.idx xestok4Xm4.saf.idx -P 20 > xestoK4Xm3Xm4.sfs ; realSFS fst index xestok4Xm3.saf.idx xestok4Xm4.saf.idx -sfs xestoK4Xm3Xm4.sfs -fstout xestoK4Xm3Xm4" >2dSFS3k4
+
+launcher_creator.py -j 2dSFS3k4 -n 2dSFS3k4 -q shortq7 -t 06:00:00 -e $EMAIL -w 20 -N 1
+sbatch 2dSFS3k4.slurm
+```
+
+### Global Fst between lineages
+```{bash, fst}
+#--K2
+realSFS fst stats xestoK2Xm1Xm2.fst.idx > xestoFstK2
+
+echo "Xm1">fstPops1
+
+echo "Xm2" >fstPops2
+
+paste fstPops1 fstPops2 xestoFstK2 > xestoFstK2.o
+
+echo -e "pop1\tpop2\tfst\tweightedFst" | cat - xestoFstK2.o > xestoFstK2.out
+
+rm fstPops1 fstPops2 xestoFstK2 xestoFstK2.o
+
+cat xestoFstK2.out
+
+
+#--K4
+> xestoFstK4
+realSFS fst stats xestoK4Xm1Xm2.fst.idx >> xestoFstK4
+realSFS fst stats xestoK4Xm1Xm3.fst.idx >> xestoFstK4
+realSFS fst stats xestoK4Xm1Xm4.fst.idx >> xestoFstK4
+realSFS fst stats xestoK4Xm2Xm3.fst.idx >> xestoFstK4
+realSFS fst stats xestoK4Xm2Xm4.fst.idx >> xestoFstK4
+realSFS fst stats xestoK4Xm3Xm4.fst.idx >> xestoFstK4
+
+echo "Xm1
+Xm1
+Xm1
+Xm2
+Xm2
+Xm3">fstPops1
+
+echo "Xm2
+Xm3
+Xm4
+Xm3
+Xm4
+Xm4" >fstPops2
+
+paste fstPops1 fstPops2 xestoFstK4 > xestoFstK4.o
+
+echo -e "pop1\tpop2\tfst\tweightedFst" | cat - xestoFstK4.o > xestoFstK4.out
+
+rm fstPops1 fstPops2 xestoFstK4 xestoFstK4.o
+
+cat xestoFstK4.out
+
+```
+<br>
+
+
+## H E T E R O Z Y G O S I T Y
+***
+Calculating Heterozygosity across all loci (variant//invariant) using ```ANGSD``` and ```R``` script from Misha Matz (https://github.com/z0on/2bRAD_denovo)
+
+```{bash, het}
+cd ~/2bRAD/flXesto/ANGSD
+
+export GENOME_FASTA=~/bin/xestoGenome/odXesMuta1.1_alternate_haplotype.fna
+
+FILTERS="-maxHetFreq 0.5 -uniqueOnly 1 -remove_bads 1 -skipTriallelic 1 -minMapQ 30 -minQ 35 -doHWE 1 -sb_pval 1e-5 -hetbias_pval 1e-5"
+TODO="-ref $GENOME_FASTA -makeMatrix 1 -doIBS 1 -doCov 1 -doGeno 32 -doPost 1 -doGlf 2 -doCounts 1 -doMajorMinor 1 -dosnpstat 1 -doMaf 1"
+
+echo "angsd -sites sfsK4SitesToDo -b bamsMainCluster -GL 1 -P 1 $TODO $FILTERS -out flXestoHetK4Main" >angsdHetK4Main
+launcher_creator.py -j angsdHetK4Main -n angsdHetK4Main -q shortq7 -t 06:00:00 -e $EMAIL -N 1
+sbatch angsdHetK4Main.slurm
+
+echo "angsd -sites sfsK4SitesToDo -b bams -GL 1 -P 1 $TODO $FILTERS -out flXestoHetK4" >angsdHetK4
+launcher_creator.py -j angsdHetK4 -n angsdHetK4 -q shortq7 -t 06:00:00 -e $EMAIL -N 1
+sbatch angsdHetK4.slurm
+
+echo "angsd -sites sfsK2SitesToDo -b bamsMainCluster -GL 1 -P 1 $TODO $FILTERS -out flXestoHetK2Main" >angsdHetK2Main
+launcher_creator.py -j angsdHetK2Main -n angsdHetK2Main -q shortq7 -t 06:00:00 -e $EMAIL -N 1
+sbatch angsdHetK2Main.slurm
+
+echo "angsd -sites sfsK2SitesToDo -b bams -GL 1 -P 1 $TODO $FILTERS -out flXestoHetK2" >angsdHetK2
+launcher_creator.py -j angsdHetK2 -n angsdHetK2 -q shortq7 -t 06:00:00 -e $EMAIL -N 1
+sbatch angsdHetK2.slurm
+
+```
+
+heterozgosity from afd
+```{bash, ANGSD no clones}
+angsd sites index afdSNPsites
+
+FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 30 -dosnpstat 1 -doHWE 1 -hwe_pval 1e-5 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 54 -snp_pval 1e-5 -minMaf 0.05"
+
+TODO="-doMajorMinor 1 -doMaf 1 -doCounts 1 -makeMatrix 1 -doIBS 1 -doCov 1 -doGeno 15 -doBcf 1 -doPost 1 -doGlf 2 -sites afdSNPsites"
+
+echo '#!/bin/bash' > xestoAFDsites.sh
+echo angsd -b afd_samples -GL 1 $FILTERS $TODO -P 1 -out xestoAFDsites >> xestoAFDsites.sh
+
+sbatch -o xestoAFDsites.o%j -e xestoAFDsites.e%j -p shortq7 --mail-type=ALL  --mail-user=reckert2017@fau.edu xestoAFDsites.sh
+
+```
+
+
+```{bash, het2}
+
+mkdir ../heterozygosity
+
+cp flXestoHet* ../heterozygosity/
+cp xestoAFDsites.beagle.gz ../heterozygosity/
+
+cd ../heterozygosity
+
+
+#----K2 All
+echo heterozygosity_beagle.R flXestoHetK2.beagle.gz >k2Het
+
+launcher_creator.py -j k2Het -n k2Het -q shortq7 -t 6:00:00 -e $EMAIL -N 1
+sbatch --mem=200GB k2Het.slurm
+
+head -n 355 k2Het.e* | tail -n 351 > flXestoK2Het
+
+cat flXestoK2Het
+
+
+#----K2 Main
+echo heterozygosity_beagle.R flXestoHetK2Main.beagle.gz >k2MainHet
+
+launcher_creator.py -j k2MainHet -n k2MainHet -q shortq7 -t 6:00:00 -e $EMAIL -N 1
+sbatch --mem=200GB k2MainHet.slurm
+
+head -n 304 k2MainHet.e* | tail -n 300 > flXestoK2MainHet
+
+cat flXestoK2MainHet
+
+
+#----K4 All
+echo heterozygosity_beagle.R flXestoHetK4.beagle.gz >k4Het
+
+launcher_creator.py -j k4Het -n k4Het -q shortq7 -t 6:00:00 -e $EMAIL -N 1
+sbatch k4Het.slurm
+
+tail -n 351 k4Het.e* > flXestoK4Het
+
+cat flXestoK4Het
+
+
+#----K4 Main
+echo heterozygosity_beagle.R flXestoHetK4Main.beagle.gz >k4MainHet
+
+launcher_creator.py -j k4MainHet -n k4MainHet -q shortq7 -t 6:00:00 -e $EMAIL -N 1
+sbatch k4MainHet.slurm
+
+tail -n 300 k4MainHet.e* > flXestoK4MainHet
+
+cat flXestoK4MainHet
+
+
+#----AFD sites
+echo heterozygosity_beagle.R xestoAFDsites.beagle.gz >afdHet
+
+launcher_creator.py -j afdHet -n afdHet -q shortq7 -t 6:00:00 -e $EMAIL -N 1
+sbatch afdHet.slurm
+
+head -n 75 afdHet.e* | tail -n 71 afdHet.e* > afdHetOut
+
+cat afdHetOut
+
+```
+
+
+## N U C L E O T I D E &nbsp; D I V E R S I T Y
+
+```{bash, nd}
+cd ~/2bRAD/flXesto
+mkdir theta
+
+cd ANGSD
+
+GENOME_FASTA=~/bin/xestoGenome/odXesMuta1.1_alternate_haplotype.fna
+
+#---- K2
+>k2Thetas
+
+for POP in Xm1 Xm2; do
+echo "angsd -b k2${POP}Bams -GL 1 -P 1 -sites sfsK2SitesToDo -anc $GENOME_FASTA -doSaf 1 -out k2${POP}Out &&\
+realSFS k2${POP}Out.saf.idx -fold 1 > k2${POP}Out.sfs &&\
+realSFS saf2theta k2${POP}Out.saf.idx -sfs k2${POP}Out.sfs -outname k2${POP} -fold 1 &&\
+thetaStat do_stat k2${POP}.thetas.idx" >> k2Thetas
+done
+
+launcher_creator.py -j k2Thetas -n k2Thetas -q shortq7 -t 6:00:00 -e $EMAIL -w 4 -N 1
+
+sbatch k2Thetas.slurm
+
+#---- K4
+>k4Thetas
+
+for POP in Xm1 Xm2 Xm3 Xm4; do
+echo "angsd -b k4${POP}Bams -GL 1 -P 1 -sites sfsK4SitesToDo -anc $GENOME_FASTA -doSaf 1 -out k4${POP}Out &&\
+realSFS k4${POP}Out.saf.idx -fold 1 > k4${POP}Out.sfs &&\
+realSFS saf2theta k4${POP}Out.saf.idx -sfs k4${POP}Out.sfs -outname k4${POP} -fold 1 &&\
+thetaStat do_stat k4${POP}.thetas.idx" >> k4Thetas
+done
+
+launcher_creator.py -j k4Thetas -n k4Thetas -q shortq7 -t 6:00:00 -e $EMAIL -w 4 -N 1
+sbatch k4Thetas.slurm
+
+# after all jobs have run:
+mv *theta* ../theta
+
+```
+<br>

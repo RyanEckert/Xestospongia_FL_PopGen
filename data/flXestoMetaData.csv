@@ -1,0 +1,367 @@
+sampleID,date,sample,region,site,species,latDD,longDD,depthFt,depthM,depthZone
+13-VIII-19-1-012,8/13/19,FKX001,Upper Keys,FK-01,Xestospongia muta,25.2157,-80.1924,168,51.2,Mesophotic
+14-VIII-19-1-009,8/14/19,FKX002,Upper Keys,FK-02,Xestospongia muta,25.15874833,-80.21938833,157,47.9,Mesophotic
+14-VIII-19-1-014,8/14/19,FKX003,Upper Keys,FK-02,Xestospongia muta,25.15874833,-80.21938833,142,43.3,Mesophotic
+14-VIII-19-2-002,8/14/19,FKX004,Upper Keys,FK-03,Xestospongia muta,25.15517,-80.23328667,111,33.8,Mesophotic
+14-VIII-19-2-004,8/14/19,FKX005,Upper Keys,FK-03,Xestospongia muta,25.15517,-80.23328667,111,33.8,Mesophotic
+15-VIII-19-1-004,8/15/19,FKX006,Upper Keys,FK-04,Xestospongia muta,25.10855167,-80.261585,165,50.3,Mesophotic
+15-VIII-19-2-001,8/15/19,FKX007,Upper Keys,FK-06,Xestospongia muta,25.03631167,-80.31959,160,48.8,Mesophotic
+15-VIII-19-2-007,8/15/19,FKX008,Upper Keys,FK-06,Xestospongia muta,25.03631167,-80.31959,42,12.8,Shallow
+15-VIII-19-2-009,8/15/19,FKX009,Upper Keys,FK-06,Xestospongia muta,25.03631167,-80.31959,141,43,Mesophotic
+16-VIII-19-2-007,8/16/19,FKX010,Lower Keys,FK-08,Xestospongia muta,24.49172,-81.59309833,81,24.7,Shallow
+22-VIII-19-1-003,8/22/19,FKX011,Tortugas Bank,Site 17,Xestospongia muta,24.65211,-83.103095,114,34.7,Mesophotic
+22-VIII-19-1-023,8/22/19,FKX012,Tortugas Bank,Site 17,Xestospongia muta,24.65211,-83.103095,112,34.1,Mesophotic
+23-VIII-19-1-010,8/23/19,FKX013,Tortugas Bank,Site 35/36,Xestospongia muta,24.64042,-83.10294333,101,30.8,Mesophotic
+23-VIII-19-1-011,8/23/19,FKX014.1,Tortugas Bank,Site 35/36,Xestospongia muta,24.64042,-83.10294333,100,30.5,Mesophotic
+23-VIII-19-1-011,8/23/19,FKX014.2,Tortugas Bank,Site 35/36,Xestospongia muta,24.64042,-83.10294333,100,30.5,Mesophotic
+23-VIII-19-1-011,8/23/19,FKX014.3,Tortugas Bank,Site 35/36,Xestospongia muta,24.64042,-83.10294333,100,30.5,Mesophotic
+23-VIII-19-1-012,8/23/19,FKX015,Tortugas Bank,Site 35/36,Xestospongia muta,24.64042,-83.10294333,101,30.8,Mesophotic
+23-VIII-19-1-013,8/23/19,FKX016,Tortugas Bank,Site 35/36,Xestospongia muta,24.64042,-83.10294333,101,30.8,Mesophotic
+23-VIII-19-1-016,8/23/19,FKX017,Tortugas Bank,Site 35/36,Xestospongia muta,24.64042,-83.10294333,98,29.9,Shallow
+23-VIII-19-1-032,8/23/19,FKX018,Tortugas Bank,Site 35/36,Xestospongia muta,24.64042,-83.10294333,99,30.2,Mesophotic
+23-VIII-19-2-001,8/23/19,FKX019,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,67,20.4,Shallow
+23-VIII-19-2-003,8/23/19,FKX020,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,68,20.7,Shallow
+23-VIII-19-2-004,8/23/19,FKX021,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,67,20.4,Shallow
+23-VIII-19-2-005,8/23/19,FKX022,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,66,20.1,Shallow
+23-VIII-19-2-006,8/23/19,FKX023,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,65,19.8,Shallow
+23-VIII-19-2-007,8/23/19,FKX024,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,64,19.5,Shallow
+23-VIII-19-2-009,8/23/19,FKX025,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,68,20.7,Shallow
+23-VIII-19-2-010,8/23/19,FKX026,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,69,21,Shallow
+23-VIII-19-2-013,8/23/19,FKX027,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,66,20.1,Shallow
+23-VIII-19-2-018,8/23/19,FKX028,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,69,21,Shallow
+23-VIII-19-2-019,8/23/19,FKX029.1,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,68,20.7,Shallow
+23-VIII-19-2-019,8/23/19,FKX029.2,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,68,20.7,Shallow
+23-VIII-19-2-020,8/23/19,FKX030,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,67,20.4,Shallow
+23-VIII-19-2-021,8/23/19,FKX031,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,69,21,Shallow
+23-VIII-19-2-023,8/23/19,FKX032,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,64,19.5,Shallow
+23-VIII-19-2-024,8/23/19,FKX033,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,66,20.1,Shallow
+23-VIII-19-2-032,8/23/19,FKX034,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,65,19.8,Shallow
+23-VIII-19-2-037,8/23/19,FKX035,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,66,20.1,Shallow
+23-VIII-19-2-038,8/23/19,FKX036,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,66,20.1,Shallow
+23-VIII-19-2-039,8/23/19,FKX037,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,67,20.4,Shallow
+23-VIII-19-2-042,8/23/19,FKX038,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,64,19.5,Shallow
+23-VIII-19-2-043,8/23/19,FKX039,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,66,20.1,Shallow
+23-VIII-19-2-044,8/23/19,FKX040,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,65,19.8,Shallow
+23-VIII-19-2-045,8/23/19,FKX041,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,65,19.8,Shallow
+23-VIII-19-2-046,8/23/19,FKX042,Tortugas Bank,Site 37,Xestospongia muta,24.67518667,-83.068585,66,20.1,Shallow
+23-VIII-19-4-002,8/23/19,FKX043,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,97,29.6,Shallow
+23-VIII-19-4-003,8/23/19,FKX044,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,97,29.6,Shallow
+23-VIII-19-4-004,8/23/19,FKX045,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-005,8/23/19,FKX046,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,101,30.8,Mesophotic
+23-VIII-19-4-006,8/23/19,FKX047,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-007,8/23/19,FKX048,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,101,30.8,Mesophotic
+23-VIII-19-4-008,8/23/19,FKX049,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,96,29.3,Shallow
+23-VIII-19-4-009,8/23/19,FKX050,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,99,30.2,Mesophotic
+23-VIII-19-4-010,8/23/19,FKX051,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,101,30.8,Mesophotic
+23-VIII-19-4-011,8/23/19,FKX052,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,101,30.8,Mesophotic
+23-VIII-19-4-012,8/23/19,FKX053,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-013,8/23/19,FKX054,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-014,8/23/19,FKX055,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-015,8/23/19,FKX056,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,101,30.8,Mesophotic
+23-VIII-19-4-016,8/23/19,FKX057,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-018,8/23/19,FKX058,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,98,29.9,Shallow
+23-VIII-19-4-019,8/23/19,FKX059,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-020,8/23/19,FKX060,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-021,8/23/19,FKX061,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,100,30.5,Mesophotic
+23-VIII-19-4-022,8/23/19,FKX062,Tortugas Bank,Site 35/36,Xestospongia muta,24.640415,-83.10294667,98,29.9,Shallow
+24-VIII-19-1-023,8/24/19,FKX063,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,108,32.9,Mesophotic
+24-VIII-19-1-024,8/24/19,FKX064,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,109,33.2,Mesophotic
+24-VIII-19-1-025,8/24/19,FKX065,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,108,32.9,Mesophotic
+24-VIII-19-1-026,8/24/19,FKX066,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,107,32.6,Mesophotic
+24-VIII-19-1-027,8/24/19,FKX067,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,108,32.9,Mesophotic
+24-VIII-19-1-030,8/24/19,FKX068,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,105,32,Mesophotic
+24-VIII-19-1-033,8/24/19,FKX069,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,109,33.2,Mesophotic
+24-VIII-19-1-035,8/24/19,FKX070,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,104,31.7,Mesophotic
+24-VIII-19-1-036,8/24/19,FKX071,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,106,32.3,Mesophotic
+24-VIII-19-1-037,8/24/19,FKX072,Riley's Hump,Site 18,Xestospongia muta,24.49396,-83.09607833,107,32.6,Mesophotic
+24-VIII-19-2-001,8/24/19,FKX073,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-003,8/24/19,FKX074,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-005,8/24/19,FKX075,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-006,8/24/19,FKX076,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-007,8/24/19,FKX077,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-009,8/24/19,FKX078,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-010,8/24/19,FKX079,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-012,8/24/19,FKX080,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-013,8/24/19,FKX081,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-014,8/24/19,FKX082,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-016,8/24/19,FKX083,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-017,8/24/19,FKX084,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,82,25,Shallow
+24-VIII-19-2-019,8/24/19,FKX085,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-020,8/24/19,FKX086,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-022,8/24/19,FKX087,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-029,8/24/19,FKX088,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-031,8/24/19,FKX089,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-033,8/24/19,FKX090,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,82,25,Shallow
+24-VIII-19-2-036,8/24/19,FKX091,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,85,25.9,Shallow
+24-VIII-19-2-038,8/24/19,FKX092,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-040,8/24/19,FKX093,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-042,8/24/19,FKX094,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-044,8/24/19,FKX095,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-046,8/24/19,FKX096,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-048,8/24/19,FKX097,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,84,25.6,Shallow
+24-VIII-19-2-050,8/24/19,FKX098,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-2-052,8/24/19,FKX099,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,93,28.3,Shallow
+24-VIII-19-2-054,8/24/19,FKX100,Riley's Hump,Site 38,Xestospongia muta,24.51780833,-83.09790167,83,25.3,Shallow
+24-VIII-19-3-001,8/24/19,FKX101,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,123,37.5,Mesophotic
+24-VIII-19-3-002,8/24/19,FKX102,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,119,36.3,Mesophotic
+24-VIII-19-3-003,8/24/19,FKX103,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,118,36,Mesophotic
+24-VIII-19-3-005,8/24/19,FKX104,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,120,36.6,Mesophotic
+24-VIII-19-3-008,8/24/19,FKX105,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,119,36.3,Mesophotic
+24-VIII-19-3-009,8/24/19,FKX106,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,121,36.9,Mesophotic
+24-VIII-19-3-010,8/24/19,FKX107,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,122,37.2,Mesophotic
+24-VIII-19-3-012,8/24/19,FKX108,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,119,36.3,Mesophotic
+24-VIII-19-3-013,8/24/19,FKX109,Riley's Hump,Site 19,Xestospongia muta,24.48925667,-83.122695,124,37.8,Mesophotic
+24-VIII-19-4-011,8/24/19,FKX110,Riley's Hump,Site 39,Xestospongia muta,24.51135833,-83.09516,90,27.4,Shallow
+24-VIII-19-4-012,8/24/19,FKX111,Riley's Hump,Site 39,Xestospongia muta,24.51135833,-83.09516,90,27.4,Shallow
+25-VIII-19-1-003,8/25/19,FKX112,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,152,46.3,Mesophotic
+25-VIII-19-1-004,8/25/19,FKX113,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,147,44.8,Mesophotic
+25-VIII-19-1-010,8/25/19,FKX114,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,145,44.2,Mesophotic
+25-VIII-19-1-014,8/25/19,FKX115,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,154,46.9,Mesophotic
+25-VIII-19-1-015,8/25/19,FKX116,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,154,46.9,Mesophotic
+25-VIII-19-1-016,8/25/19,FKX117,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,153,46.6,Mesophotic
+25-VIII-19-1-018,8/25/19,FKX118,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,151,46,Mesophotic
+25-VIII-19-1-019,8/25/19,FKX119,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,148,45.1,Mesophotic
+25-VIII-19-1-021,8/25/19,FKX120,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,145,44.2,Mesophotic
+25-VIII-19-1-025,8/25/19,FKX121.1,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,143,43.6,Mesophotic
+25-VIII-19-1-025,8/25/19,FKX121.2,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,143,43.6,Mesophotic
+25-VIII-19-1-025,8/25/19,FKX121.3,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,143,43.6,Mesophotic
+25-VIII-19-1-027,8/25/19,FKX122,Riley's Hump,Site 44,Xestospongia muta,24.48466,-83.110725,142,43.3,Mesophotic
+26-VIII-19-1-001,8/26/19,FKX123,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,116,35.4,Mesophotic
+26-VIII-19-1-002,8/26/19,FKX124,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,114,34.7,Mesophotic
+26-VIII-19-1-005,8/26/19,FKX125,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,113,34.4,Mesophotic
+26-VIII-19-1-008,8/26/19,FKX126,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,109,33.2,Mesophotic
+26-VIII-19-1-009,8/26/19,FKX127,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,109,33.2,Mesophotic
+26-VIII-19-1-010,8/26/19,FKX128,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,107,32.6,Mesophotic
+26-VIII-19-1-012,8/26/19,FKX129,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,107,32.6,Mesophotic
+26-VIII-19-1-014,8/26/19,FKX130,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,106,32.3,Mesophotic
+26-VIII-19-1-015,8/26/19,FKX131,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,107,32.6,Mesophotic
+26-VIII-19-1-018,8/26/19,FKX132,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,108,32.9,Mesophotic
+26-VIII-19-1-021,8/26/19,FKX133,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,107,32.6,Mesophotic
+26-VIII-19-1-026,8/26/19,FKX134,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,113,34.4,Mesophotic
+26-VIII-19-1-027,8/26/19,FKX135,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,113,34.4,Mesophotic
+26-VIII-19-1-028,8/26/19,FKX136,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,111,33.8,Mesophotic
+26-VIII-19-1-030,8/26/19,FKX137,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,110,33.5,Mesophotic
+26-VIII-19-1-032,8/26/19,FKX138,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,106,32.3,Mesophotic
+26-VIII-19-1-037,8/26/19,FKX139,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,103,31.4,Mesophotic
+26-VIII-19-1-039,8/26/19,FKX140,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,105,32,Mesophotic
+26-VIII-19-1-042,8/26/19,FKX141,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,106,32.3,Mesophotic
+26-VIII-19-1-043,8/26/19,FKX142,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,108,32.9,Mesophotic
+26-VIII-19-1-045,8/26/19,FKX143,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,108,32.9,Mesophotic
+26-VIII-19-1-047,8/26/19,FKX144,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,107,32.6,Mesophotic
+26-VIII-19-1-050,8/26/19,FKX145,Lower Keys,Site 45,Xestospongia muta,24.49395667,-81.58831167,106,32.3,Mesophotic
+26-VIII-19-2-059,8/26/19,FKX146,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-060,8/26/19,FKX147,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-061,8/26/19,FKX148,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-062,8/26/19,FKX149,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-063,8/26/19,FKX150,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-064,8/26/19,FKX151,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-065,8/26/19,FKX152,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-066,8/26/19,FKX153,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-067,8/26/19,FKX154,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-068,8/26/19,FKX155,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-069,8/26/19,FKX156,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,58,17.7,Shallow
+26-VIII-19-2-070,8/26/19,FKX157,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,56,17.1,Shallow
+26-VIII-19-2-071,8/26/19,FKX158,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,56,17.1,Shallow
+26-VIII-19-2-072,8/26/19,FKX159.1,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-072,8/26/19,FKX159.2,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-073,8/26/19,FKX160,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,56,17.1,Shallow
+26-VIII-19-2-074,8/26/19,FKX161,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,55,16.8,Shallow
+26-VIII-19-2-075,8/26/19,FKX162,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,56,17.1,Shallow
+26-VIII-19-2-076,8/26/19,FKX163,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-077,8/26/19,FKX164,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-078,8/26/19,FKX165,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,58,17.7,Shallow
+26-VIII-19-2-079,8/26/19,FKX166,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-080,8/26/19,FKX167,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-081,8/26/19,FKX168,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-082,8/26/19,FKX169,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-083,8/26/19,FKX170,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,59,18,Shallow
+26-VIII-19-2-084,8/26/19,FKX171,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-085,8/26/19,FKX172,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,58,17.7,Shallow
+26-VIII-19-2-098,8/26/19,FKX173,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,57,17.4,Shallow
+26-VIII-19-2-099,8/26/19,FKX174,Lower Keys,Site 46,Xestospongia muta,24.49297,-81.59892667,56,17.1,Shallow
+26-VIII-19-3-010,8/26/19,FKX175,Lower Keys,Site 45,Xestospongia muta,24.494035,-81.58790833,110,33.5,Mesophotic
+26-VIII-19-3-011,8/26/19,FKX176,Lower Keys,Site 45,Xestospongia muta,24.494035,-81.58790833,108,32.9,Mesophotic
+26-VIII-19-3-012,8/26/19,FKX177,Lower Keys,Site 45,Xestospongia muta,24.494035,-81.58790833,108,32.9,Mesophotic
+26-VIII-19-3-013,8/26/19,FKX178,Lower Keys,Site 45,Xestospongia muta,24.494035,-81.58790833,106,32.3,Mesophotic
+26-VIII-19-3-017,8/26/19,FKX179,Lower Keys,Site 45,Xestospongia muta,24.494035,-81.58790833,106,32.3,Mesophotic
+26-VIII-19-3-019,8/26/19,FKX180,Lower Keys,Site 45,Xestospongia muta,24.494035,-81.58790833,106,32.3,Mesophotic
+26-VIII-19-3-020,8/26/19,FKX181,Lower Keys,Site 45,Xestospongia muta,24.494035,-81.58790833,106,32.3,Mesophotic
+27-VIII-19-1-001,8/27/19,FKX182,Upper Keys,Site 51,Xestospongia muta,25.152185,-80.23162,117,35.7,Mesophotic
+27-VIII-19-1-002,8/27/19,FKX183,Upper Keys,Site 51,Xestospongia muta,25.152185,-80.23162,117,35.7,Mesophotic
+27-VIII-19-1-003,8/27/19,FKX184,Upper Keys,Site 51,Xestospongia muta,25.152185,-80.23162,118,36,Mesophotic
+27-VIII-19-1-004,8/27/19,FKX185,Upper Keys,Site 51,Xestospongia muta,25.152185,-80.23162,116,35.4,Mesophotic
+27-VIII-19-1-005,8/27/19,FKX186,Upper Keys,Site 51,Xestospongia muta,25.152185,-80.23162,116,35.4,Mesophotic
+27-VIII-19-1-007,8/27/19,FKX187,Upper Keys,Site 51,Xestospongia muta,25.152185,-80.23162,116,35.4,Mesophotic
+27-VIII-19-1-008,8/27/19,FKX188,Upper Keys,Site 51,Xestospongia muta,25.152185,-80.23162,117,35.7,Mesophotic
+27-VIII-19-1-009,8/27/19,FKX189,Upper Keys,Site 51,Xestospongia muta,25.152185,-80.23162,117,35.7,Mesophotic
+27-VIII-19-2-001,8/27/19,FKX190.1,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,78,23.8,Shallow
+27-VIII-19-2-001,8/27/19,FKX190.2,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,78,23.8,Shallow
+27-VIII-19-2-001,8/27/19,FKX190.3,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,78,23.8,Shallow
+27-VIII-19-2-002,8/27/19,FKX191,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,72,21.9,Shallow
+27-VIII-19-2-003,8/27/19,FKX192,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,75,22.9,Shallow
+27-VIII-19-2-004,8/27/19,FKX193,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,73,22.3,Shallow
+27-VIII-19-2-005,8/27/19,FKX194,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,73,22.3,Shallow
+27-VIII-19-2-006,8/27/19,FKX195,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,70,21.3,Shallow
+27-VIII-19-2-007,8/27/19,FKX196,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,70,21.3,Shallow
+27-VIII-19-2-008,8/27/19,FKX197,Upper Keys,Site 51,Xestospongia muta,25.14415667,-80.252055,69,21,Shallow
+27-VIII-19-4-001,8/27/19,FKX198,Upper Keys,Ian's Lumps Site 52,Xestospongia muta,25.15823333,-80.22064,143,43.6,Mesophotic
+27-VIII-19-4-005,8/27/19,FKX199,Upper Keys,Ian's Lumps Site 52,Xestospongia muta,25.15823333,-80.22064,142,43.3,Mesophotic
+27-VIII-19-4-008,8/27/19,FKX200,Upper Keys,Ian's Lumps Site 52,Xestospongia muta,25.15823333,-80.22064,141,43,Mesophotic
+27-VIII-19-4-009,8/27/19,FKX201,Upper Keys,Ian's Lumps Site 52,Xestospongia muta,25.15823333,-80.22064,141,43,Mesophotic
+27-VIII-19-4-011,8/27/19,FKX202,Upper Keys,Ian's Lumps Site 52,Xestospongia muta,25.15823333,-80.22064,141,43,Mesophotic
+27-VIII-19-4-013,8/27/19,FKX203,Upper Keys,Ian's Lumps Site 52,Xestospongia muta,25.15823333,-80.22064,141,43,Mesophotic
+27-VIII-19-5-015,8/27/19,FKX204,Upper Keys,Site 49,Xestospongia muta,25.14404833,-80.25258833,67,20.4,Shallow
+27-VIII-19-5-016,8/27/19,FKX205,Upper Keys,Site 49,Xestospongia muta,25.14404833,-80.25258833,67,20.4,Shallow
+27-VIII-19-5-017,8/27/19,FKX206,Upper Keys,Site 49,Xestospongia muta,25.14404833,-80.25258833,67,20.4,Shallow
+27-VIII-19-5-018,8/27/19,FKX207,Upper Keys,Site 49,Xestospongia muta,25.14404833,-80.25258833,64,19.5,Shallow
+27-VIII-19-5-019,8/27/19,FKX208,Upper Keys,Site 49,Xestospongia muta,25.14404833,-80.25258833,64,19.5,Shallow
+27-VIII-19-5-020,8/27/19,FKX209,Upper Keys,Site 49,Xestospongia muta,25.14404833,-80.25258833,60,18.3,Shallow
+27-VIII-19-5-021,8/27/19,FKX210,Upper Keys,Site 49,Xestospongia muta,25.14404833,-80.25258833,63,19.2,Shallow
+28-VIII-19-1-001,8/28/19,FKX211,Upper Keys,Site 1,Xestospongia muta,25.217545,-80.19341333,141,43,Mesophotic
+28-VIII-19-1-002,8/28/19,FKX212,Upper Keys,Site 1,Xestospongia muta,25.217545,-80.19341333,142,43.3,Mesophotic
+28-VIII-19-1-003,8/28/19,FKX213,Upper Keys,Site 1,Xestospongia muta,25.217545,-80.19341333,142,43.3,Mesophotic
+28-VIII-19-3-024,8/28/19,FKX214,Upper Keys,Site 1,Xestospongia muta,25.21752,-80.19336833,149,45.4,Mesophotic
+28-VIII-19-3-025,8/28/19,FKX215,Upper Keys,Site 1,Xestospongia muta,25.21752,-80.19336833,149,45.4,Mesophotic
+28-VIII-19-3-026,8/28/19,FKX216,Upper Keys,Site 1,Xestospongia muta,25.21752,-80.19336833,148,45.1,Mesophotic
+28-VIII-19-3-027,8/28/19,FKX217,Upper Keys,Site 1,Xestospongia muta,25.21752,-80.19336833,149,45.4,Mesophotic
+28-VIII-19-3-028,8/28/19,FKX218,Upper Keys,Site 1,Xestospongia muta,25.21752,-80.19336833,148,45.1,Mesophotic
+28-VIII-19-4-001,8/28/19,FKX219,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,88,26.8,Shallow
+28-VIII-19-4-002,8/28/19,FKX220,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,88,26.8,Shallow
+28-VIII-19-4-003,8/28/19,FKX221,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,82,25,Shallow
+28-VIII-19-4-005,8/28/19,FKX222,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,82,25,Shallow
+28-VIII-19-4-006,8/28/19,FKX223,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,85,25.9,Shallow
+28-VIII-19-4-007,8/28/19,FKX224,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,84,25.6,Shallow
+28-VIII-19-4-008,8/28/19,FKX225,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,86,26.2,Shallow
+28-VIII-19-4-009,8/28/19,FKX226,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,84,25.6,Shallow
+28-VIII-19-4-010,8/28/19,FKX227,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,83,25.3,Shallow
+28-VIII-19-4-012,8/28/19,FKX228,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,81,24.7,Shallow
+28-VIII-19-4-013,8/28/19,FKX229,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,81,24.7,Shallow
+28-VIII-19-4-014,8/28/19,FKX230,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,83,25.3,Shallow
+28-VIII-19-4-015,8/28/19,FKX231,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,82,25,Shallow
+28-VIII-19-4-016,8/28/19,FKX232,Upper Keys,Site 48,Xestospongia muta,25.22036,-80.20094333,85,25.9,Shallow
+02-IX-20-1-001,9/2/20,SFX001,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,43,13.1,Shallow
+02-IX-20-1-002,9/2/20,SFX002,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,44,13.4,Shallow
+02-IX-20-1-003,9/2/20,SFX003,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,43,13.1,Shallow
+02-IX-20-1-004,9/2/20,SFX004,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,42,12.8,Shallow
+02-IX-20-1-005,9/2/20,SFX005,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,43,13.1,Shallow
+02-IX-20-1-006,9/2/20,SFX006,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,48,14.6,Shallow
+02-IX-20-1-007,9/2/20,SFX007,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,48,14.6,Shallow
+02-IX-20-1-008,9/2/20,SFX008,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,47,14.3,Shallow
+02-IX-20-1-009,9/2/20,SFX009,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,51,15.5,Shallow
+02-IX-20-1-010,9/2/20,SFX010,West Palm,SEFL-12,Xestospongia muta,26.65238667,-80.02068167,52,15.8,Shallow
+02-IX-20-2-001,9/2/20,SFX011,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,49,14.9,Shallow
+02-IX-20-2-002,9/2/20,SFX012.1,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,49,14.9,Shallow
+02-IX-20-2-002,9/2/20,SFX012.2,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,49,14.9,Shallow
+02-IX-20-2-002,9/2/20,SFX012.3,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,49,14.9,Shallow
+02-IX-20-2-003,9/2/20,SFX013,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,50,15.2,Shallow
+02-IX-20-2-004,9/2/20,SFX014,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,49,14.9,Shallow
+02-IX-20-2-005,9/2/20,SFX015,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,55,16.8,Shallow
+02-IX-20-2-006,9/2/20,SFX016,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,54,16.5,Shallow
+02-IX-20-2-007,9/2/20,SFX017,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,54,16.5,Shallow
+02-IX-20-2-008,9/2/20,SFX018,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,49,14.9,Shallow
+02-IX-20-2-009,9/2/20,SFX019,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,49,14.9,Shallow
+02-IX-20-2-010,9/2/20,SFX020,West Palm,SEFL-11,Xestospongia muta,26.6785,-80.01825,52,15.8,Shallow
+02-IX-20-3-001,9/2/20,SFX021,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,47,14.3,Shallow
+02-IX-20-3-002,9/2/20,SFX022,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,47,14.3,Shallow
+02-IX-20-3-003,9/2/20,SFX023,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,47,14.3,Shallow
+02-IX-20-3-004,9/2/20,SFX024,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,49,14.9,Shallow
+02-IX-20-3-005,9/2/20,SFX025,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,51,15.5,Shallow
+02-IX-20-3-006,9/2/20,SFX026,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,48,14.6,Shallow
+02-IX-20-3-007,9/2/20,SFX027,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,49,14.9,Shallow
+02-IX-20-3-008,9/2/20,SFX028,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,49,14.9,Shallow
+02-IX-20-3-009,9/2/20,SFX029,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,50,15.2,Shallow
+02-IX-20-3-010,9/2/20,SFX030,West Palm,SEFL-08,Xestospongia muta,26.71043333,-80.01581667,50,15.2,Shallow
+10-IX-20-1-001,9/10/20,SFX031,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,64,19.5,Shallow
+10-IX-20-1-002,9/10/20,SFX032,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,65,19.8,Shallow
+10-IX-20-1-003,9/10/20,SFX033,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,66,20.1,Shallow
+10-IX-20-1-004,9/10/20,SFX034,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,66,20.1,Shallow
+10-IX-20-1-005,9/10/20,SFX035,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,66,20.1,Shallow
+10-IX-20-1-006,9/10/20,SFX036,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,67,20.4,Shallow
+10-IX-20-1-007,9/10/20,SFX037,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,67,20.4,Shallow
+10-IX-20-1-008,9/10/20,SFX038,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,67,20.4,Shallow
+10-IX-20-1-009,9/10/20,SFX039,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,67,20.4,Shallow
+10-IX-20-1-010,9/10/20,SFX040,Jupiter,SEFL-06,Xestospongia muta,26.8987735,-80.01638333,67,20.4,Shallow
+10-IX-20-2-001,9/10/20,SFX041,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,67,20.4,Shallow
+10-IX-20-2-002,9/10/20,SFX042,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,68,20.7,Shallow
+10-IX-20-2-003,9/10/20,SFX043,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,71,21.6,Shallow
+10-IX-20-2-004,9/10/20,SFX044,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,72,21.9,Shallow
+10-IX-20-2-005,9/10/20,SFX045,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,71,21.6,Shallow
+10-IX-20-2-006,9/10/20,SFX046,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,71,21.6,Shallow
+10-IX-20-2-007,9/10/20,SFX047,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,72,21.9,Shallow
+10-IX-20-2-008,9/10/20,SFX048,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,70,21.3,Shallow
+10-IX-20-2-009,9/10/20,SFX049,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,70,21.3,Shallow
+10-IX-20-2-010,9/10/20,SFX050,Jupiter,SEFL-05,Xestospongia muta,26.927445,-80.0301,71,21.6,Shallow
+10-IX-20-3-001,9/10/20,SFX051,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,65,19.8,Shallow
+10-IX-20-3-002,9/10/20,SFX052,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,69,21,Shallow
+10-IX-20-3-003,9/10/20,SFX053,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,68,20.7,Shallow
+10-IX-20-3-004,9/10/20,SFX054,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,67,20.4,Shallow
+10-IX-20-3-005,9/10/20,SFX055,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,67,20.4,Shallow
+10-IX-20-3-006,9/10/20,SFX056,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,68,20.7,Shallow
+10-IX-20-3-007,9/10/20,SFX057,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,67,20.4,Shallow
+10-IX-20-3-008,9/10/20,SFX058,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,66,20.1,Shallow
+10-IX-20-3-009,9/10/20,SFX059,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,66,20.1,Shallow
+10-IX-20-3-010,9/10/20,SFX060,Jupiter,SEFL-04,Xestospongia muta,26.94370833,-80.02197167,68,20.7,Shallow
+11-XII-20-1-001,12/11/20,SFX061,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,17,5.2,Shallow
+11-XII-20-1-002,12/11/20,SFX062,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,17,5.2,Shallow
+11-XII-20-1-003,12/11/20,SFX063,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,15,4.6,Shallow
+11-XII-20-1-004,12/11/20,SFX064,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,15,4.6,Shallow
+11-XII-20-1-005,12/11/20,SFX065,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,19,5.8,Shallow
+11-XII-20-1-006,12/11/20,SFX066,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,16,4.9,Shallow
+11-XII-20-1-007,12/11/20,SFX067,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,17,5.2,Shallow
+11-XII-20-1-008,12/11/20,SFX068,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,18,5.5,Shallow
+11-XII-20-1-009,12/11/20,SFX069,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,18,5.5,Shallow
+11-XII-20-1-010,12/11/20,SFX070,Ft. Lauderdale,T328,Xestospongia muta,26.17615333,-80.09386333,17,5.2,Shallow
+11-XII-20-2-001,12/11/20,SFX071.1,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,20,6.1,Shallow
+11-XII-20-2-001,12/11/20,SFX071.2,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,20,6.1,Shallow
+11-XII-20-2-001,12/11/20,SFX071.3,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,20,6.1,Shallow
+11-XII-20-2-002,12/11/20,SFX072,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,21,6.4,Shallow
+11-XII-20-2-003,12/11/20,SFX073,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,21,6.4,Shallow
+11-XII-20-2-004,12/11/20,SFX074,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,20,6.1,Shallow
+11-XII-20-2-005,12/11/20,SFX075,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,21,6.4,Shallow
+11-XII-20-2-006,12/11/20,SFX076,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,19,5.8,Shallow
+11-XII-20-2-007,12/11/20,SFX077,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,21,6.4,Shallow
+11-XII-20-2-008,12/11/20,SFX078,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,20,6.1,Shallow
+11-XII-20-2-009,12/11/20,SFX079,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,20,6.1,Shallow
+11-XII-20-2-010,12/11/20,SFX080,Ft. Lauderdale,FTL4,Xestospongia muta,26.1368,-80.0974,20,6.1,Shallow
+11-XII-20-3-001,12/11/20,SFX081,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,25,7.6,Shallow
+11-XII-20-3-002,12/11/20,SFX082,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,26,7.9,Shallow
+11-XII-20-3-003,12/11/20,SFX083,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,23,7,Shallow
+11-XII-20-3-004,12/11/20,SFX084,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,21,6.4,Shallow
+11-XII-20-3-005,12/11/20,SFX085,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,22,6.7,Shallow
+11-XII-20-3-006,12/11/20,SFX086,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,23,7,Shallow
+11-XII-20-3-007,12/11/20,SFX087,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,27,8.2,Shallow
+11-XII-20-3-008,12/11/20,SFX088,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,24,7.3,Shallow
+11-XII-20-3-009,12/11/20,SFX089,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,24,7.3,Shallow
+11-XII-20-3-010,12/11/20,SFX090,Ft. Lauderdale,BC1,Xestospongia muta,26.14786667,-80.09386333,23,7,Shallow
+21-I-21-1-001,1/21/21,SFX091,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,50,15.2,Shallow
+21-I-21-1-002,1/21/21,SFX092,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,50,15.2,Shallow
+21-I-21-1-003,1/21/21,SFX093,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,47,14.3,Shallow
+21-I-21-1-004,1/21/21,SFX094,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,51,15.5,Shallow
+21-I-21-1-005,1/21/21,SFX095,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,57,17.4,Shallow
+21-I-21-1-006,1/21/21,SFX096,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,60,18.3,Shallow
+21-I-21-1-007,1/21/21,SFX097,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,62,18.9,Shallow
+21-I-21-1-008,1/21/21,SFX098,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,62,18.9,Shallow
+21-I-21-1-009,1/21/21,SFX099,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,64,19.5,Shallow
+21-I-21-1-010,1/21/21,SFX100,Boynton,SEFL-16,Xestospongia muta,26.52355167,-80.03169167,66,20.1,Shallow
+21-I-21-2-001,1/21/21,SFX101,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,50,15.2,Shallow
+21-I-21-2-002,1/21/21,SFX102,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,53,16.2,Shallow
+21-I-21-2-003,1/21/21,SFX103,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,53,16.2,Shallow
+21-I-21-2-004,1/21/21,SFX104,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,58,17.7,Shallow
+21-I-21-2-005,1/21/21,SFX105,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,59,18,Shallow
+21-I-21-2-006,1/21/21,SFX106,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,63,19.2,Shallow
+21-I-21-2-007,1/21/21,SFX107,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,62,18.9,Shallow
+21-I-21-2-008,1/21/21,SFX108.1,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,59,18,Shallow
+21-I-21-2-008,1/21/21,SFX108.2,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,59,18,Shallow
+21-I-21-2-008,1/21/21,SFX108.3,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,59,18,Shallow
+21-I-21-2-009,1/21/21,SFX109,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,60,18.3,Shallow
+21-I-21-2-010,1/21/21,SFX110,Boynton,SEFL-18,Xestospongia muta,26.49359167,-80.037515,60,18.3,Shallow
+21-I-21-3-001,1/21/21,SFX111,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,53,16.2,Shallow
+21-I-21-3-002,1/21/21,SFX112,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,52,15.8,Shallow
+21-I-21-3-003,1/21/21,SFX113,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,53,16.2,Shallow
+21-I-21-3-004,1/21/21,SFX114,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,54,16.5,Shallow
+21-I-21-3-005,1/21/21,SFX115,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,55,16.8,Shallow
+21-I-21-3-006,1/21/21,SFX116,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,55,16.8,Shallow
+21-I-21-3-007,1/21/21,SFX117,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,57,17.4,Shallow
+21-I-21-3-008,1/21/21,SFX118,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,59,18,Shallow
+21-I-21-3-009,1/21/21,SFX119,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,60,18.3,Shallow
+21-I-21-3-010,1/21/21,SFX120,Boynton,SEFL-20,Xestospongia muta,26.45383,-80.04607,62,18.9,Shallow
