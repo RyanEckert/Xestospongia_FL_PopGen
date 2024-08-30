@@ -1,8 +1,13 @@
 ---
-title: "*Xestospongia muta* 2bRAD denovo"
+title: "*Xestospongia muta* 2bRAD"
 author: "Ryan Eckert"
 date: "2024-08-30"
-output: html_document
+output:
+  html_document:
+    theme: flatly
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
 knit: (function(input, ...) {
     rmarkdown::render(
       input,
