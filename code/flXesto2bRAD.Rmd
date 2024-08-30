@@ -1,12 +1,201 @@
 ---
-title: "Untitled"
+title: "*Xestospongia muta* 2bRAD denovo"
 author: "Ryan Eckert"
-date: "2023-10-11"
+date: "2024-08-30"
 output: html_document
-editor_options: 
-  chunk_output_type: console
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_file = '../code/index.html',
+      envir = globalenv()
+    )
+  })
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
 
+#### version: `r library(magrittr)` `r Sys.Date() %>% format(format="%d %B, %Y")`
+
+#### [GitHub repository](https://github.com/RyanEckert/Stephanocoenia_FKNMS_PopGen.git){target="_blank"}
+
+## A B O U T &nbsp; T H I S &nbsp; D O C U M E N T
+
+This walks through the steps to process 2bRAD reads with an existing genome.
+
+Be sure to read through what you are doing and follow instructions before copy/pasting code chunks.
+
+Copy the code chunks into your terminal, taking care to change the necessary portions to fit your data/ your needs/ your directory structure, etc.
+
+First, you will need to replace ```reckert2017``` with your user name and ```reckert2017@fau.edu``` with your email throughout this code.
+
+***
+
+## S E T U P 
+***
+
+Download all necessary scripts and load modules for processing/analysis
+
+### Login to KoKo
+```{r, login}
+ssh reckert2017@koko-login.hpc.fau.edu
+
+```
+
+### Load necessary modules 
+or you can add to ~/.bashrc to load at login (use ```nano .bashrc```)
+```{bash, load modules}
+module load angsd-0.933-gcc-9.2.0-65d64pp
+module load bayescan-2.1-gcc-8.3.0-7gakqmd
+module load qt-5.15.2-gcc-9.2.0-zi7wcem BayeScEnv/1.1
+module load bcftools-1.9-gcc-8.3.0-il4d373
+module load bowtie2-2.3.5.1-gcc-8.3.0-63cvhw5
+module load cdhit-4.8.1-gcc-8.3.0-bcay75d
+module load htslib-1.9-gcc-8.3.0-jn7ehrc
+module load kraken2-2.1.1-gcc-9.2.0-ocivj3u
+module load python-3.7.4-gcc-8.3.0-3tniqr5
+module load launcher
+module load miniconda3-4.6.14-gcc-8.3.0-eenl5dj
+module load ncbi-toolkit-22_0_0-gcc-9.2.0-jjhd2wa
+module load ngsadmix-32-gcc-8.3.0-qbnwmpq
+module load ngsRelate/v2
+module load R/3.6.1
+module load samtools-1.10-gcc-8.3.0-khgksad
+module load vcftools-0.1.14-gcc-8.3.0-safy5vc
+
+```
+
+### Download scripts 
+Put scripts needed into ~/bin or similar directory that is mapped in .bashrc path
+IF you don't have a ```bin``` directory in your ```$HOME``` you can make one now (```mkdir ~/bin```) 
+```{bash, download scripts}
+cd ~/bin
+svn checkout https://github.com/RyanEckert/Xestospongia_FL_PopGen/trunk/scripts/
+mv scripts/* .
+rm scripts
+
+wget http://www.cmpg.unibe.ch/software/PGDSpider/PGDSpider_2.0.7.1.zip
+unzip PGDSpider_2.0.7.1.zip
+rm PGDSpider_2.0.7.1.zip
+
+git clone https://github.com/Rosemeis/pcangsd.git
+cd pcangsd
+
+conda activate 2bRAD
+
+pip install --user -r requirements.txt
+python setup.py build_ext --inplace
+pip3 install -e .
+
+cd ~/bin
+
+git clone https://bitbucket.org/simongravel/moments.git
+cd moments
+
+conda activate 2bRAD
+
+conda install -c bioconda moments
+
+pip install --user -r requirements.txt
+python setup.py build_ext --inplace
+pip3 install -e .
+
+svn checkout https://github.com/xiaoming-liu/stairway-plot-v2.git
+
+mv stairway-plot-v2.git/trunk/stairway_plot_v2.1.1.zip .
+unzip stairway_plot_v2.1.1.zip
+rm -r stairway_plot_v2.1.1.zip stairway-plot-v2.git
+
+```
+
+Make all scripts executable
+```{bash, scripts +x}
+chmod +x *.sh *.pl *.py
+
+```
+
+IF not already, it is useful to add ```~/bin``` to your ```$PATH``` <br>
+This way you can easily access your executable scripts without specifying the absolute path to them. <br>
+Otherwise skip to "Build working directory"
+```{bash, bin path}
+PATH="$HOME/bin:$PATH";
+
+```
+
+To permanently add this to your ```$PATH``` add to ```.bashrc``` use ```nano``` text editor
+
+```{bash, bashrc}
+nano ~/.bashrc
+
+```
+
+ADD the following text to file under PATHS section if in your .bashrc:
+```export PATH="$HOME/bin:$PATH";``` <br>
+exit nano with ctrl+x
+
+```{bash, source bashrc}
+source ~/.bashrc
+echo $PATH
+
+```
+
+### Build working directory
+```{bash, wd}
+cd
+mkdir 2bRAD/flXesto/
+mkdir 2bRAD/flXesto
+mkdir 2bRAD/flXesto/rawReads/
+cd 2bRAD/flXesto/rawReads/
+
+```
+<br>
+
+## D O W N L O A D &nbsp; R E A D S 
+***
+
+### Download and concatenate raw reads from BaseSpace
+
+If you have not previously, download BaseSpaceCLI
+```{bash, bs dl}
+wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs" -O $HOME/bin/bs
+
+chmod +x ~/bin/bs
+
+```
+
+Go to the website and confirm authorization by logging in to your basespace acct.
+```{bash, bs}
+bs auth
+
+```
+
+Making a script to download the reads and merge samples across 2 NovaSeq lanes
+```{bash, download}
+
+echo '#!/bin/bash' > downloadReads.sh
+echo 'bs download project --concurrency=high -q -n JA21001 -o .' >> downloadReads.sh
+# -n is the project name and -o is the output directory
+
+echo "find . -name '*.gz' -exec mv {} . \;" >> downloadReads.sh
+echo 'rmdir SA*' >>downloadReads.sh
+echo 'mkdir ../concatReads' >> downloadReads.sh
+echo 'cp *.gz ../concatReads' >> downloadReads.sh
+echo 'cd ../concatReads' >> downloadReads.sh
+echo 'mergeReads.sh -o mergeTemp' >> downloadReads.sh
+# -o is the directory to put output files in
+
+echo 'rm *L00*' >> downloadReads.sh
+echo "find . -name '*.gz' -exec mv {} . \;" >> downloadReads.sh
+echo 'gunzip *.gz' >> downloadReads.sh
+echo 'rmdir mergeTemp' >> downloadReads.sh
+
+chmod +x downloadReads.sh
+
+launcher_creator.py -b 'srun downloadReads.sh' -n downloadReads -q shortq7 -t 06:00:00 -e reckert2017@fau.edu
+sbatch downloadReads.slurm
+
+```
+<br>
 
 ## T R I M M I N G &nbsp; & &nbsp; F I L T E R I N G
 ***
@@ -17,6 +206,7 @@ cd ../concatReads
 
 2bRAD_trim_launch_dedup.pl fastq > trims.sh
 launcher_creator.py -j trims.sh -n trims -q shortq7 -t 06:00:00 -e reckert2017@fau.edu
+
 sbatch --mem=200GB trims.slurm
 
 ```
@@ -235,7 +425,7 @@ cat quality.txt
 ```
 ```scp``` dd.pdf to laptop to look at distribution of base quality scores, fraction of sites in each sample passing coverage thresholds and fraction of sites passing genotyping rates cutoffs. Use these to guide choices of ```-minQ```,  ```-minIndDepth``` and ```-minInd``` filters in subsequent ```ANGSD``` runs
 
-![](../data/clones/dd.png)
+![](../data/clones/dd.pdf)
 
 ### Identifying clones and technical replicates
 ```{bash, ANGSD clones}
@@ -375,7 +565,7 @@ sbatch -o xestoNoClones.o%j -e xestoNoClones.e%j -p shortq7 --mail-type=ALL --me
 ```
 
 How many SNPs?
-```{bash, SNPs?}
+```{bash, SNPs? 1}
 grep "filtering:" xestoNoClones.e*
 
 ```
@@ -385,7 +575,7 @@ grep "filtering:" xestoNoClones.e*
 
 ### Re-running ANGSD only on main cluster
 
-```{bash, ANGSD no clones}
+```{bash, ANGSD main}
 cat bams | grep -v 'sf_X061.trim.bt2.bam\|sf_X063.trim.bt2.bam\|sf_X068.trim.bt2.bam\|sf_X066.trim.bt2.bam\|sf_X072.trim.bt2.bam\|sf_X079.trim.bt2.bam\|sf_X071.trim.bt2.bam\|sf_X076.trim.bt2.bam\|sf_X075.trim.bt2.bam\|sf_X084.trim.bt2.bam\|sf_X064.trim.bt2.bam\|sf_X065.trim.bt2.bam\|sf_X067.trim.bt2.bam\|fk_X043.trim.bt2.bam\|fk_X206.trim.bt2.bam\|fk_X064.trim.bt2.bam\|fk_X116.trim.bt2.bam\|fk_X003.trim.bt2.bam\|fk_X114.trim.bt2.bam\|sf_X034.trim.bt2.bam\|sf_X036.trim.bt2.bam\|sf_X119.trim.bt2.bam\|sf_X088.trim.bt2.bam\|sf_X083.trim.bt2.bam\|sf_X077.trim.bt2.bam\|sf_X085.trim.bt2.bam\|sf_X086.trim.bt2.bam\|fk_X100.trim.bt2.bam\|sf_X043.trim.bt2.bam\|fk_X060.trim.bt2.bam\|fk_X087.trim.bt2.bam\|sf_X025.trim.bt2.bam\|fk_X063.trim.bt2.bam\|fk_X084.trim.bt2.bam\|fk_X109.trim.bt2.bam\|fk_X122.trim.bt2.bam\|sf_X073.trim.bt2.bam\|fk_X204.trim.bt2.bam\|fk_X051.trim.bt2.bam\|fk_X055.trim.bt2.bam\|fk_X056.trim.bt2.bam\|sf_X080.trim.bt2.bam\|fk_X147.trim.bt2.bam\|fk_X230.trim.bt2.bam\|fk_X059.trim.bt2.bam\|fk_X053.trim.bt2.bam\|fk_X089.trim.bt2.bam\|fk_X160.trim.bt2.bam\|fk_X016.trim.bt2.bam\|sf_X090.trim.bt2.bam\|sf_X114.trim.bt2.bam'>bamsMainCluster
 
 cat bamsMainCluster | wc -l
@@ -402,7 +592,7 @@ sbatch -o xestoMain.o%j -e xestoMain.e%j -p shortq7 --mail-type=ALL --mem=200GB 
 ```
 
 How many SNPs?
-```{bash, SNPs?}
+```{bash, SNPs? 2}
 grep "filtering:" xestoMain.e*
 
 ```
@@ -412,7 +602,7 @@ grep "filtering:" xestoMain.e*
 
 ### Just samples for alternatively fixed SNPs
 
-```{bash, ANGSD no clones}
+```{bash, ANGSD afd}
 FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 30 -dosnpstat 1 -doHWE 1 -hwe_pval 1e-5 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 54 -snp_pval 1e-5 -minMaf 0.05"
 
 TODO="-doMajorMinor 1 -doMaf 1 -doCounts 1 -makeMatrix 1 -doIBS 1 -doCov 1 -doGeno 15 -doBcf 1 -doPost 1 -doGlf 2"
@@ -1038,7 +1228,7 @@ sbatch angsdHetK2.slurm
 ```
 
 heterozgosity from afd
-```{bash, ANGSD no clones}
+```{bash, Het afd}
 angsd sites index afdSNPsites
 
 FILTERS="-uniqueOnly 1 -remove_bads 1 -minMapQ 20 -minQ 30 -dosnpstat 1 -doHWE 1 -hwe_pval 1e-5 -sb_pval 1e-5 -hetbias_pval 1e-5 -skipTriallelic 1 -minInd 54 -snp_pval 1e-5 -minMaf 0.05"
