@@ -121,8 +121,8 @@ pcaTheme = theme(axis.title.x = element_text(color = "black", size = 10),
         axis.ticks.y = element_blank(),
         axis.line.y = element_blank(),
         legend.position = "none",
-        legend.title = element_text(size = 8),
-        legend.text = element_text(size = 8),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
         legend.key.size = unit(5, "pt"),
         panel.border = element_rect(color = "black", size = 1),
         panel.grid.major = element_blank(),
@@ -393,7 +393,7 @@ cloneDend = cloneDendA + theme(
   legend.text = element_text(size = 10),
   legend.position = "bottom")
 
-cloneDend
+# cloneDend
 
 ggsave("../figures/rmd/cloneDend.png", plot = cloneDend, height = 8, width = 40, units = "in", dpi = 300)
 
@@ -509,7 +509,7 @@ admixK5_melt = melt(admixK5, id = c("sample", "site", "depth", "depthm"))
 
 structure = facet_widths(p8, widths = c(0.8, 0.025, 0.025, 0.025, 0.25, 0.15, 0.15, 0.15))
 
-# structure
+structure
 
 ```
 
@@ -520,14 +520,10 @@ structure = facet_widths(p8, widths = c(0.8, 0.025, 0.025, 0.025, 0.25, 0.15, 0.
 ```{r, pcangsd}
 cov = read.table("../data/pcangsd/flXestoPcangsd.cov") %>% as.matrix()
 
-# pcAdmix = read.table("../data/K3.output") %>% dplyr::select(V6, V7, V8)
-# pcAdmix %>% summarise(sum(V6),sum(V7), sum(V8))
-
 
 pcAdmix = read.table("../data/admix/noClones/K4.output") %>% dplyr::select(V6, V7, V8, V9)
 pcAdmix %>% summarise(sum(V6),sum(V7), sum(V8), sum(V9))
 
-# pcAdmix = pcAdmix %>% dplyr::rename("cluster1" = "V6", "cluster2" = "V7", "cluster3" = "V8") %>% dplyr::select(order(colnames(.)))
 
 pcAdmix = pcAdmix %>% dplyr::rename("cluster1" = "V6", "cluster2" = "V7", "cluster3" = "V8", "cluster4" = "V9") %>% dplyr::select(order(colnames(.)))
   
@@ -553,18 +549,16 @@ pcangsd$PC2 = pcaEig$vectors[,2]
 pcangsd$PC3 = pcaEig$vectors[,3]
 pcangsd$PC4 = pcaEig$vectors[,4]
 
-# pcangsdClust = pcAdmix %>% mutate(cluster = ifelse(cluster1 < 0.75 & cluster2 < 0.75  & cluster3 < 0.75, "NA", ifelse(cluster1 >=0.75, 1, ifelse(cluster2 >= 0.75, 2, ifelse(cluster3 >= 0.75, 3, 0)))))
-
 pcangsdClustK2 = admixK2 %>% mutate(clusterK2 = ifelse(Xm1 >=0.75, "Xm1", ifelse(Xm2 >= 0.75, "Xm2", "Admixed")))
 pcangsdClustK2$clusterK2 = as.factor(pcangsdClustK2$clusterK2)
 levels(pcangsdClustK2$clusterK2)
 pcangsdClustK2$clusterK2 = factor(pcangsdClustK2$clusterK2, levels = levels(pcangsdClustK2$clusterK2)[c(2,3,1)])
 
 
-pcangsdClustK4 = admixK4 %>% mutate(clusterK4 = ifelse(Xm1 >=0.75, "Xm1", ifelse(Xm2 >= 0.75, "Xm2", ifelse(Xm3 >= 0.75, "Xm3", ifelse(Xm4 >= 0.75, "Xm4", "Admixed")))))
+pcangsdClustK4 = admixK4 %>% mutate(clusterK4 = ifelse(Xm1 >=0.75, "Xm1.1", ifelse(Xm2 >= 0.75, "Xm2", ifelse(Xm3 >= 0.75, "Xm1.2", ifelse(Xm4 >= 0.75, "Xm1.3", "Admixed")))))
 pcangsdClustK4$clusterK4 = as.factor(pcangsdClustK4$clusterK4)
 levels(pcangsdClustK4$clusterK4)
-pcangsdClustK4$clusterK4 = factor(pcangsdClustK4$clusterK4, levels = levels(pcangsdClustK4$clusterK4)[c(2,3,4,5,1)])
+pcangsdClustK4$clusterK4 = factor(pcangsdClustK4$clusterK4, levels = levels(pcangsdClustK4$clusterK4)[c(2,5,3,4,1)])
 
 
 pcangsd = pcangsd %>% mutate(clusterK2 = pcangsdClustK2$clusterK2, clusterK4 = pcangsdClustK4$clusterK4)
@@ -610,7 +604,7 @@ pcaPlotSA = ggplot() +
 
 pcaPlotS = pcaPlotSA +
   pcaTheme +
-  theme(legend.position = c(0.15, 0.25))
+  theme(legend.position = c(0.15, 0.24))
 
 
 pcaPlotK4A = ggplot() +
@@ -625,7 +619,7 @@ pcaPlotK4A = ggplot() +
 
 pcaPlotK4 = pcaPlotK4A +
   pcaTheme +
-  theme(legend.position = c(0.12, 0.20))
+  theme(legend.position = c(0.12, 0.15))
 
 
 pcaPlotK2A = ggplot() +
@@ -666,9 +660,10 @@ fig2 = (structure / pcaPlots) +
         legend.background = element_blank())
 
 ggsave("../figures/figure2.png", plot = fig2, height = 12, width = 14, units = "in", dpi = 300)
-# ggsave("../figures/pcaPlots.svg", plot = pcaPlots, height = 4.5, width = 14, units = "in", dpi = 300)
 
 ```
+
+![](../figures/figure2.png)
 
 ### Lineage demographics
 
@@ -884,7 +879,7 @@ hetPlots = hetPlotK2 + hetPlotK4 + nuclDivPlot + fstHeatmap +
   
 hetPlots
 
-ggsave("../figures/figure4.png", plot = hetPlots, width = 8, height = 7, units = "in", dpi = 300)
+ggsave("../figures/figure3.png", plot = hetPlots, width = 8, height = 7, units = "in", dpi = 300)
 
 ```
 
@@ -984,7 +979,7 @@ trafd = hclust(dist(maAFD),"ave")
     scale_fill_manual("Lineage",values = xestoKColPal[1:2], guide = guide_legend(ncol = 2, order = 4)) + 
     theme(strip.text = element_blank(),
           #legend.direction = "horizontal",
-          legend.text = element_text(size = 8),
+          legend.text = element_text(size = 10),
           legend.title = element_text(size = 10),
           legend.key = element_blank(),
           legend.margin = margin(c(0,0,0,0),unit = "pt"))
@@ -1037,7 +1032,10 @@ pcaPlot1AFDa = ggplot() +
 
 pcaPlot1AFD = pcaPlot1AFDa +
   pcaTheme +
-  theme(legend.position = c(0.07, 0.21),
+  theme(legend.position = c(0.12, 0.25),
+        legend.key.spacing = unit(2, "pt"),
+        legend.spacing = unit(0.25, "pt"),
+        legend.margin = margin(4,2,4,2, unit = "pt"),
         legend.background = element_blank())
 
 pcaPlot1AFD
@@ -1146,12 +1144,12 @@ xmAFD = ((afdTree) /((pcaPlot1AFD + hetPlotAFD + afdPlot) + plot_layout(widths =
   # plot_layout(design = layout) +
   plot_annotation(tag_levels = 'A') &
   theme(plot.tag = element_text(size = 20),
-        legend.text = element_text(size = 8),
+        legend.text = element_text(size = 10),
         legend.title = element_text(size = 10))
   
 xmAFD
 
-ggsave("../figures/Figure3.png", plot = xmAFD, height = 7, width = 12, units = "in", dpi = 300)
+ggsave("../figures/Figure4.png", plot = xmAFD, height = 7, width = 12, units = "in", dpi = 300)
 ```
 
 
@@ -1173,3 +1171,85 @@ xestoMainPops$sample = paste(xestoMainPops$sample, ".trim.bt2.bam", sep ="")
 
 write_delim(xestoMainPops, "../data/xestoMainPops", col_names = FALSE)
 ```
+
+
+### Main cluster
+
+```{r, pcangsd main}
+covMain = read.table("../data/pcangsd/flXestoMainPcangsd.cov") %>% as.matrix()
+
+pcAdmixMain = read.table("../data/admix/main/K3main.output") %>% dplyr::select(V6, V7, V8)
+
+pcAdmixMain = pcAdmixMain %>% dplyr::rename("Xm1.1" = "V6", "Xm1.2" = "V7", "Xm1.3" = "V8")
+  
+pcaEigMain = eigen(covMain)
+xestoMainPcaVar = pcaEigMain$values/sum(pcaEigMain$values)*100
+head(xestoMainPcaVar)
+
+pcangsdMain = read.delim("../data/pcangsd/mainCluster", header = FALSE) %>% rename("sample" = "V1") %>% left_join(bams) %>%  dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM) %>% cbind(pcAdmixMain)
+
+pcangsdMain$sitedepth = as.factor(paste(pcangsdMain$site, pcangsdMain$depth, sep = " "))
+
+
+pcangsdMain$sitedepth = factor(pcangsdMain$sitedepth)
+pcangsdMain$sitedepth = factor(pcangsdMain$sitedepth, levels(pcangsdMain$sitedepth)[c(3, 12, 1, 2, 11, 10, 5, 4, 9, 8, 7, 6)])
+
+
+pcangsdMain$depth = factor(pcangsdMain$depth)
+pcangsdMain$depth = factor(pcangsdMain$depth, levels(pcangsdMain$depth)[c(2, 1)])
+
+
+pcangsdMain$PC1 = pcaEigMain$vectors[,1]
+pcangsdMain$PC2 = pcaEigMain$vectors[,2]
+pcangsdMain$PC3 = pcaEigMain$vectors[,3]
+pcangsdMain$PC4 = pcaEigMain$vectors[,4]
+
+
+pcangsdClustMain = pcAdmixMain %>% mutate(cluster = ifelse(Xm1.1 >=0.75, "Xm1.1", ifelse(Xm1.2 >= 0.75, "Xm1.2", ifelse(Xm1.3 >= 0.75, "Xm1.3", "Admixed"))))
+
+
+pcangsdMain = pcangsdMain %>% mutate(cluster = pcangsdClustMain$cluster)
+
+pcangsdMain = merge(pcangsdMain, aggregate(cbind(mean.x = PC1, mean.y = PC2)~sitedepth, pcangsdMain, mean), by="sitedepth")
+
+pcangsdMain$cluster = factor(pcangsdMain$cluster)
+pcangsdMain$cluster = factor(pcangsdMain$cluster, levels = levels(pcangsdMain$cluster)[c(2,3,4,1)])
+
+pcaPlotMainSA = ggplot() +
+  geom_hline(yintercept = 0, color = "gray90", size = 0.25) +
+  geom_vline(xintercept = 0, color = "gray90", size = 0.25) +
+  geom_point(data = pcangsdMain, aes(x = PC1, y = PC2, fill = site, shape = depth), color = "black", stroke = 0.25, size = 4, alpha = 0.5, show.legend = FALSE) +
+  geom_point(data = pcangsdMain, aes(x = mean.x, y = mean.y, fill = site, shape = depth), color = "black", size = 5, alpha = 1, stroke = 0.5) +
+  scale_shape_manual(values = c(21, 23), name = "Depth Zone") +
+  scale_fill_manual(values = flPal, name = "Site") +
+  scale_color_manual(values = flPal, name = "Site") +
+  labs(x = paste0("PC 1 (", format(round(xestoMainPcaVar[1], 1), nsmall = 1)," %)"), y = paste0("PC 2 (", format(round(xestoMainPcaVar[2], 1), nsmall = 1), " %)")) +
+  guides(shape = guide_legend(override.aes = list(size = 2, stroke = 0.25, alpha = NA), order = 2, ncol = 1), fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = flPal, alpha = NA), order = 1, ncol = 1)) +
+  theme_bw()
+
+pcaPlotMainS = pcaPlotMainSA +
+  pcaTheme +
+  theme(legend.position = c(0.15, 0.24))
+
+pcaPlotMainS
+
+
+pcaPlotMainK3A = ggplot() +
+  geom_hline(yintercept = 0, color = "gray90", size = 0.5) +
+  geom_vline(xintercept = 0, color = "gray90", size = 0.5) +
+  geom_point(data = pcangsdMain, aes(x = PC1, y = PC2, fill = cluster, shape = depth), color = "black", size = 4, alpha = 1, show.legend = TRUE) +
+  scale_shape_manual(values = c(21, 23), name = "Depth Zone") +
+  scale_fill_manual(values = xestoKColPal[c(1,3,4,6)], name = "Lineage") +
+  labs(x = paste0("PC 1 (", format(round(xestoMainPcaVar[1], 1), nsmall = 1)," %)"), y = paste0("PC 2 (", format(round(xestoMainPcaVar[2], 1), nsmall = 1), " %)")) +
+  guides(shape = "none", fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = xestoKColPal[c(1,3,4,6)], alpha = NA), order = 1, ncol = 1))+
+  theme_bw()
+
+pcaPlotMainK3 = pcaPlotMainK3A +
+  pcaTheme +
+  theme(legend.position = c(0.12, 0.15))
+
+pcaPlotMainK3
+
+```
+
+###
