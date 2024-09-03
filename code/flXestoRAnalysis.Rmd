@@ -1153,7 +1153,7 @@ ggsave("../figures/Figure4.png", plot = xmAFD, height = 7, width = 12, units = "
 ```
 
 
-## Migration
+### Migration
 
 ```{r, migration}
 mainBams = read.delim("../data/bamsMainCluster", header = FALSE) %>% rename("sample" = "V1") 
@@ -1174,6 +1174,52 @@ write_delim(xestoMainPops, "../data/xestoMainPops", col_names = FALSE)
 
 
 ### Main cluster
+
+```{r, main tree}
+maMain = as.matrix(read.table("../data/xestoMain.ibsMat"))
+
+bamsMain = read.delim("../data/pcangsd/mainCluster", header = FALSE) %>% rename("sample" = "V1") %>% left_join(bams) %>%  dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM)
+
+dimnames(maMain) = list(bamsMain[,1],bamsMain[,1])
+
+pcAdmixMain = read.table("../data/admix/main/K3main.output") %>% dplyr::select(V6, V7, V8) %>% dplyr::rename("Xm1.1" = "V6", "Xm1.2" = "V7", "Xm1.3" = "V8") %>% cbind(bamsMain)
+
+pcAdmixMainMelt = melt(pcAdmixMain, id.vars = c("sample", "site", "depth", "depthm"))
+
+trMain = hclust(dist(maMain),"ave") 
+
+  p1Main = ggtree(trMain, layout = "rectangular") #+ ggtree::geom_tiplab()
+
+  p2Main = facet_plot(p1Main, panel = "location", data=bamsMain, geom = geom_tile, mapping = aes(x = 1, fill = site), size = 0.1, color = "grey25") + 
+    scale_fill_manual("Site", values = flPal, guide = guide_legend(ncol = 1, order = 1)) + 
+    theme(legend.key.size = unit(.8, "line")) +
+    new_scale_fill() 
+
+  p3Main = facet_plot(p2Main, panel = "depth zone", data=bamsMain, geom = geom_tile, mapping = aes(x = 1, fill = depth), size = 0.1, color = "grey25") +
+    scale_fill_manual("Depth zone", values = c("#A7E1BCFF", "#414083FF"), guide = guide_legend(ncol = 1, order = 2)) +
+    new_scale_fill()
+  
+  p4Main = facet_plot(p3Main, panel = "depth", data=bamsMain, geom = geom_tile, mapping = aes(x = 1, fill = depthm), size = 0.1, color = "grey25") + 
+    scale_fill_viridis_c("Depth (m)", option = "mako", direction = -1, guide = guide_colorbar(order = 2, direction = "horizontal")) +
+    theme(legend.title.position = "top") +
+    new_scale_fill()
+
+  p5Main = facet_plot(p4Main, panel="K = 2", data = pcAdmixMainMelt, geom=geom_barh, width = 1.0, mapping = aes(x = value, fill = variable), 
+                stat ='identity', size = 0.15, color = "grey25") +
+    scale_fill_manual("Lineage",values = xestoKColPal[c(1,3,4)], guide = guide_legend(ncol = 1, order = 4)) + 
+    theme(strip.text = element_blank(),
+          #legend.direction = "horizontal",
+          legend.text = element_text(size = 10),
+          legend.title = element_text(size = 10),
+          legend.key = element_blank(),
+          legend.margin = margin(c(0,0,0,0),unit = "pt"))
+
+p5Main 
+
+mainTree =  facet_widths(p5Main, widths = c(0.25, 0.025, 0.025, 0.025, 0.25))
+  
+
+```
 
 ```{r, pcangsd main}
 covMain = read.table("../data/pcangsd/flXestoMainPcangsd.cov") %>% as.matrix()
@@ -1224,7 +1270,7 @@ pcaPlotMainSA = ggplot() +
   scale_fill_manual(values = flPal, name = "Site") +
   scale_color_manual(values = flPal, name = "Site") +
   labs(x = paste0("PC 1 (", format(round(xestoMainPcaVar[1], 1), nsmall = 1)," %)"), y = paste0("PC 2 (", format(round(xestoMainPcaVar[2], 1), nsmall = 1), " %)")) +
-  guides(shape = guide_legend(override.aes = list(size = 2, stroke = 0.25, alpha = NA), order = 2, ncol = 1), fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = flPal, alpha = NA), order = 1, ncol = 1)) +
+  guides(shape = guide_legend(override.aes = list(size = 4, stroke = 0.25, alpha = NA), order = 2, ncol = 1), fill = guide_legend(override.aes = list(shape = 22, size = 4, fill = flPal, alpha = NA), order = 1, ncol = 1)) +
   theme_bw()
 
 pcaPlotMainS = pcaPlotMainSA +
@@ -1241,7 +1287,7 @@ pcaPlotMainK3A = ggplot() +
   scale_shape_manual(values = c(21, 23), name = "Depth Zone") +
   scale_fill_manual(values = xestoKColPal[c(1,3,4,6)], name = "Lineage") +
   labs(x = paste0("PC 1 (", format(round(xestoMainPcaVar[1], 1), nsmall = 1)," %)"), y = paste0("PC 2 (", format(round(xestoMainPcaVar[2], 1), nsmall = 1), " %)")) +
-  guides(shape = "none", fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = xestoKColPal[c(1,3,4,6)], alpha = NA), order = 1, ncol = 1))+
+  guides(shape = "none", fill = guide_legend(override.aes = list(shape = 22, size = 4, fill = xestoKColPal[c(1,3,4,6)], alpha = NA), order = 1, ncol = 1))+
   theme_bw()
 
 pcaPlotMainK3 = pcaPlotMainK3A +
@@ -1252,4 +1298,22 @@ pcaPlotMainK3
 
 ```
 
+
+```{r}
+mainPlots = (mainTree)/((pcaPlotMainS + pcaPlotMainK3 + guide_area()) +
+  plot_layout(widths = c(1, 1,0.25), guides = "collect")) +
+  plot_layout(heights = c(2.5, 1.75)) +
+  
+  plot_annotation(tag_levels = 'A') &
+  theme(plot.tag = element_text(size = 20),
+        legend.text = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.background = element_blank(),
+        legend.position = )
+
+mainPlots
+
+ggsave("../figures/FigureS1.png", plot = mainPlots, height = 10, width = 12, units = "in", dpi = 300)
+
+```
 ###

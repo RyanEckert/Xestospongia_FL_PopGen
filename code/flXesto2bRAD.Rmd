@@ -937,7 +937,7 @@ module load gcc-9.2.0-gcc-8.3.0-ebpgkrt gsl-2.5-gcc-9.2.0-i6lf4jb netlib-lapack-
 # After ~5 min you should start seeing output in the BATest.o* file
 
 echo '#!/bin/bash' > BATest
-echo BA3SNP -v -i 20000000 -b 5000000 -n 1000 xestoMainBA3.txt >> BATest
+echo BA3SNP -v -i 10000000 -b 2000000 -n 1000 xestoMainBA3.txt >> BATest
 
 sbatch -e BATest.e%j -o BATest.o%j -p shortq7 --mail-user reckert2017@fau.edu --mail-type=ALL BATest
 
@@ -949,13 +949,13 @@ sbatch -e BATest.e%j -o BATest.o%j -p shortq7 --mail-user reckert2017@fau.edu --
 # increase [-m] increase [-a] and decrease [-f]
 
 echo '#!/bin/bash' > BATest
-echo BA3SNP -v -i 20000000 -b 5000000 -n 1000  -m 0.2 -a 0.6 -f 0.04 xestoMainBA3.txt >> BATest
+echo BA3SNP -v -i 10000000 -b 2000000 -n 1000  -m 0.2 -a 0.6 -f 0.04 xestoMainBA3.txt >> BATest
 
 sbatch -e BATest.e%j -o BATest.o%j -p shortq7 --mail-user reckert2017@fau.edu --mail-type=ALL BATest
 #  -2371745.64 % done: [0.00] % accepted: (0.22, 0.01, 0.30, 0.21, 0.80)
 
 echo '#!/bin/bash' > BATest
-echo BA3SNP -v -i 20000000 -b 5000000 -n 1000  -m 0.15 -a 0.7 -f 0.03 xestoMainBA3.txt >> BATest
+echo BA3SNP -v -i 10000000 -b 2000000 -n 1000  -m 0.15 -a 0.7 -f 0.03 xestoMainBA3.txt >> BATest
 
 sbatch -e BATest.e%j -o BATest.o%j -p shortq7 --mail-user reckert2017@fau.edu --mail-type=ALL BATest
 # -2371545.99 % done: [0.00] % accepted: (0.27, 0.01, 0.26, 0.28, 0.81)
@@ -970,7 +970,7 @@ module load gcc-9.2.0-gcc-8.3.0-ebpgkrt gsl-2.5-gcc-9.2.0-i6lf4jb netlib-lapack-
 
 for i in {01..10}; do
 echo '#!/bin/bash' > BayesAss$i.sh
-echo BA3SNP -v -u -s $RANDOM -i 20000000 -b 5000000 -n 1000   -m 0.15 -a 0.7 -f 0.03 -t -o flXestoBA${i}Out.txt ../xestoMainBA3.txt >> BayesAss$i.sh;
+echo BA3SNP -v -u -s $RANDOM -i 10000000 -b 2000000 -n 1000   -m 0.15 -a 0.7 -f 0.03 -t -o flXestoBA${i}Out.txt ../xestoMainBA3.txt >> BayesAss$i.sh;
 mkdir run$i;
 mv BayesAss$i.sh run$i;
 cd run$i;
