@@ -1,5 +1,5 @@
 ---
-title: "SEFL *Xestospongia mutta* Population Genetics"
+title: "SEFL *Xestospongia muta* Population Genetics"
 author: "Ryan Eckert"
 date: "2024-06-25"
 output:
@@ -440,7 +440,7 @@ K3ad %>% summarise(sum(V6),sum(V7), sum(V8))
 admixK3 = bams %>%  
   dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM) %>% 
   cbind(K3ad) %>% 
-  dplyr::rename("Xm1" = "V6", "Xm2" = "V7", "Xm3" = "V8") %>%
+  dplyr::rename("Xm1" = "V6", "Xm2" = "V7", "Xm1.2" = "V8") %>%
   dplyr::select(order(colnames(.)))
 admixK3_melt = melt(admixK3, id = c("sample", "site", "depth", "depthm"))
 
@@ -452,7 +452,7 @@ K4ad %>% summarise(sum(V6),sum(V7), sum(V8), sum(V9))
 admixK4 = bams %>%  
   dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM) %>% 
   cbind(K4ad) %>% 
-  dplyr::rename("Xm1" = "V6", "Xm2" = "V7", "Xm3" = "V8", "Xm4" = "V9") %>%
+  dplyr::rename("Xm1" = "V6", "Xm2" = "V7", "Xm1.2" = "V8", "Xm1.3" = "V9") %>%
   dplyr::select(order(colnames(.)))
 admixK4_melt = melt(admixK4, id = c("sample", "site", "depth", "depthm"))
 
@@ -464,7 +464,7 @@ K5ad %>% summarise(sum(V6),sum(V7), sum(V8), sum(V9), sum(V10))
 admixK5 = bams %>%  
   dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM) %>% 
   cbind(K5ad) %>% 
-  dplyr::rename("Xm1" = "V6", "Xm2" = "V7", "Xm3" = "V8", "Xm4" = "V9", "Xm5" = "V10") #%>%
+  dplyr::rename("Xm1" = "V6", "Xm2" = "V7", "Xm1.2" = "V8", "Xm1.3" = "V9", "Xm1.4" = "V10") #%>%
 admixK5_melt = melt(admixK5, id = c("sample", "site", "depth", "depthm"))
 
 ## construct figure
@@ -555,7 +555,7 @@ levels(pcangsdClustK2$clusterK2)
 pcangsdClustK2$clusterK2 = factor(pcangsdClustK2$clusterK2, levels = levels(pcangsdClustK2$clusterK2)[c(2,3,1)])
 
 
-pcangsdClustK4 = admixK4 %>% mutate(clusterK4 = ifelse(Xm1 >=0.75, "Xm1.1", ifelse(Xm2 >= 0.75, "Xm2", ifelse(Xm3 >= 0.75, "Xm1.2", ifelse(Xm4 >= 0.75, "Xm1.3", "Admixed")))))
+pcangsdClustK4 = admixK4 %>% mutate(clusterK4 = ifelse(Xm1 >=0.75, "Xm1", ifelse(Xm2 >= 0.75, "Xm2", ifelse(Xm1.2 >= 0.75, "Xm1.2", ifelse(Xm1.3 >= 0.75, "Xm1.3", "Admixed")))))
 pcangsdClustK4$clusterK4 = as.factor(pcangsdClustK4$clusterK4)
 levels(pcangsdClustK4$clusterK4)
 pcangsdClustK4$clusterK4 = factor(pcangsdClustK4$clusterK4, levels = levels(pcangsdClustK4$clusterK4)[c(2,5,3,4,1)])
@@ -572,11 +572,11 @@ pcangsd = pcangsd %>% mutate(clusterK2 = pcangsdClustK2$clusterK2, clusterK4 = p
 # write.table(x = bamsClusters, file = "../data/snps/bamsClusters", sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 pcangsd = merge(pcangsd, aggregate(cbind(mean.x = PC1, mean.y = PC2)~sitedepth, pcangsd, mean), by="sitedepth")
-
+# 
 # set.seed(942)
-
-# pcPerm = adonis2(pcangsd[6:9] ~ site*depth, data = pcangsd, permutations = 999, method = "euclidean")
-
+# 
+# pcPerm = adonis2(pcangsd[6:9] ~ site*depth*clusterK2, data = pcangsd, permutations = 999, method = "euclidean")
+# 
 # pcPerm
 
 ```
@@ -745,7 +745,7 @@ hetK4PH = games_howell_test(xestoHet, k4Het ~ clusterK4)
 
 hetK4PH$p.adj
 
-hetK4Letters = data.frame(x = factor(c("Xm1", "Xm2", "Xm3", "Xm4","Admixed")), y = c(0.0025, 0.0025, 0.0025, 0.0025, 0.0025),  grp = c("a", "b", "c", "ac", "cd"))
+hetK4Letters = data.frame(x = factor(c("Xm1.1", "Xm2", "Xm1.2", "Xm1.3","Admixed")), y = c(0.0025, 0.0025, 0.0025, 0.0025, 0.0025),  grp = c("a", "b", "c", "ac", "cd"))
 
 ```
 
@@ -786,7 +786,7 @@ hetPlotK4
 
 
 ```{r, fst}
-pop.order = c("Xm4", "Xm3", "Xm2", "Xm1")
+pop.order = c("Xm1.3", "Xm1.2", "Xm2", "Xm1.1")
 
 # reads in fst 
 fstMa1 <- read.delim("../data/xestoFstK4.out") %>% dplyr::select(-fst) %>% df_to_pw_mat(., "pop1", "pop2", "weightedFst")
@@ -825,7 +825,7 @@ fstHeatmap = ggplot(data = fst %>% filter(Fst != 0), aes(Pop, Pop2, fill = as.nu
   theme_minimal() +
   fstTheme
 
-# fstHeatmap
+fstHeatmap
 
 ```
 
@@ -856,6 +856,7 @@ piAll$lineage = factor(piAll$lineage)
 
 ```{r, nuvDiv plot}
 nuclDivPlot = ggplot(piAll, aes(x = K, y = tPps, fill = lineage, group - lineage)) +
+  geom_rect(aes(xmin = 1.385, xmax = 10, ymin = -1, ymax = 100000), fill = "black", color = NA, alpha = 0.03, linewidth = 0) +
   geom_bar(position = position_dodge2(preserve = "single"), stat = "identity", color = "black") +
   scale_fill_manual(values = xestoKColPal) +
   geom_text(position = position_dodge2(preserve = "single", width = 0.9), aes(y = tPps-.0015, label= scales::comma(round(Ne,0)), hjust = 0, fontface = "bold"), angle = 90, color = "white", ) +
@@ -1153,7 +1154,9 @@ ggsave("../figures/Figure4.png", plot = xmAFD, height = 7, width = 12, units = "
 ```
 
 
-### Migration
+## Genetic connectivity
+
+Migration
 
 ```{r, migration}
 mainBams = read.delim("../data/bamsMainCluster", header = FALSE) %>% rename("sample" = "V1") 
@@ -1171,6 +1174,194 @@ xestoMainPops$sample = paste(xestoMainPops$sample, ".trim.bt2.bam", sep ="")
 
 write_delim(xestoMainPops, "../data/xestoMainPops", col_names = FALSE)
 ```
+
+Checking deviance among model runs from BayesAss we ran on HPC
+
+```{r, BA3 traces}
+# fileList = substr(list.files("../data/snps/bayesAss/", "BA3trace.*.txt$"),1,10)
+fileList = substr(list.files("../data/bayesass/", "BA3trace.*.txt$"),1,11)
+
+bayesian_deviance <- function(trace, burnin = 0, sampling.interval = 0){
+  if(burnin == 0) stop('No burnin specified')
+  if(sampling.interval == 0) stop('No sampling interval specified')
+  range <- (trace$State > burnin & trace$State %% sampling.interval == 0)
+  D <- -2*mean(trace$LogProb[range])
+  return(D)
+}
+
+for(i in 1:length(fileList)){
+  assign(fileList[i], read.delim(paste("../data/bayesass/", fileList[i], ".txt", sep = ""))) %>% dplyr::select(-last_col())
+  print(paste(fileList[i], bayesian_deviance(get(fileList[i]), burnin = 2000000, sampling.interval = 1000)))
+}
+
+#[1] "BA3trace.01 4277982.0575"
+#[1] "BA3trace.02 4278000.6675"
+#[1] "BA3trace.03 4277371.5925"
+#[1] "BA3trace.04 4274620.0525"
+
+```
+
+All traces have similar deviance (this is good!).
+Using the trace with the lowest deviance (BA3trace.02.txt, in this case)
+
+```{r, BA3}
+bayesAss = read.delim("../data/bayesass/BA3trace.04.txt") %>% filter(State > 2000000) %>% dplyr::select(-State, -LogProb, -X)
+
+baMean = bayesAss %>% summarise(across(everything(), list(mean))) %>% t() %>% as_tibble() %>% rename(., mean=V1) %>% mutate(pops = colnames(bayesAss))
+
+baSumm = bayesAss %>% summarise(across(everything(), list(median))) %>% t() %>% as.data.frame() %>% rename(., median=V1) %>% mutate(pops = baMean$pops, mean = round(baMean$mean, 3)) %>% relocate(median, .after = mean)
+
+baSumm$median = round(baSumm$median, 3)
+
+baHpd =as.data.frame(t(sapply(bayesAss, emp.hpd)))
+colnames(baHpd) = c("hpdLow", "hpdHigh")
+baHpd$pops = rownames(baHpd)
+
+ESS = as.data.frame(sapply(bayesAss, ESS))
+colnames(ESS) = "ESS"
+
+baSumm = baSumm %>% left_join(baHpd)
+baSumm$hpdLow = round(baSumm$hpdLow, 3)
+baSumm$hpdHigh = round(baSumm$hpdHigh, 3)
+baSumm$ESS = ESS$ESS
+
+### FROM BAYESASS: ###
+## Population Index -> Population Label:
+#0->UpperKeysMesophotic 1->UpperKeysShallow
+#2->LowerKeysShallow 3->TortugasBankMesophotic
+#4->TortugasBankShallow 5->RileysHumpMesophotic 
+#6->RileysHumpShallow 7->LowerKeysMesophotic
+#8->WestPalmShallow 9->JupiterShallow  
+#10->Ft.LauderdaleShallow 11->BoyntonShallow  
+
+popi = rep(c("Upper Keys\nMesophotic", "Upper Keys\nShallow", "Lower Keys\nShallow", "Tortugas Bank\nMesophotic", "Tortugas Bank\nShallow", "Riley's Hump\nMesophotic", "Riley's Hump\nShallow", "Lower Keys\nMesophotic", "West Palm\nShallow", "Jupiter\nShallow", "Ft. Lauderdale\nShallow", "Boynton\nShallow"), each = 12)
+
+popj = rep(c("Upper Keys\nMesophotic", "Upper Keys\nShallow", "Lower Keys\nShallow", "Tortugas Bank\nMesophotic", "Tortugas Bank\nShallow", "Riley's Hump\nMesophotic", "Riley's Hump\nShallow", "Lower Keys\nMesophotic", "West Palm\nShallow", "Jupiter\nShallow", "Ft. Lauderdale\nShallow", "Boynton\nShallow"), times = 12)
+
+baSumm = baSumm %>% mutate(pop.i = popi, pop.j = popj) %>% relocate(c(pop.i, pop.j), .after = pops) %>% dplyr::select(-pops)
+
+baSumm$pop.i = factor(baSumm$pop.i)
+baSumm$pop.i = factor(baSumm$pop.i, levels = levels(baSumm$pop.i)[c(3, 12, 1, 2, 11, 5, 9, 7, 10, 4, 8, 6)])
+
+baSumm$pop.j = factor(baSumm$pop.j)
+baSumm$pop.j = factor(baSumm$pop.j, levels = levels(baSumm$pop.j)[c(3, 12, 1, 2, 11, 5, 9, 7, 10, 4, 8, 6)])
+
+baSumm$site.i = word(baSumm$pop.i, 1, sep = "\n")
+baSumm$site.i = factor(baSumm$site.i)
+baSumm$site.i = factor(baSumm$site.i, levels = levels(baSumm$site.i)[c(3, 8, 1, 2, 7, 4, 6, 5)])
+
+baSumm$site.j = word(baSumm$pop.j, 1, sep = "\n")
+baSumm$site.j = factor(baSumm$site.j)
+baSumm$site.j = factor(baSumm$site.j, levels = levels(baSumm$site.j)[c(3, 8, 1, 2, 7, 4, 6, 5)])
+
+baSumm$depth.i = word(baSumm$pop.i, 2, sep = "\n")
+baSumm$depth.i = factor(baSumm$depth.i)
+baSumm$depth.i = factor(baSumm$depth.i, levels = levels(baSumm$depth.i)[c(2, 1)])
+
+baSumm$depth.j = word(baSumm$pop.j, 2, sep = "\n")
+baSumm$depth.j = factor(baSumm$depth.j)
+baSumm$depth.j = factor(baSumm$depth.j, levels = levels(baSumm$depth.j)[c(2, 1)])
+
+```
+
+```{r, bayesAss means}
+#All sites (excluding self retention)
+baMeans = baSumm %>% filter(pop.i != pop.j) %>% summarise(mean = mean(mean), sd = sd(.$mean), se = sd(.$mean)/sqrt(nrow(.))) %>% mutate(dataset = "Global")
+
+#mesophotic sources
+baMeans = baSumm %>% filter(pop.i != pop.j, depth.j == "Mesophotic") %>% summarise(mean = mean(mean), sd = sd(.$mean), se = sd(.$mean)/sqrt(nrow(.))) %>% mutate(dataset = "Mesophotic Source") %>% bind_rows(baMeans, .)
+
+#shallow sources
+baMeans = baSumm %>% filter(pop.i != pop.j, depth.j == "Shallow") %>% summarise(mean = mean(mean), sd = sd(.$mean), se = sd(.$mean)/sqrt(nrow(.))) %>% mutate(dataset = "Shallow Source") %>% bind_rows(baMeans, .)
+
+#mesophotic sinks
+baMeans = baSumm %>% filter(pop.i != pop.j, depth.i == "Mesophotic") %>% summarise(mean = mean(mean), sd = sd(.$mean), se = sd(.$mean)/sqrt(nrow(.)))  %>% mutate(dataset = "Mesophotic Sink") %>% bind_rows(baMeans, .)
+
+#shallow sinks
+baMeans = baSumm %>% filter(pop.i != pop.j, depth.i == "Shallow") %>% summarise(mean = mean(mean), sd = sd(.$mean), se = sd(.$mean)/sqrt(nrow(.)))  %>% mutate(dataset = "Shallow Sink") %>% bind_rows(baMeans, .)
+
+#mesophotic -> shallow
+baMeans = baSumm %>% filter(pop.i != pop.j, depth.j == "Mesophotic", depth.i == "Shallow") %>% summarise(mean = mean(mean), sd = sd(.$mean), se = sd(.$mean)/sqrt(nrow(.))) %>% mutate(dataset = "Mesophotic -> Shallow") %>% bind_rows(baMeans, .)
+
+#mesophotic -> mesophotic
+baMeans = baSumm %>% filter(pop.i != pop.j, depth.j == "Mesophotic", depth.i == "Mesophotic") %>% summarise(mean = mean(mean), sd = sd(.$mean), se = sd(.$mean)/sqrt(nrow(.))) %>% mutate(dataset = "Mesophotic -> Mesophotic") %>% bind_rows(baMeans, .)
+
+#shallow -> mesophotic
+baMeans = baSumm %>% filter(pop.i != pop.j, depth.j == "Shallow", depth.i == "Mesophotic") %>% summarise(mean = mean(.$mean), sd = sd(.$mean), se = sd(.$mean)/sqrt(nrow(.))) %>% mutate(dataset = "Shallow -> Mesophotic") %>% bind_rows(baMeans, .)
+
+#shallow -> shallow
+baMeans = baSumm %>% filter(pop.i != pop.j, depth.j == "Shallow", depth.i == "Shallow") %>% summarise(mean = round(mean(.$mean), 5), sd = round(sd(.$mean), 5), se = round(sd(.$mean)/sqrt(nrow(.)), 3)) %>% mutate(dataset = paste("Shallow -> Shallow")) %>% bind_rows(baMeans, .) %>% relocate(dataset, .before = mean) %>% as.data.frame()
+
+baMeans[,c(2:4)] = baMeans[,c(2:4)] %>% round(4)
+
+baMeans
+
+baMeansTabPub = baMeans %>%
+  flextable() %>%
+  flextable::compose(part = "header", j = "dataset", value = as_paragraph("Dataset")) %>%
+  flextable::compose(part = "header", j = "mean", value = as_paragraph(as_i("m"))) %>%
+  flextable::compose(part = "header", j = "sd", value = as_paragraph("SD")) %>%
+  flextable::compose(part = "header", j = "se", value = as_paragraph("SEM")) %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>%
+  flextable::bold(part = "header") %>%
+  flextable::align(align = "left", part = "all") %>%
+  flextable::autofit()
+
+table1 = read_docx()
+table1 = body_add_flextable(table1, value = baMeansTabPub)
+print(table1, target = "../tables/table1.docx")
+
+baMeansTabPub
+
+```
+
+```{r, migrationPlots}
+baSumm$mean = sprintf('%.3f', baSumm$mean)
+baSumm$mean2 = baSumm$mean
+baSumm$hpdLow = sprintf('%.3f', baSumm$hpdLow)
+baSumm$hpdHigh = sprintf('%.3f', baSumm$hpdHigh)
+
+baLabs = tibble(pop.i = unique(baSumm$pop.i), pop.j = unique(baSumm$pop.j))
+
+migrateA = ggplot(data = baSumm, aes(pop.i, pop.j))+
+  geom_tile(data = subset(baSumm, subset = baSumm$mean2>0.65), fill = "gray35", color = "white") +
+  geom_segment(data = baSumm, aes(x = 0.4755, xend = -0.55, y = pop.j, yend = pop.j, color = pop.j), size = 14) +
+  geom_segment(data = baSumm, aes(x = pop.i, xend = pop.i, y = 0.45, yend = -0.425, color = pop.i), size = 32) +
+  scale_color_manual(values = flPal[c(1:8, 5:8)], guide = NULL) +
+  guides(fill = guide_colorbar(ticks.colour = "black", barwidth = 1, barheight = 10, frame.colour = "black")) +
+  geom_tile(data = subset(baSumm, subset = baSumm$mean<0.65), aes(fill = as.numeric(as.character(mean))), color = "white") +
+  scale_fill_gradientn(colours = paletteer_c("viridis::mako", n = 10, direction = -1)[c(1:7)], limit = c(0,0.16), space = "Lab", name = expression(paste(italic("m"))), na.value = "transparent",  guide = "colourbar", values = c(0, 0.05, 0.1, 0.15, 0.2,0.5,0.75,1)) +
+  geom_text(data = baSumm, aes(x = pop.i, y = pop.j, label = paste(mean, "\n", sep = "")), color = ifelse(baSumm$mean > 0.6, "white", "gray5"), fontface = ifelse(as.numeric(baSumm$hpdLow)>0, "bold", "plain"), size = ifelse(as.numeric(baSumm$hpdLow)>0, 4.75, 4)) +
+  geom_text(data = baSumm, aes(x = pop.i, y = pop.j, label = paste("\n(",hpdLow,"–",hpdHigh, ")", sep = "")), color = ifelse(baSumm$mean > 0.6, "white", "gray5"), size = 3.25) +
+  geom_text(data = (baLabs %>% filter(pop.j %in% c("Tortugas Bank\nMesophotic", "Tortugas Bank\nShallow", "Riley's Hump\nMesophotic", "Riley's Hump\nShallow"))), x = -.02, aes(y = pop.j, label = pop.j), size = 3.75, color = "#FFFFFF", family = "sans") +
+  geom_text(data = (baLabs %>% filter(!pop.j %in% c("Tortugas Bank\nMesophotic", "Tortugas Bank\nShallow", "Riley's Hump\nMesophotic", "Riley's Hump\nShallow"))), x = -.02, aes(y = pop.j, label = pop.j), size = 3.75, color = "#000000", family = "sans") +
+  geom_text(data = (baLabs %>% filter(pop.i %in% c("Tortugas Bank\nMesophotic", "Tortugas Bank\nShallow", "Riley's Hump\nMesophotic", "Riley's Hump\nShallow"))), y = -.01, aes(x = pop.i, label = pop.i), size = 3.75, color = "#FFFFFF", family = "sans") +
+  geom_text(data = (baLabs %>% filter(!pop.i %in% c("Tortugas Bank\nMesophotic", "Tortugas Bank\nShallow", "Riley's Hump\nMesophotic", "Riley's Hump\nShallow"))), y = -.01, aes(x = pop.i, label = pop.i), size = 3.75, color = "#000000", family = "sans") +
+  
+  labs(x = "Sink", y = "Source") +
+  scale_y_discrete(limits = rev(levels(baSumm$pop.i))[c(1:12)], position = "left") +
+  coord_cartesian(xlim = c(1, 12), ylim = c(1, 12), clip = "off") +
+  theme_minimal()
+
+migrate = migrateA + theme(
+  axis.text.x = element_text(vjust = 1, size = 12, hjust = 0.5, color = NA),
+  axis.text.y = element_text(size = 10, color = NA),
+  axis.title.x = element_text(size = 14),
+  axis.title.y = element_text(size = 14),
+  panel.grid.major = element_blank(),
+  axis.ticks = element_blank(),
+  # legend.position = c(1.055, 0.5),
+  legend.direction = "vertical",
+  legend.title = element_text(size = 12, face = "bold")
+)
+
+# migrate
+
+ggsave("../figures/figure5.png", plot = migrate, width = 36, height = 18, units = "cm", dpi = 300)
+```
+
+![](../figures/figure5.png)
 
 
 ### Main cluster
