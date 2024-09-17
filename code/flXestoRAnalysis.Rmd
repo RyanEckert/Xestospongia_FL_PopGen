@@ -1,7 +1,7 @@
 ---
-title: "SEFL *Xestospongia muta* Population Genetics"
+title: "*Xestospongia muta* Population Genetics"
 author: "Ryan Eckert"
-date: "2024-06-25"
+date: "2024-09-13"
 output:
   html_document:
     theme: flatly
@@ -48,6 +48,7 @@ library(magrittr)
 
 #setting working directory to the directory containing this .Rmd file
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 ```
 
 ## Loading required packages
@@ -74,20 +75,14 @@ options("scipen" = 10)
 Making color palettes to use throughout all plots
 
 ```{r, colors}
-# flPal = c("#401718",  "#802d2f",  "#ff595e",  "#ff924c",  "#f8e16f", "#95cf92",  "#369acc",  "#9656a2",  "#cbabd1")[c(2:9)]
-# flPal = c("#401718",  "#802d2f",  "#ff595e",  "#FF914D",  "#f8e16f", "#95cf92",  "#369acc",  "#9656a2",  "#cbabd1")[c(2:9)]
-
 flPal = paletteer_c(`"viridis::turbo"`, 9, direction = -1)[c(2:9)]
 
-# paletteer_d("vapoRwave::vapoRwave")[10])
-
 pink = "#FF6A8BFF"
+
 purple = paletteer_d("vapoRwave::vapoRwave")[10]
 
-# xestoKColPal = c( "#A21150", "#D84D7A", "#E57D7E", "#EBA396", "#F2C5B1")
-
 xestoKColPal = c( "#800E52", "#FF2879", "#E66060", "#FF866B", "#FF8F8F", "#BB3571")
-#"#F32BA3"
+
 ```
 
 Plot themes
@@ -298,17 +293,29 @@ Analyzing 2bRAD generated SNPs (XXX loci) for population
 structure//genetic connectivity across sites and depth zones in FL
 
 ## How many reads?
-```{r, sint read counts}
-# xestoReads = read.delim("../data/snps/sintRawReadCounts", header = FALSE)
-# colnames(xestoReads) = c("sample", "reads")
-# 
-# head(xestoReads)
-# 
-# #total reads
-# sum(xestoReads$reads)
-# 
-# #average reads/sample
-# (sum(xestoReads$reads)/366)
+```{r, xesto read counts}
+xestoReads = read.delim("../data/xestoRawReadCounts", header = FALSE)
+colnames(xestoReads) = c("sample", "reads")
+
+head(xestoReads)
+
+#total reads
+sum(xestoReads$reads)
+
+#average reads/sample
+(sum(xestoReads$reads)/366)
+
+xestoFiltReads = read.delim("../data/xestoFiltReadCounts", header = FALSE)
+
+colnames(xestoFiltReads) = c("sample", "reads")
+
+head(xestoFiltReads)
+
+#total reads
+sum(xestoFiltReads$reads)
+
+#average reads/sample
+(sum(xestoFiltReads$reads)/366)
 
 ```
 
@@ -406,7 +413,7 @@ following pop-gen analyses.
 
 ### Dendrogram without clones
 
-```{r, dend no clones}
+```{r, dend no clones, warning=FALSE, message=FALSE}
 bams = read.csv("../data/flXestoMetaData.csv")[-c(7, 15, 16, 32, 125, 126, 165, 197, 198, 253, 254, 314, 315, 353, 354),] # list of bams files and their populations (tech reps removed)
 bams$sample <- gsub("\\.[1-3]*$", "", bams$sample)
 
@@ -732,7 +739,8 @@ xestoHet = bams %>% left_join(hetK2Data) %>% left_join(hetK4Data)
 ```
 
 ```{r, }
-hetK2AOV = welch_anova_test(xestoHet, k2Het ~ clusterK2) 
+hetK2AOV = welch_anova_test(xestoHet, k2Het ~ clusterK2)
+
 hetK2PH = games_howell_test(xestoHet, k2Het ~ clusterK2)
 
 hetK2PH$p.adj
@@ -745,7 +753,7 @@ hetK4PH = games_howell_test(xestoHet, k4Het ~ clusterK4)
 
 hetK4PH$p.adj
 
-hetK4Letters = data.frame(x = factor(c("Xm1.1", "Xm2", "Xm1.2", "Xm1.3","Admixed")), y = c(0.0025, 0.0025, 0.0025, 0.0025, 0.0025),  grp = c("a", "b", "c", "ac", "cd"))
+hetK4Letters = data.frame(x = factor(c("Xm1", "Xm2", "Xm1.2", "Xm1.3","Admixed")), y = c(0.0025, 0.0025, 0.0025, 0.0025, 0.0025),  grp = c("a", "b", "c", "ac", "cd"))
 
 ```
 
@@ -755,7 +763,7 @@ hetPlotK2 = ggplot(data = xestoHet, aes(x = clusterK2, y = k2Het)) +
   geom_violin(aes(fill = clusterK2, group = clusterK2), adjust = 1, linewidth = 0.4, color = "black", alpha = 1, trim = TRUE, scale = "area", width = 1.2) +
   geom_boxplot(aes(fill = clusterK2, group = clusterK2), width = 0.2, color = "black", fill = "white", outlier.colour = NA, linewidth = 0.4, alpha = 0.5) +  xlab("Lineage") +
   geom_text(data = hetK2Letters, aes(x = x, y = y, label = grp), size = 4) +
-   # annotate(geom = "text", x = 3.65, y =0.0036, label = bquote(italic("F")~" = "~.(hF)*"; "~italic("p")~" < 0.001"), size = 3) +
+   annotate(geom = "text", x = 2.95, y = 0, label = bquote(italic("F")~" = "~.(hetK2AOV$statistic)*"; "~italic("p")~" < 0.001"), size = 3) +
   scale_fill_discrete(type = xestoKColPal[c(1,2,6)], name = "Lineage") +
   xlab("Lineage") +
   ylab("Heterozygosity") +
@@ -771,7 +779,7 @@ hetPlotK4 = ggplot(data = xestoHet, aes(x = clusterK4, y = k4Het)) +
   geom_violin(aes(fill = clusterK4, group = clusterK4), adjust = 1, linewidth = 0.4, color = "black", alpha = 1, trim = TRUE, scale = "area", width = 1.2) +
   geom_boxplot(aes(fill = clusterK4, group = clusterK4), width = 0.2, color = "black", fill = "white", outlier.colour = NA, linewidth = 0.4, alpha = 0.5) +  xlab("Lineage") +
   geom_text(data = hetK4Letters, aes(x = x, y = y, label = grp), size = 4) +
-   # annotate(geom = "text", x = 3.65, y =0.0036, label = bquote(italic("F")~" = "~.(hF)*"; "~italic("p")~" < 0.001"), size = 3) +
+   annotate(geom = "text", x = 4.5, y = 0, label = bquote(italic("F")~" = "~.(hetK4AOV$statistic)*"; "~italic("p")~" < 0.001"), size = 3) +
   scale_fill_discrete(type = xestoKColPal[c(1,2,3,4,6)], name = "Lineage") +
   xlab("Lineage") +
   ylab("Heterozygosity") +
@@ -786,7 +794,7 @@ hetPlotK4
 
 
 ```{r, fst}
-pop.order = c("Xm1.3", "Xm1.2", "Xm2", "Xm1.1")
+pop.order = c("Xm1.3", "Xm1.2", "Xm2", "Xm1")
 
 # reads in fst 
 fstMa1 <- read.delim("../data/xestoFstK4.out") %>% dplyr::select(-fst) %>% df_to_pw_mat(., "pop1", "pop2", "weightedFst")
@@ -802,7 +810,6 @@ fstMa <- as.data.frame(fstMa)
 
 # rearrange and reformat matrix
 fstMa$Pop = factor(row.names(fstMa), levels = unique(pop.order))
-
 
 
 # melt matrix data (turn from matrix into long dataframe)
@@ -895,13 +902,13 @@ admixK3 = bams %>%
   cbind(K3ad) %>% 
   dplyr::rename("Xm1" = "V6", "Xm2" = "V7", "Xm3" = "V8")
 
-admixK3afd = admixK3 %>% mutate(cluster = ifelse(Xm1 >= .97, "Xm1", ifelse(Xm2 >= .97, "Xm2", ifelse(between(Xm1, 0.40, 0.60) & between(Xm2, 0.40, 0.60) , "Hyb", ifelse(between(Xm1, 0.65, 0.85) & between(Xm2, 0.15, 0.35),"Hyb", ifelse(between(Xm2, 0.65, 0.85) & between(Xm1, 0.15, 0.35),"Hyb", "NA")))))) %>% filter(cluster != "NA")
+admixK3div = admixK3 %>% mutate(cluster = ifelse(Xm1 >= .97, "Xm1", ifelse(Xm2 >= .97, "Xm2", ifelse(between(Xm1, 0.40, 0.60) & between(Xm2, 0.40, 0.60) , "Hyb", ifelse(between(Xm1, 0.65, 0.85) & between(Xm2, 0.15, 0.35),"Hyb", ifelse(between(Xm2, 0.65, 0.85) & between(Xm1, 0.15, 0.35),"Hyb", "NA")))))) %>% filter(cluster != "NA")
 
-admixK3afd %>% group_by(cluster) %>% summarise(n = n())
+admixK3div %>% group_by(cluster) %>% summarise(n = n())
 
-flXestoAdmixK3afd =  admixK3afd %>% filter(sample != "FKX006")
+flXestoAdmixK3div =  admixK3div %>% filter(sample != "FKX006")
 # 
-# flXestoAdmixK3Melt = melt(flXestoAdmixK3afd, id.vars=c("sample", "site", "depth", "depthm"), variable.name="Ancestry", value.name="Fraction")
+# flXestoAdmixK3Melt = melt(flXestoAdmixK3div, id.vars=c("sample", "site", "depth", "depthm"), variable.name="Ancestry", value.name="Fraction")
 
 K2ad = read.table("../data/admix/noClones/K2.output") %>% dplyr::select(V6, V7) 
 K2ad %>% summarise(sum(V6),sum(V7))
@@ -910,15 +917,15 @@ admixK2 = bams %>%
   cbind(K2ad) %>% 
   dplyr::rename("Xm1" = "V6", "Xm2" = "V7")
 
-admixK2afd = admixK2 %>% mutate(cluster = ifelse(Xm1 >= 1, "Xm1", ifelse(Xm2 >= 1, "Xm2", ifelse(between(Xm1, 0.40, 0.60) & between(Xm2, 0.40, 0.60) , "Hyb", ifelse(between(Xm1, 0.60, 0.90) & between(Xm2, 0.1, 0.40),"Hyb", ifelse(between(Xm2, 0.60, 0.90) & between(Xm1, 0.1, 0.40),"Hyb", "NA")))))) %>% filter(cluster != "NA")
+admixK2div = admixK2 %>% mutate(cluster = ifelse(Xm1 >= 1, "Xm1", ifelse(Xm2 >= 1, "Xm2", ifelse(between(Xm1, 0.40, 0.60) & between(Xm2, 0.40, 0.60) , "Hyb", ifelse(between(Xm1, 0.60, 0.90) & between(Xm2, 0.1, 0.40),"Hyb", ifelse(between(Xm2, 0.60, 0.90) & between(Xm1, 0.1, 0.40),"Hyb", "NA")))))) %>% filter(cluster != "NA")
 
-flXestoAdmixK2 = admixK2afd %>% filter(sample %in% flXestoAdmixK3afd$sample) %>% arrange(-Xm1)
+flXestoAdmixK2 = admixK2div %>% filter(sample %in% flXestoAdmixK3div$sample) %>% arrange(-Xm1)
 flXestoAdmixK2$ord = c(1:length(flXestoAdmixK2$sample)) 
 
 flXestoAdmixK2Melt = melt(flXestoAdmixK2, id.vars=c("sample", "site", "depth", "depthm", "cluster", "ord"), variable.name="Lineage", value.name="Fraction")
 
 
-admixPlotK2AFDa = ggplot(data = flXestoAdmixK2Melt, aes(x = ord, y = Fraction, fill = Lineage, order = ord)) +
+admixPlotK2Diva = ggplot(data = flXestoAdmixK2Melt, aes(x = ord, y = Fraction, fill = Lineage, order = ord)) +
   geom_bar(stat = "identity", position = "fill", width = 1, colour = "grey25", linewidth = 0.2) +
   scale_fill_manual(values = xestoKColPal) +
   scale_color_manual(values = rev(flPal)) +
@@ -928,54 +935,54 @@ admixPlotK2AFDa = ggplot(data = flXestoAdmixK2Melt, aes(x = ord, y = Fraction, f
 theme_bw()
 
 
-admixPlotK2AFD = admixPlotK2AFDa + 
+admixPlotK2Div = admixPlotK2Diva + 
   admixTheme +
   theme(legend.position = "right")
 
-admixPlotK2AFD
+admixPlotK2Div
 
-afd_groups = data.frame("sample" = flXestoAdmixK2$sample, "group" = flXestoAdmixK2$cluster) %>% arrange(sample)
+div_groups = data.frame("sample" = flXestoAdmixK2$sample, "group" = flXestoAdmixK2$cluster) %>% arrange(sample)
 
-afd_groups$sample = gsub(pattern = "SF", replacement = "sf_", afd_groups$sample)
-afd_groups$sample = gsub(pattern = "FK", replacement = "fk_", afd_groups$sample)
-afd_groups$sample = paste(afd_groups$sample, ".trim.bt2.bam", sep = "")
+div_groups$sample = gsub(pattern = "SF", replacement = "sf_", div_groups$sample)
+div_groups$sample = gsub(pattern = "FK", replacement = "fk_", div_groups$sample)
+div_groups$sample = paste(div_groups$sample, ".trim.bt2.bam", sep = "")
 
-afd_groups$sample
+div_groups$sample
 
-write_delim(afd_groups, "../data/afd_groups", col_names = FALSE)
+write_delim(div_groups, "../data/div_groups", col_names = FALSE)
 
-afd_groups %>% select("sample") %>% write_delim(., "../data/afd_samples", col_names = FALSE)
+div_groups %>% select("sample") %>% write_delim(., "../data/div_samples", col_names = FALSE)
 
 ```
 
 
-```{r, afd tree}
-maAFD = as.matrix(read.table("../data/xestoAFD.ibsMat"))
+```{r, div tree}
+maDiv = as.matrix(read.table("../data/xestoDiv.ibsMat"))
 
-afdSamples = admixK2afd %>% filter(sample %in% flXestoAdmixK3afd$sample) %>% select(sample)
+divSamples = admixK2div %>% filter(sample %in% flXestoAdmixK3div$sample) %>% select(sample)
 
-dimnames(maAFD) = list(afdSamples[,1],afdSamples[,1])
+dimnames(maDiv) = list(divSamples[,1],divSamples[,1])
 
 
-trafd = hclust(dist(maAFD),"ave") 
+trdiv = hclust(dist(maDiv),"ave") 
 
-  p1afd = ggtree(trafd, layout = "rectangular") #+ ggtree::geom_tiplab()
+  p1div = ggtree(trdiv, layout = "rectangular") #+ ggtree::geom_tiplab()
 
-  p2afd = facet_plot(p1afd, panel = "location", data=admixK2, geom = geom_tile, mapping = aes(x = 1, fill = site), size = 0.1, color = "grey25") + 
+  p2div = facet_plot(p1div, panel = "location", data=admixK2, geom = geom_tile, mapping = aes(x = 1, fill = site), size = 0.1, color = "grey25") + 
     scale_fill_manual("Site", values = flPal, guide = guide_legend(ncol = 2, order = 1)) + 
     theme(legend.key.size = unit(.8, "line")) +
     new_scale_fill() 
 
-  p3afd = facet_plot(p2afd, panel = "depth zone", data=admixK2, geom = geom_tile, mapping = aes(x = 1, fill = depth), size = 0.1, color = "grey25") +
+  p3div = facet_plot(p2div, panel = "depth zone", data=admixK2, geom = geom_tile, mapping = aes(x = 1, fill = depth), size = 0.1, color = "grey25") +
     scale_fill_manual("Depth zone", values = c("#A7E1BCFF", "#414083FF"), guide = guide_legend(ncol = 2, order = 2)) +
     new_scale_fill()
   
-  p4afd = facet_plot(p3afd, panel = "depth", data=admixK2, geom = geom_tile, mapping = aes(x = 1, fill = depthm), size = 0.1, color = "grey25") + 
+  p4div = facet_plot(p3div, panel = "depth", data=admixK2, geom = geom_tile, mapping = aes(x = 1, fill = depthm), size = 0.1, color = "grey25") + 
     scale_fill_viridis_c("Depth (m)", option = "mako", direction = -1, guide = guide_colorbar(order = 2, direction = "horizontal")) +
     theme(legend.title.position = "top") +
     new_scale_fill()
 
-  p5afd = facet_plot(p4afd, panel="K = 2", data = admixK2_melt, geom=geom_barh, width = 1.0, mapping = aes(x = value, fill = variable), 
+  p5div = facet_plot(p4div, panel="K = 2", data = admixK2_melt, geom=geom_barh, width = 1.0, mapping = aes(x = value, fill = variable), 
                 stat ='identity', size = 0.15, color = "grey25") +
     scale_fill_manual("Lineage",values = xestoKColPal[1:2], guide = guide_legend(ncol = 2, order = 4)) + 
     theme(strip.text = element_blank(),
@@ -985,53 +992,53 @@ trafd = hclust(dist(maAFD),"ave")
           legend.key = element_blank(),
           legend.margin = margin(c(0,0,0,0),unit = "pt"))
 
-p5afd 
+p5div 
 
-afdTree =  facet_widths(p5afd, widths = c(0.25, 0.025, 0.025, 0.025, 0.25))
+divTree =  facet_widths(p5div, widths = c(0.25, 0.025, 0.025, 0.025, 0.25))
   
 ```
 
 
-```{r, pcangsd afd}
-covAFD = read.table("../data/pcangsd/flXestoAFDPcangsd.cov") %>% as.matrix()
+```{r, pcangsd div}
+covDiv = read.table("../data/pcangsd/flXestoDivPcangsd.cov") %>% as.matrix()
 
-pcaEigAFD = eigen(covAFD)
-xestoPcaVarAFD = pcaEigAFD$values/sum(pcaEigAFD$values)*100
+pcaEigDiv = eigen(covDiv)
+xestoPcaVarDiv = pcaEigDiv$values/sum(pcaEigDiv$values)*100
 
-head(xestoPcaVarAFD)
+head(xestoPcaVarDiv)
 
-pcangsdAFD = bams %>%  dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM) %>% filter(sample %in% flXestoAdmixK2$sample) %>% left_join(flXestoAdmixK2)
-
-
-pcangsdAFD$PC1 = pcaEigAFD$vectors[,1]
-pcangsdAFD$PC2 = pcaEigAFD$vectors[,2]
-pcangsdAFD$PC3 = pcaEigAFD$vectors[,3]
-pcangsdAFD$PC4 = pcaEigAFD$vectors[,4]
-
-pcangsdAFD = pcangsdAFD %>% mutate(cluster = ifelse(Xm1 >= 0.98, "Xm1", ifelse(Xm2 >= 0.98, "Xm2", "Admixed")))
+pcangsdDiv = bams %>%  dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM) %>% filter(sample %in% flXestoAdmixK2$sample) %>% left_join(flXestoAdmixK2)
 
 
-pcangsdAFD$cluster = as.factor(pcangsdAFD$cluster)
-levels(pcangsdAFD$cluster)
-pcangsdAFD$cluster = factor(pcangsdAFD$cluster, levels = levels(pcangsdAFD$cluster)[c(2, 3, 1)]) 
+pcangsdDiv$PC1 = pcaEigDiv$vectors[,1]
+pcangsdDiv$PC2 = pcaEigDiv$vectors[,2]
+pcangsdDiv$PC3 = pcaEigDiv$vectors[,3]
+pcangsdDiv$PC4 = pcaEigDiv$vectors[,4]
+
+pcangsdDiv = pcangsdDiv %>% mutate(cluster = ifelse(Xm1 >= 0.98, "Xm1", ifelse(Xm2 >= 0.98, "Xm2", "Admixed")))
+
+
+pcangsdDiv$cluster = as.factor(pcangsdDiv$cluster)
+levels(pcangsdDiv$cluster)
+pcangsdDiv$cluster = factor(pcangsdDiv$cluster, levels = levels(pcangsdDiv$cluster)[c(2, 3, 1)]) 
 
 ```
 
 
 Plot PCA
 
-```{r, pca plots afd}
-pcaPlot1AFDa = ggplot() +
+```{r, pca plots div}
+pcaPlot1Diva = ggplot() +
   geom_hline(yintercept = 0, color = "gray90", size = 0.25) +
   geom_vline(xintercept = 0, color = "gray90", size = 0.25) +
-  geom_point(data = pcangsdAFD, aes(x = PC1, y = PC2, fill = cluster, shape = depth), color = "black", stroke = 0.25, size = 4, show.legend = TRUE) +
+  geom_point(data = pcangsdDiv, aes(x = PC1, y = PC2, fill = cluster, shape = depth), color = "black", stroke = 0.25, size = 4, show.legend = TRUE) +
   scale_fill_manual(name = "Lineage", values = xestoKColPal[c(1,2,6)]) +
   scale_shape_manual(name = "Depth zone", values = c(21,23)) +
-  labs(x = paste0("PC 1 (", format(round(xestoPcaVarAFD[1], 1), nsmall = 1)," %)"), y = paste0("PC 2 (", format(round(xestoPcaVarAFD[2], 1), nsmall = 1), " %)")) +
+  labs(x = paste0("PC 1 (", format(round(xestoPcaVarDiv[1], 1), nsmall = 1)," %)"), y = paste0("PC 2 (", format(round(xestoPcaVarDiv[2], 1), nsmall = 1), " %)")) +
   guides(shape = guide_legend(override.aes = list(size = 2, stroke = 0.25, alpha = NA), order = 2, ncol = 1), fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = xestoKColPal[c(1,2,6)], alpha = NA), order = 1, ncol = 1)) +
   theme_bw()
 
-pcaPlot1AFD = pcaPlot1AFDa +
+pcaPlot1Div = pcaPlot1Diva +
   pcaTheme +
   theme(legend.position = c(0.12, 0.25),
         legend.key.spacing = unit(2, "pt"),
@@ -1039,12 +1046,12 @@ pcaPlot1AFD = pcaPlot1AFDa +
         legend.margin = margin(4,2,4,2, unit = "pt"),
         legend.background = element_blank())
 
-pcaPlot1AFD
+pcaPlot1Div
 
 ```
 
 
-```{r, afd}
+```{r, div}
 xestoAF = read.delim(file = "../data/flXestoAlleleFreq.txt")
 xestoAF$chrom = paste(xestoAF$chrom, xestoAF$pos, sep = "_")
 
@@ -1078,7 +1085,7 @@ levels(altSnps$pop) = c("Xm1","Admixed","Xm2")
 altSnpsMelt = melt(altSnps, id.vars = c("chrom", "pop"))
 
 
-afdPlot = ggplot() +
+divPlot = ggplot() +
   geom_tile(data = altSnpsMelt, aes(x = pop, y = chrom, fill = value)) +
 # ggplot2::geom_text(data = altSnpsMelt, aes(x = pop, y = chrom, label = round(value, 2))) + # scale_fill_gradientn(colors = rev(c("#645A9FFF", "#B696D6FF", "#F6E2FBFF")))
 scale_fill_gradientn(name = "Major allele \nfrequency",colors = c("#3FB8AFFF", "#ADCEA9", "#DAD8A7", "#E4AB9B","#FF3D7FFF")) +
@@ -1103,29 +1110,29 @@ scale_fill_gradientn(name = "Major allele \nfrequency",colors = c("#3FB8AFFF", "
 ```
 
 
-afd heterozygosities
+Divergent snps heterozygosities
 
-```{r, afdHet}
-afdHet = read.delim("../data/afdHetOut", header = FALSE, sep = " ") %>% rename("het" = "V2") %>% cbind(lineage = afd_groups$group, sample = afd_groups$sample) %>% select(-V1)
+```{r, divHet}
+divHet = read.delim("../data/divHetOut", header = FALSE, sep = " ") %>% rename("het" = "V2") %>% cbind(lineage = div_groups$group, sample = div_groups$sample) %>% select(-V1)
 
-afdHet$lineage = as.factor(afdHet$lineage)
+divHet$lineage = as.factor(divHet$lineage)
 
-afdHet$lineage = factor(afdHet$lineage, levels = levels(afdHet$lineage)[c(2,1,3)])
-levels(afdHet$lineage) = c("Xm1", "Admixed", "Xm2")
+divHet$lineage = factor(divHet$lineage, levels = levels(divHet$lineage)[c(2,1,3)])
+levels(divHet$lineage) = c("Xm1", "Admixed", "Xm2")
 
-afdAOV = welch_anova_test(afdHet, het ~ lineage) 
-afdPH = games_howell_test(afdHet, het ~ lineage)
+divAOV = welch_anova_test(divHet, het ~ lineage) 
+divPH = games_howell_test(divHet, het ~ lineage)
 
-afdPH$p.adj
+divPH$p.adj
 
 hetLetters = data.frame(x = factor(c("Xm1", "Admixed", "Xm2")), y = c(1, 1, 1),  grp = c("a", "b", "a"))
 
 
-hetPlotAFD = ggplot(data = afdHet, aes(x = lineage, y = het)) +
+hetPlotDiv = ggplot(data = divHet, aes(x = lineage, y = het)) +
   geom_violin(aes(fill = lineage, group = lineage), adjust = 1, linewidth = 0.4, color = "black", alpha = 1, trim = TRUE, scale = "area", width = 1.2) +
   geom_boxplot(aes(fill = lineage, group = lineage), width = 0.2, color = "black", fill = "white", outlier.colour = NA, linewidth = 0.4, alpha = 0.5) +  xlab("Lineage") +
   geom_text(data = hetLetters, aes(x = x, y = y, label = grp), size = 4) +
-   # annotate(geom = "text", x = 3.65, y =0.0036, label = bquote(italic("F")~" = "~.(hF)*"; "~italic("p")~" < 0.001"), size = 3) +
+   annotate(geom = "text", x = 2.9, y =0.85, label = bquote(italic("F")~" = "~.(divAOV$statistic)*"; "~italic("p")~" < 0.001"), size = 3) +
   scale_fill_discrete(type = xestoKColPal[c(1, 6, 2)], name = "Lineage") +
   xlab("Lineage") +
   ylab("Heterozygosity") +
@@ -1133,30 +1140,30 @@ hetPlotAFD = ggplot(data = afdHet, aes(x = lineage, y = het)) +
   theme_bw() + 
   violinTheme
 
-hetPlotAFD
+hetPlotDiv
 
 ```
 
 
-combined plots
+combined plots:
 
-```{r, AFDplots}
-xmAFD = ((afdTree) /((pcaPlot1AFD + hetPlotAFD + afdPlot) + plot_layout(widths = c(3, 2, 1)))) + plot_layout(heights = c(2, 1.5)) +
+```{r, DivSnpplots}
+xmDiv = ((divTree) /((pcaPlot1Div + hetPlotDiv + divPlot) + plot_layout(widths = c(3, 2, 1)))) + plot_layout(heights = c(2, 1.5)) +
   # plot_layout(design = layout) +
   plot_annotation(tag_levels = 'A') &
   theme(plot.tag = element_text(size = 20),
         legend.text = element_text(size = 10),
         legend.title = element_text(size = 10))
   
-xmAFD
+xmDiv
 
-ggsave("../figures/Figure4.png", plot = xmAFD, height = 7, width = 12, units = "in", dpi = 300)
+ggsave("../figures/Figure4.png", plot = xmDiv, height = 7, width = 12, units = "in", dpi = 300)
 ```
 
 
 ## Genetic connectivity
 
-Migration
+### Migration
 
 ```{r, migration}
 mainBams = read.delim("../data/bamsMainCluster", header = FALSE) %>% rename("sample" = "V1") 
@@ -1189,23 +1196,35 @@ bayesian_deviance <- function(trace, burnin = 0, sampling.interval = 0){
   return(D)
 }
 
+baRuns = setNames(data.frame(matrix(ncol = 2, nrow = length(fileList))), c("file", "bD"))
+
 for(i in 1:length(fileList)){
-  assign(fileList[i], read.delim(paste("../data/bayesass/", fileList[i], ".txt", sep = ""))) %>% dplyr::select(-last_col())
-  print(paste(fileList[i], bayesian_deviance(get(fileList[i]), burnin = 2000000, sampling.interval = 1000)))
+  assign(fileList[i], read.delim(paste("../data/bayesass/", fileList[i], ".txt", sep = ""))) %>% dplyr::select(-last_col()) 
+  baRuns$file[i] = fileList[i]
+  baRuns$bD[i] = (bayesian_deviance(get(fileList[i]), burnin = 2000000, sampling.interval = 1000))
 }
+
+bestBA = baRuns %>% dplyr::filter(bD == min(bD)) %>% select(file) %>% as.list()
 
 #[1] "BA3trace.01 4277982.0575"
 #[1] "BA3trace.02 4278000.6675"
 #[1] "BA3trace.03 4277371.5925"
 #[1] "BA3trace.04 4274620.0525"
+#[1] "BA3trace.05 4278321.1175"
+#[1] "BA3trace.06 4277084.2950"
+#[1] "BA3trace.07 4276766.8200"
+#[1] "BA3trace.08 4277712.3800"
+#
+
+bestBA
 
 ```
 
 All traces have similar deviance (this is good!).
-Using the trace with the lowest deviance (BA3trace.02.txt, in this case)
+Using the trace with the lowest deviance (`r bestBA`, in this case)
 
 ```{r, BA3}
-bayesAss = read.delim("../data/bayesass/BA3trace.04.txt") %>% filter(State > 2000000) %>% dplyr::select(-State, -LogProb, -X)
+bayesAss = read.delim(paste("../data/bayesass/",bestBA,".txt", sep = "")) %>% filter(State > 2000000) %>% dplyr::select(-State, -LogProb, -X)
 
 baMean = bayesAss %>% summarise(across(everything(), list(mean))) %>% t() %>% as_tibble() %>% rename(., mean=V1) %>% mutate(pops = colnames(bayesAss))
 
@@ -1326,7 +1345,7 @@ baLabs = tibble(pop.i = unique(baSumm$pop.i), pop.j = unique(baSumm$pop.j))
 
 migrateA = ggplot(data = baSumm, aes(pop.i, pop.j))+
   geom_tile(data = subset(baSumm, subset = baSumm$mean2>0.65), fill = "gray35", color = "white") +
-  geom_segment(data = baSumm, aes(x = 0.4755, xend = -0.55, y = pop.j, yend = pop.j, color = pop.j), size = 14) +
+  geom_segment(data = baSumm, aes(x = 0.4755, xend = -0.55, y = pop.j, yend = pop.j, color = pop.j), size = 16) +
   geom_segment(data = baSumm, aes(x = pop.i, xend = pop.i, y = 0.45, yend = -0.425, color = pop.i), size = 32) +
   scale_color_manual(values = flPal[c(1:8, 5:8)], guide = NULL) +
   guides(fill = guide_colorbar(ticks.colour = "black", barwidth = 1, barheight = 10, frame.colour = "black")) +
@@ -1359,6 +1378,7 @@ migrate = migrateA + theme(
 # migrate
 
 ggsave("../figures/figure5.png", plot = migrate, width = 36, height = 18, units = "cm", dpi = 300)
+
 ```
 
 ![](../figures/figure5.png)
@@ -1373,7 +1393,7 @@ bamsMain = read.delim("../data/pcangsd/mainCluster", header = FALSE) %>% rename(
 
 dimnames(maMain) = list(bamsMain[,1],bamsMain[,1])
 
-pcAdmixMain = read.table("../data/admix/main/K3main.output") %>% dplyr::select(V6, V7, V8) %>% dplyr::rename("Xm1.1" = "V6", "Xm1.2" = "V7", "Xm1.3" = "V8") %>% cbind(bamsMain)
+pcAdmixMain = read.table("../data/admix/main/K3main.output") %>% dplyr::select(V6, V7, V8) %>% dplyr::rename("Xm1" = "V6", "Xm1.2" = "V7", "Xm1.3" = "V8") %>% cbind(bamsMain)
 
 pcAdmixMainMelt = melt(pcAdmixMain, id.vars = c("sample", "site", "depth", "depthm"))
 
@@ -1417,7 +1437,7 @@ covMain = read.table("../data/pcangsd/flXestoMainPcangsd.cov") %>% as.matrix()
 
 pcAdmixMain = read.table("../data/admix/main/K3main.output") %>% dplyr::select(V6, V7, V8)
 
-pcAdmixMain = pcAdmixMain %>% dplyr::rename("Xm1.1" = "V6", "Xm1.2" = "V7", "Xm1.3" = "V8")
+pcAdmixMain = pcAdmixMain %>% dplyr::rename("Xm1" = "V6", "Xm1.2" = "V7", "Xm1.3" = "V8")
   
 pcaEigMain = eigen(covMain)
 xestoMainPcaVar = pcaEigMain$values/sum(pcaEigMain$values)*100
@@ -1442,7 +1462,7 @@ pcangsdMain$PC3 = pcaEigMain$vectors[,3]
 pcangsdMain$PC4 = pcaEigMain$vectors[,4]
 
 
-pcangsdClustMain = pcAdmixMain %>% mutate(cluster = ifelse(Xm1.1 >=0.75, "Xm1.1", ifelse(Xm1.2 >= 0.75, "Xm1.2", ifelse(Xm1.3 >= 0.75, "Xm1.3", "Admixed"))))
+pcangsdClustMain = pcAdmixMain %>% mutate(cluster = ifelse(Xm1 >=0.75, "Xm1", ifelse(Xm1.2 >= 0.75, "Xm1.2", ifelse(Xm1.3 >= 0.75, "Xm1.3", "Admixed"))))
 
 
 pcangsdMain = pcangsdMain %>% mutate(cluster = pcangsdClustMain$cluster)

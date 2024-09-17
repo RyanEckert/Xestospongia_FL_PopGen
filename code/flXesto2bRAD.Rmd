@@ -202,6 +202,17 @@ sbatch downloadReads.slurm
 ```
 <br>
 
+How many reads before filtering?
+```{bash, read counts}
+echo '#!/bin/bash' >rawReads
+echo readCounts.sh -e .fastq -o xestoRaw >>rawReads
+
+sbatch -o rawReads.o%j -e rawReads.e%j rawReads --mail-type=ALL --mail-user=reckert2017@fau.edu
+
+```
+
+<br>
+
 ## T R I M M I N G &nbsp; & &nbsp; F I L T E R I N G
 ***
 
@@ -681,7 +692,7 @@ Create a file with 50 replicate simulations for each value of K 1-11 (num pops +
 cd noClones
 mv ../*NoClones* .
 
-ngsAdmixLauncher.py -f xestoNoClones.beagle.gz --maxK 11 -r 20 -n flXestoNoClones --launcher -e reckert2017@fau.edu
+ngsAdmixLauncher.py -f xestoNoClones.beagle.gz --maxK 15 -r 20 -n flXestoNoClones --launcher -e reckert2017@fau.edu
 sbatch --mem=200GB flXestoNoClonesNgsAdmix.slurm
 
 
@@ -689,16 +700,8 @@ mkdir ../main
 cd ../main
 mv ../*Main* .
 
-ngsAdmixLauncher.py -f xestoMain.beagle.gz --maxK 11 -r 20 -n flXestoMain --launcher -e reckert2017@fau.edu
+ngsAdmixLauncher.py -f xestoMain.beagle.gz --maxK 15 -r 20 -n flXestoMain --launcher -e reckert2017@fau.edu
 sbatch --mem=200GB flXestoMainNgsAdmix.slurm
-
-
-mkdir ../afd
-cd ../afd
-mv ../*AFD* .
-
-ngsAdmixLauncher.py -f xestoAFD.beagle.gz --maxK 6 -r 20 -n flXestoAFD --launcher -e reckert2017@fau.edu
-sbatch --mem=200GB flXestoAFDNgsAdmix.slurm
 
 ```
 
@@ -732,14 +735,15 @@ R
 You are now using R in the terminal
 
 ```{r, format Clumpak}
-logs <- as.data.frame(read.table("flXestoMainNgsAdmixLogfile"))
+logs <- as.data.frame(read.table("flXestoNoClonesNgsAdmixLogfile"))
 
 #output is organized with 10, 11 preceding 1, 2, 3 etc.
-logs$K <- c(rep("10", 20), rep("11", 20), rep("1", 20), rep("2", 20), rep("3", 20),
+logs$K <- c(rep("10", 20), rep("11", 20), rep("12", 20), rep("13", 20), rep("14", 20), rep("15", 20), rep("1", 20), rep("2", 20), rep("3", 20),
 rep("4", 20), rep("5", 20), rep("6", 20),
     rep("7", 20), rep("8", 20), rep("9", 20))
-write.table(logs[, c(2, 1)], "flXestoMainNgsAdmixLogfile_formatted", row.names = F,
-        col.names = F, quote = F)
+
+write.table(logs[, c(2, 1)], "flXestoNoClonesNgsAdmixLogfile_formatted", row.names = F, col.names = F, quote = F)
+
 quit()
 # No need to save workspace image [press 'n']
 n
@@ -748,7 +752,7 @@ n
 
 Check that your formatted logfile has the appropriate number of entries
 ```{bash}
-cat flXestoMainNgsAdmixLogfile_formatted | wc -l
+cat flXestoNoClonesNgsAdmixLogfile_formatted | wc -l
 
 ```
 
@@ -770,6 +774,7 @@ zip -r flXestoNoClonesQ.zip flXestoNoClonesQ
 
 ```scp``` xestoNoClones* to local machine for further analyses with ```R```
 
+Repeat these steps as necessary for all ```ngsAdmix``` runs
 ```{bash, admixture}
  #alternatively, to use real ADMIXTURE on called SNPs (requires plink and ADMIXTURE):
 mkdir ~/2bRAD/flXesto/admixture
@@ -978,7 +983,12 @@ sbatch -e BayesAss$i.e%j -o BayesAss$i.o%j -p longq7 --mem=200GB --exclusive --m
 cd ..;
 done
 
-# after all runs complete copy files to main BayesAss directory
+```
+<br>
+
+After all runs complete copy files to main ```BayesAss``` directory
+
+```{bash, BA3 out}
 cd ~/2bRAD/flXesto/BA3
 
 #cp run*/*Out.txt .
@@ -986,8 +996,6 @@ cd ~/2bRAD/flXesto/BA3
 for i in {01..10}; do 
 cp run$i/BA3trace.txt BA3trace.$i.txt;
 done
-
-scancel 15124929 15124930 15124931 15124932 15124933 15124934 15124935 15124936 15124937
 
 ```
 
