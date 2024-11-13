@@ -60,11 +60,16 @@ if (!require("pacman")) install.packages("pacman")
 
 pacman::p_load_gh("pmartinezarbizu/pairwiseAdonis/pairwiseAdonis", "ropensci/rnaturalearthhires", "KarstensLab/microshades")
 
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# BiocManager::install("ggtree")
+
 pacman::p_load("cowplot", "car", "ggrepel", "ggspatial", "ggstance", "ggtreeExtra", "ggtree", "paletteer", "patchwork", "rgdal", "rnaturalearth", "sf", "Hmisc", "MCMC.OTU", "pairwiseAdonis", "RColorBrewer", "Redmonder", "flextable", "lubridate", "officer", "adegenet", "dendextend", "gdata", "ggdendro", "hierfstat", "kableExtra", "poppr", "reshape2", "StAMPP", "vcfR", "vegan", "boa", "magick", "rgeos", "sdmpredictors", "ggcorrplot", "tidyverse", "TeachingDemos", "LaplacesDemon", "adespatial", "ggnewscale", "ggbeeswarm", "multcomp", "rstatix", "R.utils", "graph4lg")
 
 options("scipen" = 10)
 
-# load("fknmsSint.RData")
+# load("flXesto.RData")
 
 ```
 
@@ -125,7 +130,8 @@ pcaTheme = theme(axis.title.x = element_text(color = "black", size = 10),
   
 admixTheme = theme(
   panel.grid = element_blank(),
-  panel.background = element_rect(fill = "gray85"),
+  # panel.background = element_rect(fill = "gray85"),
+  panel.background = element_blank(),
   plot.background = element_blank(),
   panel.border = element_rect(fill = NA, color = "black", size = 0.75, linetype = "solid"),
   panel.spacing.x = grid:::unit(0.05, "lines"),
@@ -194,7 +200,8 @@ flPops = flSites %>% group_by(region) %>% summarise(latDD = mean(latDD), longDD 
 
 flSampleSites = flSites %>% group_by(region, site, depthZone) %>% summarise(latDD = min(latDD), longDD = min(longDD))
 
-fknmsBounds = read.csv("../data/shp/fknmsSPA.csv", header = TRUE)
+# fknmsBounds = read.csv("../data/shp/fknmsSPA.csv", header = TRUE)
+fknmsBounds = read_sf("../data/shp/fknms_py.shp") %>% st_transform(crs = 4326)
 coralECA = read_sf("../data/shp/SEFLCoralReefEcosystemConservationArea.shp") %>% st_transform(crs = 4326)
 states = st_as_sf(ne_states(country = c("United States of America")), scale = "count",  crs = 4326) %>% filter(name_en %in% c("Florida", "Georgia", "Alabama"))
 countries = st_as_sf(ne_countries(country = c("Cuba", "Mexico", "The Bahamas", "Bermuda"), scale = "Large"), crs = 4326)
@@ -203,6 +210,12 @@ cuba = read_sf("../data/shp/cubaShoreline.shp") %>% st_transform(crs = 4326)
 florida = read_sf("../data/shp/floridaShoreline.shp") %>% st_transform(crs = 4326)
 bathy = read_sf("../data/shp/flBathy.shp") %>% st_transform(crs = 4326) %>% subset(subset = DATASET %in% c("fl_shelf", "fl_coast"))
 tortugasBathy = read_sf("../data/shp/tortugasBathy.shp") %>% st_transform(crs = 4326)
+
+MPA = c("KJCRPA", "FKNMS")
+latDD = 26
+longDD = -81
+
+bounds = data.frame(MPA,latDD,longDD)
 
 ```
 
@@ -213,14 +226,16 @@ zoomed in map of the colony locations. We use `ggspatial` to add a north
 arrow and scale bar to the main map.
 
 ```{r, maps}
+purples = c("purple1", "purple4")
+
 floridaMap = ggplot() +
-  geom_polygon(data = fknmsBounds[fknmsBounds$type == "Sanctuary",], aes(x = long, y = lat, group = location), alpha = 0.1, fill = "black", color =  "black") +
-  geom_polygon(data = fknmsBounds[fknmsBounds$location == "FKNMS2",], aes(x = long, y = lat), fill = "aliceblue", color = NA) +
-   geom_sf(data = coralECA, fill = "black", color = "black", alpha = 0.1, linewidth = 0.5) +
-  # geom_polygon(data = fknmsBounds, aes(x = long, y = lat, color = type, group = location), fill = NA, linewidth = 0) +
-  scale_fill_manual(values = flPal, name = "Site") +
-  scale_color_manual(values = c("gray30",purple), name = "Boundaries", labels = c("FKNMS", "SPA")) +
-  
+   geom_point(data = bounds, aes(x = longDD, y = latDD, fill = MPA, color = MPA), alpha = 0.1, shape = 22) +
+   scale_fill_manual(values = purples, guide = "none") +
+   ggnewscale::new_scale_fill() +
+   scale_color_manual(values = purples, name = "MPA") +
+   geom_sf(data = fknmsBounds, fill = purples[1], color = purples[1], alpha = 0.1, linewidth = 0.5) +
+   geom_sf(data = coralECA, fill = purples[2], color = purples[2], alpha = 0.1, linewidth = 0.5) +
+   scale_fill_manual(values = flPal, name = "Site") +
   scale_shape_manual(values = c(21, 23), name = "Depth") +
   geom_sf(data = florida, fill = "white", linewidth = 0.15) +
   geom_sf(data = cuba, fill = "white", linewidth = 0.15) +
@@ -230,16 +245,15 @@ floridaMap = ggplot() +
   scale_x_continuous(breaks = c(seq(-83, -80, by = 1))) +
   scale_y_continuous(breaks = c(seq(23, 27, by = 1))) +
   annotation_scale(location = "br", pad_x = unit(1.35, "cm"), text_pad = unit(-4.5, "cm")) +
-  guides(fill = guide_legend(override.aes = list(shape = 22, color = "gray30", size = 3), order = 1), shape = guide_legend(override.aes = list(size = c(2.25, 2), stroke = 0.25, color = "black"), order = 2), color = "none") +
+  guides(fill = guide_legend(override.aes = list(shape = 22, color = "gray30", size = 3), order = 1), shape = guide_legend(override.aes = list(size = c(2.25, 2), stroke = 0.25, color = "black"), order = 2), color = guide_legend(override.aes = list(shape = 22, size = 3, fill = purples, color = purples, alpha = 1), order = 3)) +
   theme_bw() +
   theme(panel.background = element_rect(fill = "aliceblue"),
-
         plot.background = element_blank(),
         panel.border = element_rect(color = "black", size = 1, fill = NA),
         axis.title = element_blank(),
         axis.ticks = element_line(color = "black"),
         axis.text = element_text(color = "black"),
-        legend.position = c(0.105, 0.35),
+        legend.position = c(0.105, 0.4),
         legend.box.background = element_rect(linewidth = 0.35, fill = "white"),
         legend.title = element_text(color = "black", size = 8),
         legend.text = element_text(color = "black", size = 8),
@@ -277,9 +291,7 @@ largeMap = inset = ggplot() +
 map = (floridaMap + 
   inset_element(largeMap, top = 1.07, right = 0.33, bottom = 0.63, left = -0.005, ignore_tag = TRUE))
   
-ggsave("../figures/figure1.png", plot = map, height = 7, width = 7, units = "in", dpi = 300)
-
-ggsave("../figures/figure1.svg", plot = map, height = 7, width = 7, units = "in", dpi = 300)
+ggsave("../figures/figure1a.png", plot = map, height = 7, width = 7, units = "in", dpi = 300)
 
 ```
 
@@ -510,6 +522,7 @@ admixK5_melt = melt(admixK5, id = c("sample", "site", "depth", "depthm"))
 
   p8 = facet_plot(p7, panel="K = 5", data=admixK5_melt, geom=geom_barh, width = 1.0, mapping = aes(x = value, fill = variable), 
                   stat='identity', color = "grey25", size = 0.1) +
+    
     theme_tree(strip.text = element_blank(),
                panel.spacing = unit(.1, "line")) 
 }
@@ -632,16 +645,18 @@ pcaPlotK4 = pcaPlotK4A +
 pcaPlotK2A = ggplot() +
   geom_hline(yintercept = 0, color = "gray90", size = 0.25) +
   geom_vline(xintercept = 0, color = "gray90", size = 0.25) +
-  geom_point(data = pcangsd, aes(x = PC1, y = PC2, fill = clusterK2, shape = depth), color = "black", size = 4, show.legend = FALSE) +
-  scale_shape_manual(values = c(21, 23), name = "Depth Zone") +
-  scale_fill_manual(values = c(xestoKColPal[c(1,2,6)]), name = "Site") +
+  geom_point(data = pcangsd, aes(x = PC1, y = PC2, fill = clusterK2, shape = depth), color = "black", size = 4, show.legend = TRUE) +
+  scale_shape_manual(values = c(21, 23), name = "Depth Zone", ) +
+  scale_fill_manual(values = c(xestoKColPal[c(1,2,6)]), name = "Lineage") +
   labs(x = paste0("PC 1 (", format(round(xestoPcaVar[1], 1), nsmall = 1)," %)"), y = paste0("PC 2 (", format(round(xestoPcaVar[2], 1), nsmall = 1), " %)")) +
-  guides(shape = guide_legend(override.aes = list(size = 2, stroke = 0.25, alpha = NA), order = 2, ncol = 1), fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = flPal, alpha = NA), order = 1, ncol = 1)) +
+  guides(shape = "none", fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = xestoKColPal[c(1,2,6)], alpha = NA), order = 1, ncol = 1)) +
   theme_bw()
 
 pcaPlotK2 = pcaPlotK2A +
   pcaTheme +
-  theme(legend.position = c(0.15, 0.25))
+  theme(legend.position = c(0.12, 0.15))
+
+pcaPlotK2
 
 ```
 
@@ -666,7 +681,8 @@ fig2 = (structure / pcaPlots) +
         legend.key = element_blank(),
         legend.background = element_blank())
 
-ggsave("../figures/figure2.png", plot = fig2, height = 12, width = 14, units = "in", dpi = 300)
+# ggsave("../figures/figure2.png", plot = fig2, height = 12, width = 14, units = "in", dpi = 300)
+ggsave("../figures/figure2.svg", plot = fig2, height = 12, width = 14, units = "in", dpi = 300)
 
 ```
 
@@ -1429,24 +1445,25 @@ p5Main
 
 mainTree =  facet_widths(p5Main, widths = c(0.25, 0.025, 0.025, 0.025, 0.25))
   
-
 ```
 
 ```{r, pcangsd main}
 covMain = read.table("../data/pcangsd/flXestoMainPcangsd.cov") %>% as.matrix()
 
-pcAdmixMain = read.table("../data/admix/main/K3main.output") %>% dplyr::select(V6, V7, V8)
+pcAdmixMain2 = read.table("../data/admix/main/K3main.output") %>% dplyr::select(V6, V7, V8)
 
-pcAdmixMain = pcAdmixMain %>% dplyr::rename("Xm1" = "V6", "Xm1.2" = "V7", "Xm1.3" = "V8")
+pcAdmixMain2 = pcAdmixMain2 %>% dplyr::rename("Xm1" = "V6", "Xm1.2" = "V7", "Xm1.3" = "V8")
   
 pcaEigMain = eigen(covMain)
 xestoMainPcaVar = pcaEigMain$values/sum(pcaEigMain$values)*100
 head(xestoMainPcaVar)
 
-pcangsdMain = read.delim("../data/pcangsd/mainCluster", header = FALSE) %>% rename("sample" = "V1") %>% left_join(bams) %>%  dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM) %>% cbind(pcAdmixMain)
+pcangsdMain = read.delim("../data/pcangsd/mainCluster", header = FALSE) %>% rename("sample" = "V1") %>% left_join(bams) %>%  dplyr::select(sample, "site" = region, "depth" = depthZone, "depthm" = depthM) %>% cbind(pcAdmixMain2)
 
 pcangsdMain$sitedepth = as.factor(paste(pcangsdMain$site, pcangsdMain$depth, sep = " "))
 
+pcangsdMain$depth = factor(pcangsdMain$depth)
+pcangsdMain$depth = factor(pcangsdMain$depth, levels = levels(pcangsdMain$depth)[c(2,1)])
 
 pcangsdMain$sitedepth = factor(pcangsdMain$sitedepth)
 pcangsdMain$sitedepth = factor(pcangsdMain$sitedepth, levels(pcangsdMain$sitedepth)[c(3, 12, 1, 2, 11, 10, 5, 4, 9, 8, 7, 6)])
@@ -1462,7 +1479,7 @@ pcangsdMain$PC3 = pcaEigMain$vectors[,3]
 pcangsdMain$PC4 = pcaEigMain$vectors[,4]
 
 
-pcangsdClustMain = pcAdmixMain %>% mutate(cluster = ifelse(Xm1 >=0.75, "Xm1", ifelse(Xm1.2 >= 0.75, "Xm1.2", ifelse(Xm1.3 >= 0.75, "Xm1.3", "Admixed"))))
+pcangsdClustMain = pcAdmixMain2 %>% mutate(cluster = ifelse(Xm1 >=0.75, "Xm1", ifelse(Xm1.2 >= 0.75, "Xm1.2", ifelse(Xm1.3 >= 0.75, "Xm1.3", "Admixed"))))
 
 
 pcangsdMain = pcangsdMain %>% mutate(cluster = pcangsdClustMain$cluster)
@@ -1509,11 +1526,81 @@ pcaPlotMainK3
 
 ```
 
+```{r, main admix}
+
+pcAdmixMain3 = arrange(pcAdmixMain, site, depth, -Xm1, -Xm1.2)
+popCounts = pcAdmixMain3 %>% group_by(site, depth) %>% summarise(n = n())
+
+pcAdmixMain3$site = factor(pcAdmixMain3$site, levels = rev(levels(pcAdmixMain3$site)))
+
+popCounts
+
+popCountList = reshape2::melt(lapply(popCounts$n,function(x){c(1:x)}))
+pcAdmixMain3$ord = popCountList$value
+
+pcAdmixMain3Melt = melt(pcAdmixMain3, id.vars=c("sample", "site", "depth", "depthm", "ord"), variable.name="Ancestry", value.name="Fraction")
+
+pcAdmixMain3Melt$Ancestry = factor(pcAdmixMain3Melt$Ancestry)
+pcAdmixMain3Melt$Ancestry = factor(pcAdmixMain3Melt$Ancestry, levels = rev(levels(pcAdmixMain3Melt$Ancestry)))
+
+popAnno = data.frame(x1 = c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5), x2 = c(30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5, 30.5),
+                     y1 = -.1, y2 = -.1, sample = NA, Ancestry = NA, depth = "Shallow", 
+                     ord  = NA, Fraction = NA,
+                     site = c("Riley's Hump", "Tortugas Bank", 
+                                  "Lower Keys", "Upper Keys", "Ft. Lauderdale", "Boynton", "West Palm", "Jupiter"))
+
+popAnno$site = factor(popAnno$site)
+popAnno$site = factor(popAnno$site, levels = levels(popAnno$site)[rev(c(3, 8, 1, 2, 7, 4, 6, 5))])
+
+```
+
+Make admixture plots
+```{r, admix plots}
+mainAdmixPlotA = ggplot(data = pcAdmixMain3Melt, aes(x = ord, y = Fraction, fill = Ancestry, order = sample)) +
+  geom_segment(data = popAnno, aes(x = x1, xend = x2, y = -1.11, yend = -1.11, color = site), size = 7) +
+  geom_bar(stat = "identity", position = "fill", width = 1, colour = "grey25", size = 0.2) +
+  facet_grid(factor(depth) ~ site, switch = "both") +
+  geom_text(data = (pcAdmixMain3Melt %>% filter(depth == "Mesophotic", site %in% c("Riley's Hump", "Tortugas Bank"), sample %in% c("FKX047", "FKX070"), Ancestry == "Xm1")), x = 15.5, y = -.1, aes(label = site), size = 4, color = "#FFFFFF") +
+  geom_text(data = (pcAdmixMain3Melt %>% filter(depth == "Shallow", !site %in% c("Riley's Hump", "Tortugas Bank"), sample %in% c("FKX148", "FKX208", "SFX069", "SFX093", "SFX021","SFX035"), Ancestry == "Xm1")), x = 15.5, y = -1.11, aes(label = site), size = 4, color = "#000000") +
+  scale_fill_manual(values = xestoKColPal[c(1,3,4)]) +
+  scale_color_manual(values = rev(flPal)) +
+  scale_x_discrete(expand = c(0.005, 0.005)) +
+  scale_y_continuous(expand = c(0.001, 0.001)) +
+  coord_cartesian(ylim = c(0.0, 1.0), clip = "off") +
+theme_bw()
+  
+mainAdmixPlot = mainAdmixPlotA + 
+  theme_bw()+
+  theme(
+  panel.grid = element_blank(),
+  plot.background = element_blank(),
+  panel.border = element_rect(fill = NA, color = "black", size = 0.75, linetype = "solid"),
+  panel.spacing.x = grid:::unit(0.05, "lines"),
+  panel.spacing.y = grid:::unit(0.05, "lines"),
+  panel.background = element_blank(),
+  axis.text.x = element_blank(),
+  axis.text.y = element_blank(),
+  axis.ticks.x = element_blank(),
+  axis.ticks.y = element_blank(),
+  axis.title = element_blank(),
+  strip.background.x = element_blank(),
+  strip.background.y = element_blank(),
+  strip.text = element_text(size = 8),
+  strip.text.y.left = element_text(size = 10, angle = 90),
+  strip.text.x.bottom = element_text(vjust = 1, color = NA),
+  legend.key = element_blank(),
+  legend.position = "none",
+  legend.title = element_text(size = 8))
+
+mainAdmixPlot
+
+```
+
 
 ```{r}
 mainPlots = (mainTree)/((pcaPlotMainS + pcaPlotMainK3 + guide_area()) +
-  plot_layout(widths = c(1, 1,0.25), guides = "collect")) +
-  plot_layout(heights = c(2.5, 1.75)) +
+  plot_layout(widths = c(1, 1,0.25), guides = "collect"))/(mainAdmixPlot) +
+  plot_layout(heights = c(2.5, 1.75, 2)) +
   
   plot_annotation(tag_levels = 'A') &
   theme(plot.tag = element_text(size = 20),
@@ -1524,7 +1611,7 @@ mainPlots = (mainTree)/((pcaPlotMainS + pcaPlotMainK3 + guide_area()) +
 
 mainPlots
 
-ggsave("../figures/FigureS1.png", plot = mainPlots, height = 10, width = 12, units = "in", dpi = 300)
+ggsave("../figures/FigureS1.png", plot = mainPlots, height = 14, width = 12, units = "in", dpi = 300)
 
 ```
 ###
