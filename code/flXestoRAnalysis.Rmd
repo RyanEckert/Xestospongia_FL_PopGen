@@ -1,7 +1,7 @@
 ---
 title: "*Xestospongia muta* Population Genetics"
 author: "Ryan Eckert"
-date: "2024-09-13"
+date: "2024-12-19"
 output:
   html_document:
     theme: flatly
@@ -211,7 +211,7 @@ florida = read_sf("../data/shp/floridaShoreline.shp") %>% st_transform(crs = 432
 bathy = read_sf("../data/shp/flBathy.shp") %>% st_transform(crs = 4326) %>% subset(subset = DATASET %in% c("fl_shelf", "fl_coast"))
 tortugasBathy = read_sf("../data/shp/tortugasBathy.shp") %>% st_transform(crs = 4326)
 
-MPA = c("KJCRPA", "FKNMS")
+MPA = c("KJCAP", "FKNMS")
 latDD = 26
 longDD = -81
 
@@ -226,7 +226,7 @@ zoomed in map of the colony locations. We use `ggspatial` to add a north
 arrow and scale bar to the main map.
 
 ```{r, maps}
-purples = c("purple1", "purple4")
+purples = c("purple1", pink)
 
 floridaMap = ggplot() +
    geom_point(data = bounds, aes(x = longDD, y = latDD, fill = MPA, color = MPA), alpha = 0.1, shape = 22) +
@@ -291,7 +291,7 @@ largeMap = inset = ggplot() +
 map = (floridaMap + 
   inset_element(largeMap, top = 1.07, right = 0.33, bottom = 0.63, left = -0.005, ignore_tag = TRUE))
   
-ggsave("../figures/figure1a.png", plot = map, height = 7, width = 7, units = "in", dpi = 300)
+ggsave("../figures/figure1.png", plot = map, height = 7, width = 7, units = "in", dpi = 300)
 
 ```
 
@@ -632,9 +632,9 @@ pcaPlotK4A = ggplot() +
   geom_vline(xintercept = 0, color = "gray90", size = 0.5) +
   geom_point(data = pcangsd, aes(x = PC1, y = PC2, fill = clusterK4, shape = depth), color = "black", size = 4, alpha = 1, show.legend = TRUE) +
   scale_shape_manual(values = c(21, 23), name = "Depth Zone") +
-  scale_fill_manual(values = xestoKColPal[c(1:4,6)], name = "Lineage") +
+  scale_fill_manual(values = c(xestoKColPal[c(1:4)],"grey75"), name = "Lineage") +
   labs(x = paste0("PC 1 (", format(round(xestoPcaVar[1], 1), nsmall = 1)," %)"), y = paste0("PC 2 (", format(round(xestoPcaVar[2], 1), nsmall = 1), " %)")) +
-  guides(shape = "none", fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = xestoKColPal[c(1:4,6)], alpha = NA), order = 1, ncol = 1))+
+  guides(shape = "none", fill = guide_legend(override.aes = list(shape = 22, size = 2, fill = c(xestoKColPal[c(1:4)],"grey75"), alpha = NA), order = 1, ncol = 1))+
   theme_bw()
 
 pcaPlotK4 = pcaPlotK4A +
@@ -663,7 +663,7 @@ pcaPlotK2
 
 Put all plots together
 ```{r, pca 1 plot}
-pcaPlots = (pcaPlotS | pcaPlotK4 | pcaPlotK2) +
+pcaPlots = (pcaPlotS | pcaPlotK2 | pcaPlotK4) +
   plot_annotation(tag_levels = 'A') &
   theme(plot.tag = element_text(size = 18),
         panel.background = element_rect(fill = "white"),
