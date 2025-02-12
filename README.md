@@ -7,10 +7,10 @@
 ### version: 12 February, 2025
 
 ------------------------------------------------------------------------
-<img src="figures/figure1.png" width="425"/>
+<img src="figures/figure1.png" width="425"/> <img src="figures/figure2.png" width="425"/> 
 
 This repository contains scripts and data associated with the publication:
-[Eckert RJ, Sturm AB, Carreiro AMM, Voss JD (in review). Population genetics of the giant barrel sponge, *Xestospongia muta*, reveal distinct, hybridizing lineages across the Florida Reef Tract. **](https://)
+[Eckert RJ, Sturm AB, Carreiro AMM, Voss JD (in review). Population genetics of the giant barrel sponge, *Xestospongia muta*, reveal distinct, hybridizing lineages across the Florida Reef Tract.](https://)
 
 ------------------------------------------------------------------------
 
