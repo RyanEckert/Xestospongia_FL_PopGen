@@ -1,6 +1,6 @@
 # Xestospongia_FL_PopGen
  
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo/xxx.svg)](https://doi.org/10.5281/zenodo.)
+[![DOI](https://zenodo.org/badge/849679348.svg)](https://doi.org/10.5281/zenodo.14861674)
 
 ### Ryan Eckert -- <ryan.j.eckert@gmail.com>
 ### [ryanjeckert.weebly.com](https://ryanjeckert.weebly.com)
