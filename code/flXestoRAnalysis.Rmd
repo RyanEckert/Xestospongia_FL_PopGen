@@ -1,7 +1,7 @@
 ---
 title: "*Xestospongia muta* Population Genetics"
 author: "Ryan Eckert"
-date: "2024-12-19"
+date:
 output:
   html_document:
     theme: flatly

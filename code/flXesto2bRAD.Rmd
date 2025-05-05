@@ -1,7 +1,7 @@
 ---
 title: "*Xestospongia muta* 2bRAD"
 author: "Ryan Eckert"
-date: "2024-08-30"
+date: 
 output:
   html_document:
     theme: flatly
