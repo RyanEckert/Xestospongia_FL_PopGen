@@ -8,7 +8,7 @@
 ### version: 12 February, 2025
 
 ------------------------------------------------------------------------
-<img src="figures/figure1.png" width="425"/> <img src="figures/figure2.png" width="425"/> 
+<img src="figures/figure1.png" width="650"/> <img src="figures/figure2.png" width="650"/> 
 
 This repository contains scripts and data associated with the publication:
 
