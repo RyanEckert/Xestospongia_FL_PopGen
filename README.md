@@ -5,14 +5,14 @@
 
 ### Ryan Eckert -- <ryan.j.eckert@gmail.com>
 ### [ryanjeckert.weebly.com](https://ryanjeckert.weebly.com)
-### version: 12 February, 2025
+### version: 04 December, 2025
 
 ------------------------------------------------------------------------
 <img src="figures/figure1.png" width="650"/> <img src="figures/figure2.png" width="650"/> 
 
 This repository contains scripts and data associated with the publication:
 
-**[Eckert RJ, Sturm AB, Carreiro AM, Voss JD (in review). Population genetics of the giant barrel sponge, *Xestospongia muta*, reveal distinct, hybridizing lineages across the Florida Reef Tract.](https://)**
+**[Eckert RJ, Sturm AB, Carreiro AM, Voss JD (in review). Population genetics of the giant barrel sponge, *Xestospongia muta*, reveal distinct, hybridizing lineages across the Florida reef tract.](https://)**
 
 ------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ With recent anthropogenically driven coral reef declines, reef biodiversity and 
 
 1.  [Protocol for DNA extraction](https://ryaneckert.github.io/labProtocols/dnaExtraction/)
 2.  [Protocol for 2bRAD wet lab (based on https://github.com/z0on/2bRAD_denovo)](https://ryaneckert.github.io/labProtocols/2bRAD/)
-3.  [2bRAD denovo analysis (adapted from https://github.com/z0on/2bRAD_denovo)](https://ryaneckert.github.io/Xestospongia_FL_PopGen/code/)
+3.  [2bRAD analysis (adapted from https://github.com/z0on/2bRAD_denovo)](https://ryaneckert.github.io/Xestospongia_FL_PopGen/code/)
 4.  [Statistical analysis of SNP data](https://ryaneckert.github.io/Xestospongia_FL_PopGen/data/)
 5. [Sequncing data (NCBI PRJNA1186221)](https://www.ncbi.nlm.nih.gov/biosample?Db=biosample&DbFrom=bioproject&Cmd=Link&LinkName=bioproject_biosample&LinkReadableName=BioSample&ordinalpos=1&IdsFromResult=1186221)
 ------------------------------------------------------------------------
