@@ -912,6 +912,7 @@ ggsave("../figures/figure5.png", plot = hetPlots, width = 8, height = 7, units =
 
 ```
 
+![](../figures/figure5.png)
 
 ## Size class structure
 ```{r, X. muta size class}
@@ -1125,10 +1126,9 @@ xmSizeClassPlots = (sizeClassK2 + sizeClassK2site)/xmGLMMplot +
 ggsave("../figures/figure4.png", plot = xmSizeClassPlots, dpi =300, height = 16, width = 20, units = "cm")
 
 
-
-
 ```
 
+![](../figures/figure4.png)
 
 ## Hybridization
 
@@ -1426,13 +1426,14 @@ xmDiv = ((p5div) /((pcaPlot1Div + hetPlotDiv + divPlot) + plot_layout(widths = c
         legend.key = element_blank(),
         legend.background = element_blank())
   
-xmDiv
+# xmDiv
 
 # ggsave("../figures/figure6.png", plot = xmDiv, height = 9, width = 12, units = "in", dpi = 300)
 ggsave("../figures/figure6.svg", plot = xmDiv, height = 9, width = 12, units = "in", dpi = 300)
 
 ```
 
+![](../figures/figure6.png)
 
 ## Genetic connectivity
 
