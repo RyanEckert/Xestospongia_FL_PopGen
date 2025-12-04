@@ -5,14 +5,14 @@
 
 ### Ryan Eckert -- <ryan.j.eckert@gmail.com>
 ### [ryanjeckert.weebly.com](https://ryanjeckert.weebly.com)
-### version: 12 February, 2025
+### version: 04 December, 2025
 
 ------------------------------------------------------------------------
 <img src="figures/figure1.png" width="650"/> <img src="figures/figure2.png" width="650"/> 
 
 This repository contains scripts and data associated with the publication:
 
-**[Eckert RJ, Sturm AB, Carreiro AM, Voss JD (in review). Population genetics of the giant barrel sponge, *Xestospongia muta*, reveal distinct, hybridizing lineages across the Florida Reef Tract.](https://)**
+**[Eckert RJ, Sturm AB, Carreiro AM, Voss JD (in review). Population genetics of the giant barrel sponge, *Xestospongia muta*, reveal distinct, hybridizing lineages across the Florida reef tract.](https://)**
 
 ------------------------------------------------------------------------
 
